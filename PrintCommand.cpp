@@ -44,6 +44,14 @@ int PrintCommand::invoke(Runtime& runtime)
 
 		return 0;
 	}
+	else if (lexemes[i].tokenName == ID) {
+		// Print the string.
+		Variable var = runtime.getVariable(lexemes[i].value);
+
+		cout << var.value << endl;
+
+		return 0;
+	}
 
 	stringstream ss;
 	ss << (*this);

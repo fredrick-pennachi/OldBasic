@@ -16,6 +16,7 @@ Forms of LET:
 
 LET A = 1
 LET B$ = "B"
+LET A = A + 1
 
 */
 
@@ -39,25 +40,19 @@ int LetCommand::invoke(Runtime& runtime)
 		throw InvalidSyntaxExeption("Unsupported syntax: No argument isn't valid for LET.");
 	}
 	else if (lexemes[i].tokenName == ID) {
-		// String variable names should end in $.
-		bool isString = false;
-		if (lexemes[i].value[lexemes[i].value.size() - 1] == '$') {
-			isString = true;
-		}
+		string name = lexemes[i].value;
+
 		i++;
 		if (lexemes[i].value == "=") {
 			i++;
 
+			// Declare the variable and value in the runtime.
+			if (lexemes[i].tokenName == INTEGER || lexemes[i].tokenName == STRING) {
+				runtime.setVariable(name, lexemes[i].value);
 
-			if (lexemes[i].tokenName == INTEGER) {
-				int varValue = stoi(lexemes[i].value);
-
+				return 0;
 			}
-			else if (lexemes[i].tokenName == STRING) {
-				string varValue = lexemes[i].value;
-
-			}
-		}
+		}		
 	}
 
 	stringstream ss;
@@ -67,4 +62,3 @@ int LetCommand::invoke(Runtime& runtime)
 		+ lexemes[i].value
 		+ " in \"" + ss.str() + "\"");
 }
-

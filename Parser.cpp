@@ -28,15 +28,10 @@ unique_ptr<Command> Parser::parse(vector<Lexeme>& lexemes) {
 
 	TokenName tokenName = lexemes[currentIndex].tokenName;
 	// Only ID should be valid in this position.
-	switch (tokenName) {
-	case ID:
+	if (tokenName == ID) {
 		return parseId(lexemes, currentIndex);
-	case UNSET:
-	case INTEGER:
-	case OPERATOR:
-	case SEPARATOR:
-	case STRING:
-	default:
+	}
+	else {
 		throw ParseException("Parsing error, unexpected token " + TokenNameMap.at(tokenName) + ".");
 	}
 }
@@ -64,7 +59,7 @@ unique_ptr<Command> Parser::parseId(vector<Lexeme>& lexemes, int index)
 		return make_unique<RunCommand>(lexemes);
 	}
 
-	// Is it an existing variable?
+	// Add else for if it is an existing variable.
 
 	throw ParseException("Parsing error, unknown id " + id + ".");
 }

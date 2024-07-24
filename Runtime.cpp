@@ -30,3 +30,13 @@ int Runtime::setNextLine(int nextLine)
 	return 0;
 }
 
+void Runtime::setVariable(string name, string value)
+{
+	variables.emplace(name, Variable(name, value));
+}
+
+Variable Runtime::getVariable(string name)
+{
+	return variables.at(name);
+}
+
