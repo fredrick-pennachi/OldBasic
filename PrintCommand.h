@@ -7,7 +7,7 @@
 class PrintCommand : public Command {
 public:
 
-    PrintCommand(vector<Lexeme>& lexemes);
+    PrintCommand(const vector<Lexeme>& lexemes);
 
     // Inherited via Command
     int invoke(Runtime& runtime) override;

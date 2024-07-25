@@ -1,13 +1,13 @@
 #include "Runtime.h"
 
-Runtime::Runtime(map<int, unique_ptr<Command>>& program) : program(program) {
+Runtime::Runtime(const map<int, unique_ptr<Command>>& program) : program(program) {
 }
 
 int Runtime::run()
 {
-	nextLineIter = program.begin();
+	nextLineIter = program.cbegin();
 
-	while (nextLineIter != program.end()) {
+	while (nextLineIter != program.cend()) {
 		int lineNumber = (*nextLineIter).first;
 
 		Command& command = *(*nextLineIter).second;

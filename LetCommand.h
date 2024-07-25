@@ -4,7 +4,7 @@ class LetCommand :
     public Command
 {
 public:
-    LetCommand(vector<Lexeme>& lexemes);
+    LetCommand(const vector<Lexeme>& lexemes);
 
     // Inherited via Command
     int invoke(Runtime& runtime) override;

@@ -129,6 +129,6 @@ bool Tokenizer::ishighbit(char c) {
 }
 
 
-InvalidTokenExeption::InvalidTokenExeption(string what) : runtime_error(what)
+InvalidTokenExeption::InvalidTokenExeption(const string what) : runtime_error(what)
 {
 }

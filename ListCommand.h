@@ -3,7 +3,7 @@
 
 class ListCommand : public Command {
 public:
-	ListCommand(vector<Lexeme>& lexemes);
+	ListCommand(const vector<Lexeme>& lexemes);
 
 	// Inherited via Command
 	int invoke(Runtime& runtime) override;

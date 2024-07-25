@@ -7,7 +7,7 @@ using namespace std;
 class Variable
 {
 public:
-	Variable(string name, string value);
+	Variable(const string& name, const string& value);
 
 	string name;
 	string value;

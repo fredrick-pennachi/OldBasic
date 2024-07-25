@@ -10,12 +10,12 @@
 class Parser
 {
 public:
-	unique_ptr<Command> parse(vector<Lexeme>& lexemes);
+	unique_ptr<Command> parse(const vector<Lexeme>& lexemes);
 
-	unique_ptr<Command> parseId(vector<Lexeme>& lexemes, int index);
+	unique_ptr<Command> parseId(const vector<Lexeme>& lexemes, int index);
 };
 
 class ParseException : public runtime_error {
 public:
-	ParseException(string what);
+	ParseException(const string what);
 };

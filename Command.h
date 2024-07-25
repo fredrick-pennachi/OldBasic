@@ -14,7 +14,7 @@ using namespace std;
 
 class Command {
 public:
-	Command(const string& name, vector<Lexeme>& lexemes);
+	Command(const string& name, const vector<Lexeme>& lexemes);
 
 	virtual int invoke(Runtime& runtime) = 0;
 

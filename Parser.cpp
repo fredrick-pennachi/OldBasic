@@ -7,7 +7,7 @@
 #include "PrintCommand.h"
 #include "RunCommand.h"
 
-unique_ptr<Command> Parser::parse(vector<Lexeme>& lexemes) {
+unique_ptr<Command> Parser::parse(const vector<Lexeme>& lexemes) {
 
 	if (lexemes.empty()) {
 		// Not sure how the program would get here.
@@ -36,9 +36,9 @@ unique_ptr<Command> Parser::parse(vector<Lexeme>& lexemes) {
 	}
 }
 
-unique_ptr<Command> Parser::parseId(vector<Lexeme>& lexemes, int index)
+unique_ptr<Command> Parser::parseId(const vector<Lexeme>& lexemes, int index)
 {
-	string& id = lexemes[index].value;
+	const string& id = lexemes[index].value;
 
 	// Is this a command?
 
@@ -64,6 +64,6 @@ unique_ptr<Command> Parser::parseId(vector<Lexeme>& lexemes, int index)
 	throw ParseException("Parsing error, unknown id " + id + ".");
 }
 
-ParseException::ParseException(string what) : runtime_error(what)
+ParseException::ParseException(const string what) : runtime_error(what)
 {
 }

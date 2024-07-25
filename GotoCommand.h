@@ -6,7 +6,7 @@
 
 class GotoCommand : public Command {
 public:
-	GotoCommand(vector<Lexeme>& lexemes);
+	GotoCommand(const vector<Lexeme>& lexemes);
 
 	// Inherited via Command
 	int invoke(Runtime& runtime) override;

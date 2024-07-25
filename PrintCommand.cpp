@@ -7,7 +7,7 @@ using namespace std;
 
 const string PrintCommand::PRINT_COMMAND_NAME = "PRINT";
 
-PrintCommand::PrintCommand(vector<Lexeme>& lexemes) : Command(PRINT_COMMAND_NAME, lexemes)
+PrintCommand::PrintCommand(const vector<Lexeme>& lexemes) : Command(PRINT_COMMAND_NAME, lexemes)
 {
 }
 

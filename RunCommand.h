@@ -6,7 +6,7 @@ class RunCommand :
 {
 public:
 
-    RunCommand(vector<Lexeme>& lexemes);
+    RunCommand(const vector<Lexeme>& lexemes);
 
     // Inherited via Command
     int invoke(Runtime& runtime) override;

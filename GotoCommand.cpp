@@ -5,7 +5,7 @@
 
 const string GotoCommand::GOTO_COMMAND_NAME = "GOTO";
 
-GotoCommand::GotoCommand(vector<Lexeme>& lexemes)
+GotoCommand::GotoCommand(const vector<Lexeme>& lexemes)
 	: Command(GOTO_COMMAND_NAME, lexemes) {
 }
 

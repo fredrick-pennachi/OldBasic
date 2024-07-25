@@ -14,18 +14,19 @@ class Command;
 class Runtime
 {
 public:
-	Runtime(map<int, unique_ptr<Command>>& program);
+	Runtime(const map<int, unique_ptr<Command>>& program);
 
 	int run();
 
 	int setNextLine(int nextLine);
 
-	void setVariable(string name, string value);
-	Variable getVariable(string name);
+	void setVariable(const string name, const string value);
 
-	map<int, unique_ptr<Command>>& program;
+	Variable getVariable(const string name);
 
-	map<int, unique_ptr<Command>>::iterator nextLineIter;
+	const map<int, unique_ptr<Command>>& program;
+
+	map<int, unique_ptr<Command>>::const_iterator nextLineIter;
 
 	map<string, Variable> variables;
 };

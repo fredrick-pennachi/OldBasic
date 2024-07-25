@@ -18,5 +18,5 @@ public:
 
 class InvalidTokenExeption : public runtime_error {
 public:
-	InvalidTokenExeption(string what);
+	InvalidTokenExeption(const string what);
 };

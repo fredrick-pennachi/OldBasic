@@ -6,7 +6,7 @@ using namespace std;
 
 const string LetCommand::LET_COMMAND_NAME = "LET";
 
-LetCommand::LetCommand(vector<Lexeme>& lexemes) : Command(LET_COMMAND_NAME, lexemes)
+LetCommand::LetCommand(const vector<Lexeme>& lexemes) : Command(LET_COMMAND_NAME, lexemes)
 {
 }
 

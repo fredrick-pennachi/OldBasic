@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Command::Command(const string& name, vector<Lexeme>& lexemes) : name(name), lexemes(lexemes)
+Command::Command(const string& name, const vector<Lexeme>& lexemes) : name(name), lexemes(lexemes)
 {
 }
 

@@ -4,7 +4,7 @@
 
 class NoOpCommand : public Command {
 public:
-	NoOpCommand(vector<Lexeme>& lexemes);
+	NoOpCommand(const vector<Lexeme>& lexemes);
 
 	// Inherited via Command
 	int invoke(Runtime& runtime) override;
