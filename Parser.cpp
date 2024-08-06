@@ -4,8 +4,14 @@
 #include "LetCommand.h"
 #include "ListCommand.h"
 #include "NoOpCommand.h"
+#include "NullNode.h"
+#include "OperatorNode.h"
 #include "PrintCommand.h"
 #include "RunCommand.h"
+#include "ValueNode.h"
+#include "VariableNode.h"
+
+#include <stack>
 
 unique_ptr<Command> Parser::parse(const vector<Lexeme>& lexemes) {
 
@@ -44,13 +50,13 @@ unique_ptr<Command> Parser::parseId(const vector<Lexeme>& lexemes, int index)
 
 	// Maybe this logic should be tidied up with sets of commands and functions.
 	if (id == "PRINT") {
-		return make_unique<PrintCommand>(lexemes);
+		return make_unique<PrintCommand>(lexemes, parseExpression(lexemes));
 	}
 	else if (id == "GOTO") {
 		return make_unique<GotoCommand>(lexemes);
 	}
 	else if (id == "LET") {
-		return make_unique<LetCommand>(lexemes);
+		return make_unique<LetCommand>(lexemes, parseExpression(lexemes));
 	}
 	else if (id == "LIST") {
 		return make_unique<ListCommand>(lexemes);
@@ -62,6 +68,121 @@ unique_ptr<Command> Parser::parseId(const vector<Lexeme>& lexemes, int index)
 	// Add else for if it is an existing variable.
 
 	throw ParseException("Parsing error, unknown id " + id + ".");
+}
+
+unique_ptr<ExpressionNode> Parser::parseExpression(const vector<Lexeme>& lexemes)
+{
+	int i = 0;
+
+	// Skip over the first lexeme if it's a line number.
+	if (lexemes[i].tokenName == INTEGER) {
+		i++;
+	}
+
+	// Skip over the LET id.
+	i++;
+
+	if (i == lexemes.size()) {
+		// There isn't an expression! This might not be valid for some
+		// command types.
+		return make_unique<NullNode>();
+	}
+
+	stack<Lexeme> operators;
+	stack<Lexeme> values;
+
+	for (; i < lexemes.size(); i++) {
+		if (lexemes[i].tokenName == OPERATOR) {
+			operators.push(lexemes[i]);
+		}
+		else {
+			values.push(lexemes[i]);
+		}
+	}
+
+	cout << operators << endl;
+	cout << values << endl;
+
+	if (values.empty()) {
+		throw ParseException("Parsing error, did not parse any values!");
+	}
+
+	Lexeme value = values.top();
+	values.pop();
+
+	// Seed current node with the first value.
+
+	unique_ptr<ExpressionNode> currentNode;
+
+	if (value.tokenName == INTEGER || value.tokenName == STRING) {
+		currentNode = make_unique<ValueNode>(value);
+	}
+	else if (value.tokenName == ID) {
+		currentNode = make_unique<VariableNode>(value);
+	}
+
+	stack<unique_ptr<OperatorNode>> lowerPrecedence;
+
+	while (operators.size() > 0) {
+		Lexeme op = operators.top();
+		unique_ptr<OperatorNode> opNode = make_unique<OperatorNode>(op);
+		operators.pop();
+
+		// If this node is lower precendence than the next one in the stack
+		// hook up the right side and push it on the stack.
+
+		if (op.value == "+" && !operators.empty() && operators.top().value == "*") {
+			opNode->right = move(currentNode);
+			lowerPrecedence.push(move(opNode));
+
+			// Repopulate current node with the next value.
+			Lexeme value = values.top();
+			values.pop();
+			
+			if (value.tokenName == INTEGER || value.tokenName == STRING) {
+				currentNode = make_unique<ValueNode>(value);
+			}
+			else if (value.tokenName == ID) {
+				currentNode = make_unique<VariableNode>(value);
+			}
+		}
+		else {
+			opNode->right = move(currentNode);
+			
+			// Also populate the left side.
+			Lexeme value = values.top();
+			values.pop();
+
+			if (value.tokenName == INTEGER || value.tokenName == STRING) {
+				opNode->left = make_unique<ValueNode>(value);
+			}
+			else if (value.tokenName == ID) {
+				opNode->left = make_unique<VariableNode>(value);
+			}
+
+			// If there is a lower precedence node, set this node to the left side.
+			if (!lowerPrecedence.empty()) {
+				lowerPrecedence.top()->left = move(opNode);
+				opNode = move(lowerPrecedence.top());
+				lowerPrecedence.pop();
+			}
+
+			currentNode = move(opNode);
+		}
+	}
+
+	return currentNode;
+}
+
+
+ostream& operator<<(ostream& os, stack<Lexeme> stack)
+{
+	while (!stack.empty())
+	{
+		os << stack.top().value << " ";
+		stack.pop();
+	}
+	return os; // end of function
 }
 
 ParseException::ParseException(const string what) : runtime_error(what)

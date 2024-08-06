@@ -1,0 +1,12 @@
+#pragma once
+#include "ExpressionNode.h"
+class VariableNode :
+    public ExpressionNode
+{
+public:
+
+    VariableNode(const Lexeme& lexeme);
+
+    // Inherited via ExpressionNode
+    Value eval(Runtime& runtime) override;
+};

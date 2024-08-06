@@ -1,4 +1,5 @@
 #include "LetCommand.h"
+#include "ValueNode.h"
 
 #include <sstream>
 
@@ -6,7 +7,10 @@ using namespace std;
 
 const string LetCommand::LET_COMMAND_NAME = "LET";
 
-LetCommand::LetCommand(const vector<Lexeme>& lexemes) : Command(LET_COMMAND_NAME, lexemes)
+LetCommand::LetCommand(
+	const vector<Lexeme>& lexemes,
+	unique_ptr<ExpressionNode> expression)
+	: Command(LET_COMMAND_NAME, lexemes), expression(move(expression))
 {
 }
 

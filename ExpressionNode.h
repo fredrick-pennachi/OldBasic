@@ -1,0 +1,18 @@
+#pragma once
+
+#include "Runtime.h"
+#include "Value.h"
+
+class ExpressionNode
+{
+public:
+	enum NodeType { NULL_NODE, OPERATOR_NODE, VALUE_NODE, VARIABLE_NODE };
+
+	ExpressionNode(const Lexeme& lexeme, NodeType nodeType);
+
+	virtual Value eval(Runtime& runtime) = 0;
+
+	Lexeme lexeme;
+
+	NodeType nodeType;
+};

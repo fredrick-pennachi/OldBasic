@@ -128,32 +128,44 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Command.cpp" />
+    <ClCompile Include="ExpressionNode.cpp" />
     <ClCompile Include="GotoCommand.cpp" />
     <ClCompile Include="LetCommand.cpp" />
     <ClCompile Include="Lexeme.cpp" />
     <ClCompile Include="ListCommand.cpp" />
     <ClCompile Include="NoOpCommand.cpp" />
+    <ClCompile Include="NullNode.cpp" />
     <ClCompile Include="OldBasic.cpp" />
+    <ClCompile Include="OperatorNode.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="PrintCommand.cpp" />
     <ClCompile Include="RunCommand.cpp" />
     <ClCompile Include="Runtime.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
+    <ClCompile Include="Value.cpp" />
+    <ClCompile Include="ValueNode.cpp" />
     <ClCompile Include="Variable.cpp" />
+    <ClCompile Include="VariableNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h" />
+    <ClInclude Include="ExpressionNode.h" />
     <ClInclude Include="GotoCommand.h" />
     <ClInclude Include="LetCommand.h" />
     <ClInclude Include="Lexeme.h" />
     <ClInclude Include="ListCommand.h" />
     <ClInclude Include="NoOpCommand.h" />
+    <ClInclude Include="NullNode.h" />
+    <ClInclude Include="OperatorNode.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="PrintCommand.h" />
     <ClInclude Include="RunCommand.h" />
     <ClInclude Include="Runtime.h" />
     <ClInclude Include="Tokenizer.h" />
+    <ClInclude Include="Value.h" />
+    <ClInclude Include="ValueNode.h" />
     <ClInclude Include="Variable.h" />
+    <ClInclude Include="VariableNode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

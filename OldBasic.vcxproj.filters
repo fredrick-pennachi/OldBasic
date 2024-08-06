@@ -19,6 +19,12 @@
     <Filter Include="Header Files\commands">
       <UniqueIdentifier>{54754df6-641e-463d-9776-e7ea79f4027b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\expressions">
+      <UniqueIdentifier>{6fa7371c-b75e-4764-9d9e-4744fd519d86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\expressions">
+      <UniqueIdentifier>{1336a600-9c20-4ef3-9ddb-664445b5a598}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OldBasic.cpp">
@@ -60,6 +66,24 @@
     <ClCompile Include="Variable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Value.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpressionNode.cpp">
+      <Filter>Source Files\expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="OperatorNode.cpp">
+      <Filter>Source Files\expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="ValueNode.cpp">
+      <Filter>Source Files\expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableNode.cpp">
+      <Filter>Source Files\expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="NullNode.cpp">
+      <Filter>Source Files\expressions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lexeme.h">
@@ -97,6 +121,24 @@
     </ClInclude>
     <ClInclude Include="Variable.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Value.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpressionNode.h">
+      <Filter>Header Files\expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="OperatorNode.h">
+      <Filter>Header Files\expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableNode.h">
+      <Filter>Header Files\expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="ValueNode.h">
+      <Filter>Header Files\expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="NullNode.h">
+      <Filter>Header Files\expressions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
