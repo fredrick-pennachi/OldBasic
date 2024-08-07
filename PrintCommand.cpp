@@ -3,13 +3,13 @@
 #include <iostream>
 #include <sstream>
 
-using namespace std;
 
-const string PrintCommand::PRINT_COMMAND_NAME = "PRINT";
+
+const std::string PrintCommand::PRINT_COMMAND_NAME = "PRINT";
 
 PrintCommand::PrintCommand(
-	const vector<Lexeme>& lexemes,
-	unique_ptr<ExpressionNode> expression)
+	const std::vector<Lexeme>& lexemes,
+	std::unique_ptr<ExpressionNode> expression)
 	: Command(PRINT_COMMAND_NAME, lexemes),
 	expression(move(expression))
 {
@@ -20,8 +20,8 @@ PrintCommand::PrintCommand(
 Forms of PRINT:
 
 PRINT
-PRINT "STRING"
-PRINT STRING_VARIABLE$
+PRINT "std::string"
+PRINT std::string_VARIABLE$
 PRINT 2 + 2
 
 */
@@ -30,11 +30,11 @@ int PrintCommand::invoke(Runtime& runtime)
 {
 	if (expression) {
 		Value value = expression->eval(runtime);
-		cout << value << endl;
+		std::cout << value << std::endl;
 	}
 	else {
 		// No argument, just print a newline.
-		cout << endl;
+		std::cout << std::endl;
 	}
 
 	return 0;

@@ -10,33 +10,31 @@
 #include <map>
 #include <memory>
 
-using namespace std;
-
 int main()
 {
 	SetConsoleOutputCP(CP_UTF8);    // Sets console output
 	SetConsoleCP(CP_UTF8);          // Sets console input
 	setlocale(LC_ALL, ".UTF8");     // Sets locale?
 
-	const string PROMPT = u8"> ";
+	const std::string PROMPT = u8"> ";
 
-	map<int, unique_ptr<Command>> program;
+	std::map<int, std::unique_ptr<Command>> program;
 
 	Tokenizer tokenizer;
 	Parser parser;
 	Runtime runtime(program);
 
-	string line;
+	std::string line;
 
-	cout << u8"OLD BASIC 🐻 🎨 🥗 🍨 🍒 🤖" << endl;
-	cout << endl;
+	std::cout << u8"OLD BASIC 🐻 🎨 🥗 🍨 🍒 🤖" << std::endl;
+	std::cout << std::endl;
 	//cout << u8"🦚 🐻 🍔 🌭 🥗 🥪" << endl;
 
 	while (true) {
-		cout << PROMPT;
+		std::cout << PROMPT;
 
 		// Get a line of input
-		getline(cin, line);
+		getline(std::cin, line);
 
 		if (line == "q" || line == "Q" || line == "exit") {
 			break;
@@ -44,10 +42,10 @@ int main()
 
 		try {
 			// Tokenize line
-			vector<Lexeme> lexemes = tokenizer.tokenize(line);
+			std::vector<Lexeme> lexemes = tokenizer.tokenize(line);
 
 			// Some early debugging logic, should probably remove.
-			/*for (vector<Lexeme>::iterator i = lexemes.begin(); i != lexemes.end(); i++) {
+			/*for (std::vector<Lexeme>::iterator i = lexemes.begin(); i != lexemes.end(); i++) {
 				Lexeme& lexeme = *i;
 				cout << TokenNameMap.at(lexeme.tokenName) << " " << lexeme.value << endl;
 			}*/
@@ -57,25 +55,25 @@ int main()
 			}
 
 			// Turn tokens into command
-			unique_ptr<Command> command = parser.parse(lexemes);
+			std::unique_ptr<Command> command = parser.parse(lexemes);
 			// If first token is a line number then add to program
 			// otherwise invoke immediately.
 			if (lexemes[0].tokenName == INTEGER) {
 				int lineNumber = stoi(lexemes[0].value);
 				program[lineNumber] = move(command);
-				cout << u8"🥗 OK" << endl;
+				std::cout << u8"🥗 OK" << std::endl;
 			}
 			else {
 				// No line number, invoke immediately.
 				(*command).invoke(runtime);
 			}
 		}
-		catch (exception& e) {
-			cout << u8"🐞 ERROR: " << e.what() << endl;
+		catch (std::exception& e) {
+			std::cout << u8"🐞 ERROR: " << e.what() << std::endl;
 		}		
 	}
 
-	cout << u8"Goodbye! 👋" << endl;
+	std::cout << u8"Goodbye! 👋" << std::endl;
 
 	return 0;
 }

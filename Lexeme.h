@@ -3,11 +3,9 @@
 #include <string>
 #include <map>
 
-using namespace std;
-
 enum TokenName { UNSET, INTEGER, ID, OPERATOR, SEPARATOR, STRING };
 
-static const map<TokenName, string> TokenNameMap = {
+static const std::map<TokenName, std::string> TokenNameMap = {
 	{UNSET, "UNSET"},
 	{INTEGER, "INTEGER"},
 	{ID, "ID"},
@@ -19,5 +17,5 @@ static const map<TokenName, string> TokenNameMap = {
 class Lexeme {
 public:
 	TokenName tokenName = UNSET;
-	string value;
+	std::string value;
 };

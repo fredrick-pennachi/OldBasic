@@ -10,6 +10,6 @@ public:
 	// Inherited via ExpressionNode
 	Value eval(Runtime& runtime) override;
 
-	unique_ptr<ExpressionNode> left;
-	unique_ptr<ExpressionNode> right;
+	std::unique_ptr<ExpressionNode> left;
+	std::unique_ptr<ExpressionNode> right;
 };

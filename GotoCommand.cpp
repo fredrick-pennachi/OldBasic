@@ -3,9 +3,9 @@
 #include <iostream>
 #include <sstream>
 
-const string GotoCommand::GOTO_COMMAND_NAME = "GOTO";
+const std::string GotoCommand::GOTO_COMMAND_NAME = "GOTO";
 
-GotoCommand::GotoCommand(const vector<Lexeme>& lexemes)
+GotoCommand::GotoCommand(const std::vector<Lexeme>& lexemes)
 	: Command(GOTO_COMMAND_NAME, lexemes) {
 }
 
@@ -33,7 +33,7 @@ int GotoCommand::invoke(Runtime& runtime) {
 
 	if (i == lexemes.size()) {
 		// No argument, this isn't supported for GOTO.
-		stringstream ss;
+		std::stringstream ss;
 		ss << (*this);
 
 		throw InvalidSyntaxExeption("Unsupported syntax: Missing line number in \"" + ss.str() + "\"");
@@ -44,7 +44,7 @@ int GotoCommand::invoke(Runtime& runtime) {
 		runtime.setNextLine(lineNumber);
 	}
 	else {
-		stringstream ss;
+		std::stringstream ss;
 		ss << (*this);
 
 		throw InvalidSyntaxExeption("Unsupported syntax: "

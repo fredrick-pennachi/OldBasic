@@ -13,18 +13,18 @@
 
 #include <stack>
 
-unique_ptr<Command> Parser::parse(const vector<Lexeme>& lexemes) {
+std::unique_ptr<Command> Parser::parse(const std::vector<Lexeme>& lexemes) {
 
 	if (lexemes.empty()) {
 		// Not sure how the program would get here.
-		return make_unique<NoOpCommand>(lexemes);
+		return std::make_unique<NoOpCommand>(lexemes);
 	}
 
 	int currentIndex = 0;
 
 	if (lexemes[currentIndex].tokenName == INTEGER) {
 		if (lexemes.size() == 1) {
-			return make_unique<NoOpCommand>(lexemes);
+			return std::make_unique<NoOpCommand>(lexemes);
 		}
 		else {
 			// Skip past the line number.
@@ -42,27 +42,27 @@ unique_ptr<Command> Parser::parse(const vector<Lexeme>& lexemes) {
 	}
 }
 
-unique_ptr<Command> Parser::parseId(const vector<Lexeme>& lexemes, int index)
+std::unique_ptr<Command> Parser::parseId(const std::vector<Lexeme>& lexemes, int index)
 {
-	const string& id = lexemes[index].value;
+	const std::string& id = lexemes[index].value;
 
 	// Is this a command?
 
 	// Maybe this logic should be tidied up with sets of commands and functions.
 	if (id == "PRINT") {
-		return make_unique<PrintCommand>(lexemes, parseExpression(lexemes));
+		return std::make_unique<PrintCommand>(lexemes, parseExpression(lexemes));
 	}
 	else if (id == "GOTO") {
-		return make_unique<GotoCommand>(lexemes);
+		return std::make_unique<GotoCommand>(lexemes);
 	}
 	else if (id == "LET") {
-		return make_unique<LetCommand>(lexemes, parseExpression(lexemes));
+		return std::make_unique<LetCommand>(lexemes, parseExpression(lexemes));
 	}
 	else if (id == "LIST") {
-		return make_unique<ListCommand>(lexemes);
+		return std::make_unique<ListCommand>(lexemes);
 	}
 	else if (id == "RUN") {
-		return make_unique<RunCommand>(lexemes);
+		return std::make_unique<RunCommand>(lexemes);
 	}
 
 	// Add else for if it is an existing variable.
@@ -70,7 +70,7 @@ unique_ptr<Command> Parser::parseId(const vector<Lexeme>& lexemes, int index)
 	throw ParseException("Parsing error, unknown id " + id + ".");
 }
 
-unique_ptr<ExpressionNode> Parser::parseExpression(const vector<Lexeme>& lexemes)
+std::unique_ptr<ExpressionNode> Parser::parseExpression(const std::vector<Lexeme>& lexemes)
 {
 	int i = 0;
 
@@ -85,11 +85,11 @@ unique_ptr<ExpressionNode> Parser::parseExpression(const vector<Lexeme>& lexemes
 	if (i == lexemes.size()) {
 		// There isn't an expression! This might not be valid for some
 		// command types.
-		return make_unique<NullNode>();
+		return std::make_unique<NullNode>();
 	}
 
-	stack<Lexeme> operators;
-	stack<Lexeme> values;
+	std::stack<Lexeme> operators;
+	std::stack<Lexeme> values;
 
 	for (; i < lexemes.size(); i++) {
 		if (lexemes[i].tokenName == OPERATOR) {
@@ -100,9 +100,6 @@ unique_ptr<ExpressionNode> Parser::parseExpression(const vector<Lexeme>& lexemes
 		}
 	}
 
-	cout << operators << endl;
-	cout << values << endl;
-
 	if (values.empty()) {
 		throw ParseException("Parsing error, did not parse any values!");
 	}
@@ -112,20 +109,20 @@ unique_ptr<ExpressionNode> Parser::parseExpression(const vector<Lexeme>& lexemes
 
 	// Seed current node with the first value.
 
-	unique_ptr<ExpressionNode> currentNode;
+	std::unique_ptr<ExpressionNode> currentNode;
 
 	if (value.tokenName == INTEGER || value.tokenName == STRING) {
-		currentNode = make_unique<ValueNode>(value);
+		currentNode = std::make_unique<ValueNode>(value);
 	}
 	else if (value.tokenName == ID) {
-		currentNode = make_unique<VariableNode>(value);
+		currentNode = std::make_unique<VariableNode>(value);
 	}
 
-	stack<unique_ptr<OperatorNode>> lowerPrecedence;
+	std::stack<std::unique_ptr<OperatorNode>> lowerPrecedence;
 
 	while (operators.size() > 0) {
 		Lexeme op = operators.top();
-		unique_ptr<OperatorNode> opNode = make_unique<OperatorNode>(op);
+		std::unique_ptr<OperatorNode> opNode = std::make_unique<OperatorNode>(op);
 		operators.pop();
 
 		// If this node is lower precendence than the next one in the stack
@@ -140,10 +137,10 @@ unique_ptr<ExpressionNode> Parser::parseExpression(const vector<Lexeme>& lexemes
 			values.pop();
 			
 			if (value.tokenName == INTEGER || value.tokenName == STRING) {
-				currentNode = make_unique<ValueNode>(value);
+				currentNode = std::make_unique<ValueNode>(value);
 			}
 			else if (value.tokenName == ID) {
-				currentNode = make_unique<VariableNode>(value);
+				currentNode = std::make_unique<VariableNode>(value);
 			}
 		}
 		else {
@@ -154,10 +151,10 @@ unique_ptr<ExpressionNode> Parser::parseExpression(const vector<Lexeme>& lexemes
 			values.pop();
 
 			if (value.tokenName == INTEGER || value.tokenName == STRING) {
-				opNode->left = make_unique<ValueNode>(value);
+				opNode->left = std::make_unique<ValueNode>(value);
 			}
 			else if (value.tokenName == ID) {
-				opNode->left = make_unique<VariableNode>(value);
+				opNode->left = std::make_unique<VariableNode>(value);
 			}
 
 			// If there is a lower precedence node, set this node to the left side.
@@ -175,7 +172,7 @@ unique_ptr<ExpressionNode> Parser::parseExpression(const vector<Lexeme>& lexemes
 }
 
 
-ostream& operator<<(ostream& os, stack<Lexeme> stack)
+std::ostream& operator<<(std::ostream& os, std::stack<Lexeme> stack)
 {
 	while (!stack.empty())
 	{
@@ -185,6 +182,6 @@ ostream& operator<<(ostream& os, stack<Lexeme> stack)
 	return os; // end of function
 }
 
-ParseException::ParseException(const string what) : runtime_error(what)
+ParseException::ParseException(const std::string what) : runtime_error(what)
 {
 }

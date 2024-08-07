@@ -7,12 +7,12 @@ class LetCommand :
     public Command
 {
 public:
-    LetCommand(const vector<Lexeme>& lexemes, unique_ptr<ExpressionNode> expression);
+    LetCommand(const std::vector<Lexeme>& lexemes, std::unique_ptr<ExpressionNode> expression);
 
     // Inherited via Command
     int invoke(Runtime& runtime) override;
 
-    static const string LET_COMMAND_NAME;
+    static const std::string LET_COMMAND_NAME;
 
-    unique_ptr<ExpressionNode> expression;
+    std::unique_ptr<ExpressionNode> expression;
 };

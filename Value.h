@@ -3,8 +3,6 @@
 #include <ostream>
 #include <string>
 
-using namespace std;
-
 class Value
 {
 public:
@@ -14,13 +12,13 @@ public:
 
 	Value(int intValue);
 
-	Value(string strValue);
+	Value(std::string strValue);
 
 	ValueType type;
 
 	int intValue;
 
-	string strValue;
+	std::string strValue;
 };
 
 Value operator*(const Value& lhs, const Value& rhs);
@@ -28,9 +26,9 @@ Value operator/(const Value& lhs, const Value& rhs);
 Value operator+(const Value& lhs, const Value& rhs);
 Value operator-(const Value& lhs, const Value& rhs);
 
-ostream& operator<<(ostream& stream, const Value& value);
+std::ostream& operator<<(std::ostream& stream, const Value& value);
 
-class InvalidOperatorExeption : public runtime_error {
+class InvalidOperatorExeption : public std::runtime_error {
 public:
-	InvalidOperatorExeption(string what);
+	InvalidOperatorExeption(std::string what);
 };

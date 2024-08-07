@@ -6,10 +6,10 @@
 
 class GotoCommand : public Command {
 public:
-	GotoCommand(const vector<Lexeme>& lexemes);
+	GotoCommand(const std::vector<Lexeme>& lexemes);
 
 	// Inherited via Command
 	int invoke(Runtime& runtime) override;
 
-	static const string GOTO_COMMAND_NAME;
+	static const std::string GOTO_COMMAND_NAME;
 };

@@ -6,17 +6,15 @@
 
 #include "Lexeme.h"
 
-using namespace std;
-
 class Tokenizer {
 public:
-	vector<Lexeme> tokenize(const string& line);
+	std::vector<Lexeme> tokenize(const std::string& line);
 	static const char HIGH_BIT;
-	bool isoperator(char c);
-	bool ishighbit(char c);
+	bool isOperator(char c);
+	bool isHighBit(char c);
 };
 
-class InvalidTokenExeption : public runtime_error {
+class InvalidTokenExeption : public std::runtime_error {
 public:
-	InvalidTokenExeption(const string what);
+	InvalidTokenExeption(const std::string what);
 };

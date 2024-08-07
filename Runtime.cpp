@@ -1,6 +1,6 @@
 #include "Runtime.h"
 
-Runtime::Runtime(const map<int, unique_ptr<Command>>& program) : program(program) {
+Runtime::Runtime(const std::map<int, std::unique_ptr<Command>>& program) : program(program) {
 }
 
 int Runtime::run()
@@ -30,12 +30,12 @@ int Runtime::setNextLine(int nextLine)
 	return 0;
 }
 
-void Runtime::setVariable(string name, string value)
+void Runtime::setVariable(std::string name, std::string value)
 {
 	variables.emplace(name, Variable(name, value));
 }
 
-Variable Runtime::getVariable(string name)
+Variable Runtime::getVariable(std::string name)
 {
 	return variables.at(name);
 }

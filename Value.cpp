@@ -8,7 +8,7 @@ Value::Value(int intValue) : type(INTEGER), intValue(intValue), strValue("")
 {
 }
 
-Value::Value(string strValue) : type(STRING), intValue(0), strValue(strValue)
+Value::Value(std::string strValue) : type(STRING), intValue(0), strValue(strValue)
 {
 }
 
@@ -73,7 +73,7 @@ Value operator-(const Value& lhs, const Value& rhs)
 	return retVal;
 }
 
-ostream& operator<<(ostream& stream, const Value& value) {
+std::ostream& operator<<(std::ostream& stream, const Value& value) {
 	if (value.type == Value::INTEGER) {
 		stream << value.intValue;
 	}
@@ -84,6 +84,6 @@ ostream& operator<<(ostream& stream, const Value& value) {
 	return stream;
 }
 
-InvalidOperatorExeption::InvalidOperatorExeption(string what) : runtime_error(what)
+InvalidOperatorExeption::InvalidOperatorExeption(std::string what) : runtime_error(what)
 {
 }

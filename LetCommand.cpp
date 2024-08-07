@@ -3,13 +3,11 @@
 
 #include <sstream>
 
-using namespace std;
-
-const string LetCommand::LET_COMMAND_NAME = "LET";
+const std::string LetCommand::LET_COMMAND_NAME = "LET";
 
 LetCommand::LetCommand(
-	const vector<Lexeme>& lexemes,
-	unique_ptr<ExpressionNode> expression)
+	const std::vector<Lexeme>& lexemes,
+	std::unique_ptr<ExpressionNode> expression)
 	: Command(LET_COMMAND_NAME, lexemes), expression(move(expression))
 {
 }
@@ -38,13 +36,13 @@ int LetCommand::invoke(Runtime& runtime)
 
 	if (i == lexemes.size()) {
 		// No argument, this isn't valid for LET.
-		stringstream ss;
+		std::stringstream ss;
 		ss << (*this);
 
 		throw InvalidSyntaxExeption("Unsupported syntax: No argument isn't valid for LET.");
 	}
 	else if (lexemes[i].tokenName == ID) {
-		string name = lexemes[i].value;
+		std::string name = lexemes[i].value;
 
 		i++;
 		if (lexemes[i].value == "=") {
@@ -53,13 +51,12 @@ int LetCommand::invoke(Runtime& runtime)
 			// Declare the variable and value in the runtime.
 			if (lexemes[i].tokenName == INTEGER || lexemes[i].tokenName == STRING) {
 				runtime.setVariable(name, lexemes[i].value);
-
 				return 0;
 			}
 		}		
 	}
 
-	stringstream ss;
+	std::stringstream ss;
 	ss << (*this);
 
 	throw InvalidSyntaxExeption("Unsupported syntax: "

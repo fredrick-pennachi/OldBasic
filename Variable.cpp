@@ -1,5 +1,5 @@
 #include "Variable.h"
 
-Variable::Variable(const string& name, const string& value) : name(name), value(value)
+Variable::Variable(const std::string& name, const std::string& value) : name(name), value(value)
 {
 }

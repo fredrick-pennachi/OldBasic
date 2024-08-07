@@ -5,11 +5,11 @@
 
 const char Tokenizer::HIGH_BIT = 128;
 
-vector<Lexeme> Tokenizer::tokenize(const string& line) {
+std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 
-	vector<Lexeme> lexemes;
+	std::vector<Lexeme> lexemes;
 
-	for (string::const_iterator i = line.begin(); i != line.end(); /* iterator is advanced inside loop */) {
+	for (std::string::const_iterator i = line.begin(); i != line.end(); /* iterator is advanced inside loop */) {
 
 		// Whitespace is between lexemes, move to a non-whitespace char.
 		if (i != line.end() && isspace(*i)) {
@@ -36,7 +36,7 @@ vector<Lexeme> Tokenizer::tokenize(const string& line) {
 		}
 
 		// Id, convert to uppercase
-		if (isalpha(*i) || ishighbit(*i)) {
+		if (isalpha(*i) || isHighBit(*i)) {
 			lexeme.tokenName = ID;
 			lexeme.value += toupper(*i);
 			i++;
@@ -49,11 +49,11 @@ vector<Lexeme> Tokenizer::tokenize(const string& line) {
 		}
 
 		// Operator
-		if (isoperator(*i)) {
+		if (isOperator(*i)) {
 			lexeme.tokenName = OPERATOR;
 			lexeme.value += *i;
 			i++;
-			while (i != line.end() && isoperator(*i)) {
+			while (i != line.end() && isOperator(*i)) {
 				lexeme.value += *i;
 				i++;
 			}
@@ -108,7 +108,7 @@ vector<Lexeme> Tokenizer::tokenize(const string& line) {
 	return lexemes;
 }
 
-bool Tokenizer::isoperator(char c) {
+bool Tokenizer::isOperator(char c) {
 	switch (c) {
 		case '(':
 		case ')':
@@ -124,11 +124,10 @@ bool Tokenizer::isoperator(char c) {
 	}
 }
 
-bool Tokenizer::ishighbit(char c) {
+bool Tokenizer::isHighBit(char c) {
 	return c & HIGH_BIT;
 }
 
-
-InvalidTokenExeption::InvalidTokenExeption(const string what) : runtime_error(what)
+InvalidTokenExeption::InvalidTokenExeption(const std::string what) : runtime_error(what)
 {
 }

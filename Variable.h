@@ -2,13 +2,11 @@
 
 #include <string>
 
-using namespace std;
-
 class Variable
 {
 public:
-	Variable(const string& name, const string& value);
+	Variable(const std::string& name, const std::string& value);
 
-	string name;
-	string value;
+	std::string name;
+	std::string value;
 };

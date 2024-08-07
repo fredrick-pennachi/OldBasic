@@ -10,27 +10,25 @@
 
 class Runtime;
 
-using namespace std;
-
 class Command {
 public:
-	Command(const string& name, const vector<Lexeme>& lexemes);
+	Command(const std::string& name, const std::vector<Lexeme>& lexemes);
 
 	virtual int invoke(Runtime& runtime) = 0;
 
 	virtual ~Command();
 
-	string name;
+	std::string name;
 
-	vector<Lexeme> lexemes;
+	std::vector<Lexeme> lexemes;
 
 private:
 	Command();
 };
 
-ostream& operator<<(ostream& stream, const Command& command);
+std::ostream& operator<<(std::ostream& stream, const Command& command);
 
-class InvalidSyntaxExeption : public runtime_error {
+class InvalidSyntaxExeption : public std::runtime_error {
 public:
-	InvalidSyntaxExeption(string what);
+	InvalidSyntaxExeption(std::string what);
 };

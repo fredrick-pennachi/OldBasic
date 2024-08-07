@@ -9,21 +9,21 @@
 #include <stdexcept>
 #include <vector>
 
-using namespace std;
+
 
 class Parser
 {
 public:
-	unique_ptr<Command> parse(const vector<Lexeme>& lexemes);
+	std::unique_ptr<Command> parse(const std::vector<Lexeme>& lexemes);
 
-	unique_ptr<Command> parseId(const vector<Lexeme>& lexemes, int index);
+	std::unique_ptr<Command> parseId(const std::vector<Lexeme>& lexemes, int index);
 
-	unique_ptr<ExpressionNode> parseExpression(const vector<Lexeme>& lexemes);
+	std::unique_ptr<ExpressionNode> parseExpression(const std::vector<Lexeme>& lexemes);
 };
 
-ostream& operator<<(ostream& os, stack<Lexeme> stack);
+std::ostream& operator<<(std::ostream& os, std::stack<Lexeme> stack);
 
-class ParseException : public runtime_error {
+class ParseException : public std::runtime_error {
 public:
-	ParseException(const string what);
+	ParseException(const std::string what);
 };

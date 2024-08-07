@@ -7,13 +7,13 @@
 
 class PrintCommand : public Command {
 public:
-    PrintCommand(const vector<Lexeme>& lexemes, unique_ptr<ExpressionNode> expression);
+    PrintCommand(const std::vector<Lexeme>& lexemes, std::unique_ptr<ExpressionNode> expression);
 
     // Inherited via Command
     int invoke(Runtime& runtime) override;
 
-    static const string PRINT_COMMAND_NAME;
+    static const std::string PRINT_COMMAND_NAME;
 
-    unique_ptr<ExpressionNode> expression;
+    std::unique_ptr<ExpressionNode> expression;
 };
 
