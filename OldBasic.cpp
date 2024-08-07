@@ -18,20 +18,16 @@ int main()
 
 	const std::string PROMPT = u8"> ";
 
-	std::map<int, std::unique_ptr<Command>> program;
-
 	Tokenizer tokenizer;
 	Parser parser;
-	Runtime runtime(program);
 
 	std::string line;
 
-	std::cout << u8"OLD BASIC 🐻 🎨 🥗 🍨 🍒 🤖" << std::endl;
-	std::cout << std::endl;
-	//cout << u8"🦚 🐻 🍔 🌭 🥗 🥪" << endl;
+	runtime << u8"OLD BASIC 🐻 🎨 🥗 🍨 🍒 🤖 🦚 🍔 🌭 🥪" << std::endl;
+	runtime << std::endl;
 
 	while (true) {
-		std::cout << PROMPT;
+		runtime << PROMPT;
 
 		// Get a line of input
 		getline(std::cin, line);
@@ -44,12 +40,6 @@ int main()
 			// Tokenize line
 			std::vector<Lexeme> lexemes = tokenizer.tokenize(line);
 
-			// Some early debugging logic, should probably remove.
-			/*for (std::vector<Lexeme>::iterator i = lexemes.begin(); i != lexemes.end(); i++) {
-				Lexeme& lexeme = *i;
-				cout << TokenNameMap.at(lexeme.tokenName) << " " << lexeme.value << endl;
-			}*/
-
 			if (lexemes.size() == 0) {
 				continue;
 			}
@@ -60,20 +50,20 @@ int main()
 			// otherwise invoke immediately.
 			if (lexemes[0].tokenName == INTEGER) {
 				int lineNumber = stoi(lexemes[0].value);
-				program[lineNumber] = move(command);
-				std::cout << u8"🥗 OK" << std::endl;
+				runtime.program[lineNumber] = move(command);
+				runtime << u8"🥗 OK" << std::endl;
 			}
 			else {
 				// No line number, invoke immediately.
-				(*command).invoke(runtime);
+				(*command).invoke();
 			}
 		}
 		catch (std::exception& e) {
-			std::cout << u8"🐞 ERROR: " << e.what() << std::endl;
+			runtime << u8"🐞 ERROR: " << e.what() << std::endl;
 		}		
 	}
 
-	std::cout << u8"Goodbye! 👋" << std::endl;
+	runtime << u8"Goodbye! 👋" << std::endl;
 
 	return 0;
 }

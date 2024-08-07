@@ -19,7 +19,7 @@ GOTO A (where A == 10)
 
 */
 
-int GotoCommand::invoke(Runtime& runtime) {
+int GotoCommand::invoke() {
 	
 	int i = 0;
 

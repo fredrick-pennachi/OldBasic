@@ -8,5 +8,5 @@ public:
     NullNode();
 
     // Inherited via ExpressionNode
-    Value eval(Runtime& runtime) override;
+    Value eval() override;
 };

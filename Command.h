@@ -14,7 +14,7 @@ class Command {
 public:
 	Command(const std::string& name, const std::vector<Lexeme>& lexemes);
 
-	virtual int invoke(Runtime& runtime) = 0;
+	virtual int invoke() = 0;
 
 	virtual ~Command();
 

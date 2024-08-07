@@ -8,7 +8,7 @@ Command::Command(const std::string& name, const std::vector<Lexeme>& lexemes) : 
 
 Command::~Command()
 {
-	std::cout << "Destroyed " << name << u8" command 👻" << std::endl;
+	runtime << "Destroyed " << name << u8" command 👻" << std::endl;
 }
 
 std::ostream& operator<<(std::ostream& stream, const Command& command) {

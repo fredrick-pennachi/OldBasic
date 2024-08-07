@@ -8,7 +8,7 @@ public:
 	OperatorNode(const Lexeme& lexeme);
 
 	// Inherited via ExpressionNode
-	Value eval(Runtime& runtime) override;
+	Value eval() override;
 
 	std::unique_ptr<ExpressionNode> left;
 	std::unique_ptr<ExpressionNode> right;

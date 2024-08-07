@@ -3,6 +3,7 @@
 #include "Command.h"
 #include "Variable.h"
 
+#include <iostream>
 #include <list>
 #include <map>
 #include <memory>
@@ -12,7 +13,7 @@ class Command;
 class Runtime
 {
 public:
-	Runtime(const std::map<int, std::unique_ptr<Command>>& program);
+	Runtime();
 
 	int run();
 
@@ -22,9 +23,26 @@ public:
 
 	Variable getVariable(const std::string name);
 
-	const std::map<int, std::unique_ptr<Command>>& program;
+	static std::map<int, std::unique_ptr<Command>> program;
 
 	std::map<int, std::unique_ptr<Command>>::const_iterator nextLineIter;
 
 	std::map<std::string, Variable> variables;
+
+	template<typename T>
+	Runtime& operator<<(const T& object)
+	{
+		std::cout << object;
+		return *this;
+	}
+
+	Runtime& operator<<(std::ostream& (*pManip)(std::ostream&))
+	{
+		std::cout << (*pManip);
+		return *this;
+	}
+
+	~Runtime();
 };
+
+extern Runtime runtime;

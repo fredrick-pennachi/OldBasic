@@ -6,16 +6,16 @@ OperatorNode::OperatorNode(
 {
 }
 
-Value OperatorNode::eval(Runtime& runtime)
+Value OperatorNode::eval()
 {
     if (lexeme.value == "*") {
-        return left->eval(runtime) * right->eval(runtime);
+        return left->eval() * right->eval();
     } else if (lexeme.value == "/") {
-        return left->eval(runtime) / right->eval(runtime);
+        return left->eval() / right->eval();
     } else if (lexeme.value == "+") {
-        return left->eval(runtime) + right->eval(runtime);
+        return left->eval() + right->eval();
     } else if (lexeme.value == "-") {
-        return left->eval(runtime) - right->eval(runtime);
+        return left->eval() - right->eval();
     }
 
     return Value();

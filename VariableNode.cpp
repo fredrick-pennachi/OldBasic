@@ -4,7 +4,7 @@ VariableNode::VariableNode(const Lexeme& lexeme) : ExpressionNode(lexeme, VARIAB
 {
 }
 
-Value VariableNode::eval(Runtime& runtime)
+Value VariableNode::eval()
 {
     return Value();
 }

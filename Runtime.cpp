@@ -1,6 +1,11 @@
 #include "Runtime.h"
 
-Runtime::Runtime(const std::map<int, std::unique_ptr<Command>>& program) : program(program) {
+
+Runtime runtime;
+std::map<int, std::unique_ptr<Command>> Runtime::program;
+
+Runtime::Runtime()
+{
 }
 
 int Runtime::run()
@@ -17,7 +22,7 @@ int Runtime::run()
 
 		nextLineIter++;
 
-		command.invoke(*this);
+		command.invoke();
 	}
 
     return 0;
@@ -38,5 +43,9 @@ void Runtime::setVariable(std::string name, std::string value)
 Variable Runtime::getVariable(std::string name)
 {
 	return variables.at(name);
+}
+
+Runtime::~Runtime()
+{
 }
 

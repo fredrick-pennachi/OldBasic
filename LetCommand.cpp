@@ -22,7 +22,7 @@ LET A = A + 1
 
 */
 
-int LetCommand::invoke(Runtime& runtime)
+int LetCommand::invoke()
 {
 	int i = 0;
 

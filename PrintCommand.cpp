@@ -26,15 +26,15 @@ PRINT 2 + 2
 
 */
 
-int PrintCommand::invoke(Runtime& runtime)
+int PrintCommand::invoke()
 {
 	if (expression) {
-		Value value = expression->eval(runtime);
-		std::cout << value << std::endl;
+		Value value = expression->eval();
+		runtime << value << std::endl;
 	}
 	else {
 		// No argument, just print a newline.
-		std::cout << std::endl;
+		runtime << std::endl;
 	}
 
 	return 0;

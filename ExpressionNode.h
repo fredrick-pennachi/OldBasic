@@ -10,7 +10,7 @@ public:
 
 	ExpressionNode(const Lexeme& lexeme, NodeType nodeType);
 
-	virtual Value eval(Runtime& runtime) = 0;
+	virtual Value eval() = 0;
 
 	Lexeme lexeme;
 

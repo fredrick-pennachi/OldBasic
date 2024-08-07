@@ -13,7 +13,7 @@ ValueNode::ValueNode(const Lexeme& lexeme) : ExpressionNode(lexeme, VALUE_NODE)
     }
 }
 
-Value ValueNode::eval(Runtime& runtime)
+Value ValueNode::eval()
 {
     return value;
 }

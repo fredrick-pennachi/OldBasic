@@ -8,5 +8,5 @@ public:
     VariableNode(const Lexeme& lexeme);
 
     // Inherited via ExpressionNode
-    Value eval(Runtime& runtime) override;
+    Value eval() override;
 };
