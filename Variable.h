@@ -1,12 +1,17 @@
 #pragma once
 
+#include "ValueType.h"
+
 #include <string>
 
 class Variable
 {
 public:
-	Variable(const std::string& name, const std::string& value);
+	Variable();
+
+	Variable(const std::string& name, ValueType::Enum valueType);
 
 	std::string name;
-	std::string value;
+
+	ValueType::Enum valueType;
 };

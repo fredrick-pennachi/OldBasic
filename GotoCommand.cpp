@@ -36,7 +36,7 @@ int GotoCommand::invoke() {
 		std::stringstream ss;
 		ss << (*this);
 
-		throw InvalidSyntaxExeption("Unsupported syntax: Missing line number in \"" + ss.str() + "\"");
+		throw InvalidSyntaxException("Unsupported syntax: Missing line number in \"" + ss.str() + "\"");
 	}
 	else if (lexemes[i].tokenName == INTEGER) {
 		// Set the next line of the program.
@@ -47,7 +47,7 @@ int GotoCommand::invoke() {
 		std::stringstream ss;
 		ss << (*this);
 
-		throw InvalidSyntaxExeption("Unsupported syntax: "
+		throw InvalidSyntaxException("Unsupported syntax: "
 			+ lexemes[i].value
 			+ " in \"" + ss.str() + "\"");
 	}

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Command.h"
-#include "Variable.h"
+#include "Value.h"
 
 #include <iostream>
 #include <list>
@@ -19,15 +19,17 @@ public:
 
 	int setNextLine(int nextLine);
 
-	void setVariable(const std::string name, const std::string value);
+	void setVariable(const std::string& name, const Value& variable);
 
-	Variable getVariable(const std::string name);
+	bool hasVariable(const std::string& name);
+
+	Value getVariable(const std::string& name);
 
 	static std::map<int, std::unique_ptr<Command>> program;
 
 	std::map<int, std::unique_ptr<Command>>::const_iterator nextLineIter;
 
-	std::map<std::string, Variable> variables;
+	std::map<std::string, Value> variables;
 
 	template<typename T>
 	Runtime& operator<<(const T& object)

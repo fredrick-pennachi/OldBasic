@@ -164,6 +164,7 @@
     <ClInclude Include="Tokenizer.h" />
     <ClInclude Include="Value.h" />
     <ClInclude Include="ValueNode.h" />
+    <ClInclude Include="ValueType.h" />
     <ClInclude Include="Variable.h" />
     <ClInclude Include="VariableNode.h" />
   </ItemGroup>

@@ -1,70 +1,73 @@
 #include "Value.h"
 
-Value::Value() : type(NONE), intValue(0), strValue("")
+Value::Value() : valueType(ValueType::NONE), intValue(0), strValue(""), var()
 {
 }
 
-Value::Value(int intValue) : type(INTEGER), intValue(intValue), strValue("")
+Value::Value(int intValue) : valueType(ValueType::INTEGER), intValue(intValue), strValue(""), var()
 {
 }
 
-Value::Value(std::string strValue) : type(STRING), intValue(0), strValue(strValue)
+Value::Value(std::string strValue) : valueType(ValueType::STRING), intValue(0), strValue(strValue), var()
 {
+}
+
+Value::Value(Variable var) : valueType(ValueType::VARIABLE), intValue(0), strValue(strValue), var(var)
+{
+}
+
+ValueType::Enum Value::getType() const
+{
+	if (isVariable()) {
+		return var.valueType;
+	}
+	else {
+		return valueType;
+	}
+}
+
+bool Value::isVariable() const
+{
+	return valueType == ValueType::VARIABLE;
 }
 
 Value operator*(const Value& lhs, const Value& rhs)
 {
-	Value retVal;
-
-	if (lhs.type == Value::INTEGER && rhs.type == Value::INTEGER) {
-		retVal.type = Value::INTEGER;
-		retVal.intValue = lhs.intValue * rhs.intValue;
+	if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::INTEGER) {
+		return Value(lhs.intValue * rhs.intValue);
 	}
 	else {
 		throw InvalidOperatorExeption("operator* is not valid for these values!");
 	}
-
-	return retVal;
 }
 
 Value operator/(const Value& lhs, const Value& rhs)
 {
-	Value retVal;
-
-	if (lhs.type == Value::INTEGER && rhs.type == Value::INTEGER) {
-		retVal.type = Value::INTEGER;
-		retVal.intValue = lhs.intValue / rhs.intValue;
+	if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::INTEGER) {
+		return Value(lhs.intValue / rhs.intValue);
 	}
 	else {
 		throw InvalidOperatorExeption("operator/ is not valid for these values!");
 	}
-
-	return retVal;
 }
 
 Value operator+(const Value& lhs, const Value& rhs)
 {
-	Value retVal;
-
-	if (lhs.type == Value::INTEGER && rhs.type == Value::INTEGER) {
-		retVal.type = Value::INTEGER;
-		retVal.intValue = lhs.intValue + rhs.intValue;
+	if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::INTEGER) {
+		return Value(lhs.intValue + rhs.intValue);
 	}
 	else {
-		retVal.type = Value::STRING;
-		retVal.strValue = lhs.strValue + rhs.strValue;
+		// operator= is also allowed for strings.
+		return Value(lhs.strValue + rhs.strValue);
 	}
-
-	return retVal;
 }
 
 Value operator-(const Value& lhs, const Value& rhs)
 {
 	Value retVal;
 
-	if (lhs.type == Value::INTEGER && rhs.type == Value::INTEGER) {
-		retVal.type = Value::INTEGER;
-		retVal.intValue = lhs.intValue - rhs.intValue;
+	if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::INTEGER) {
+		return Value(lhs.intValue - rhs.intValue);
 	}
 	else {
 		throw InvalidOperatorExeption("operator- is not valid for these values!");
@@ -74,8 +77,22 @@ Value operator-(const Value& lhs, const Value& rhs)
 }
 
 std::ostream& operator<<(std::ostream& stream, const Value& value) {
-	if (value.type == Value::INTEGER) {
+	if (value.getType() == ValueType::INTEGER) {
 		stream << value.intValue;
+	}
+	else if (value.getType() == ValueType::STRING) {
+		stream << value.strValue;
+	}
+	else if (value.getType() == ValueType::VARIABLE) {
+		if (value.var.valueType == ValueType::INTEGER) {
+			stream << value.intValue;
+		}
+		else if (value.var.valueType == ValueType::STRING) {
+			stream << value.strValue;
+		}
+		else {
+			stream << "UNKNOWN ValueType!";
+		}
 	}
 	else {
 		stream << value.strValue;

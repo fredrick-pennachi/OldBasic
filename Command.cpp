@@ -24,6 +24,6 @@ std::ostream& operator<<(std::ostream& stream, const Command& command) {
 	return stream;
 }
 
-InvalidSyntaxExeption::InvalidSyntaxExeption(std::string what) : runtime_error(what)
+InvalidSyntaxException::InvalidSyntaxException(std::string what) : runtime_error(what)
 {
 }

@@ -1,12 +1,14 @@
 #pragma once
 
+#include "Variable.h"
+#include "ValueType.h"
+
 #include <ostream>
 #include <string>
 
 class Value
 {
 public:
-	enum ValueType { NONE, INTEGER, STRING };
 
 	Value();
 
@@ -14,11 +16,21 @@ public:
 
 	Value(std::string strValue);
 
-	ValueType type;
+	Value(Variable var);
+
+	ValueType::Enum getType() const;
+
+	bool isVariable() const;
 
 	int intValue;
 
 	std::string strValue;
+
+	Variable var;
+
+protected:
+	ValueType::Enum valueType;
+
 };
 
 Value operator*(const Value& lhs, const Value& rhs);

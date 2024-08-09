@@ -16,3 +16,8 @@ public:
 
 	NodeType nodeType;
 };
+
+class ExpressionException : public std::runtime_error {
+public:
+	ExpressionException(std::string what);
+};

@@ -28,7 +28,7 @@ private:
 
 std::ostream& operator<<(std::ostream& stream, const Command& command);
 
-class InvalidSyntaxExeption : public std::runtime_error {
+class InvalidSyntaxException : public std::runtime_error {
 public:
-	InvalidSyntaxExeption(std::string what);
+	InvalidSyntaxException(std::string what);
 };

@@ -1,5 +1,9 @@
 #include "Variable.h"
 
-Variable::Variable(const std::string& name, const std::string& value) : name(name), value(value)
+Variable::Variable()
+{
+}
+
+Variable::Variable(const std::string& name, ValueType::Enum valueType) : name(name), valueType(valueType)
 {
 }

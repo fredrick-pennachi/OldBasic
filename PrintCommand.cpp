@@ -28,7 +28,7 @@ PRINT 2 + 2
 
 int PrintCommand::invoke()
 {
-	if (expression) {
+	if (expression->nodeType != ExpressionNode::NULL_NODE) {
 		Value value = expression->eval();
 		runtime << value << std::endl;
 	}

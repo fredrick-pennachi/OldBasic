@@ -24,42 +24,31 @@ LET A = A + 1
 
 int LetCommand::invoke()
 {
-	int i = 0;
+	if (expression->nodeType == ExpressionNode::NULL_NODE) {
+		// No expression, print all the variables.
+		std::map<std::string, Value>::const_iterator iter = runtime.variables.cbegin();
 
-	// Skip over the first lexeme if it's a line number.
-	if (lexemes[i].tokenName == INTEGER) {
-		i++;
+		runtime << "Variables:" << std::endl;
+
+		for (; iter != runtime.variables.cend(); iter++)
+		{
+			runtime << iter->first << ": " << iter->second << std::endl;
+		}
+
+		return 0;
 	}
 
-	// Skip over the LET id.
-	i++;
+	Value value = expression->eval();
 
-	if (i == lexemes.size()) {
-		// No argument, this isn't valid for LET.
+	if (value.isVariable()) {
+		runtime.setVariable(value.var.name, value);
+	}
+	else {
 		std::stringstream ss;
 		ss << (*this);
-
-		throw InvalidSyntaxExeption("Unsupported syntax: No argument isn't valid for LET.");
-	}
-	else if (lexemes[i].tokenName == ID) {
-		std::string name = lexemes[i].value;
-
-		i++;
-		if (lexemes[i].value == "=") {
-			i++;
-
-			// Declare the variable and value in the runtime.
-			if (lexemes[i].tokenName == INTEGER || lexemes[i].tokenName == STRING) {
-				runtime.setVariable(name, lexemes[i].value);
-				return 0;
-			}
-		}		
+		throw InvalidSyntaxException("Unsupported assignment: \"" + ss.str() + "\"");
 	}
 
-	std::stringstream ss;
-	ss << (*this);
-
-	throw InvalidSyntaxExeption("Unsupported syntax: "
-		+ lexemes[i].value
-		+ " in \"" + ss.str() + "\"");
+	return 0;
 }
+
