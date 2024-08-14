@@ -16,9 +16,9 @@ class Parser
 public:
 	std::unique_ptr<Command> parse(const std::vector<Lexeme>& lexemes);
 
-	std::unique_ptr<Command> parseId(const std::vector<Lexeme>& lexemes, int index);
+	std::unique_ptr<Command> parseCommand(const std::vector<Lexeme>& lexemes, std::vector<Lexeme>::const_iterator lexStart);
 
-	std::unique_ptr<ExpressionNode> parseExpression(const std::vector<Lexeme>& lexemes);
+	std::unique_ptr<ExpressionNode> parseExpression(std::vector<Lexeme>::const_iterator lexStart, std::vector<Lexeme>::const_iterator lexEnd);
 };
 
 std::ostream& operator<<(std::ostream& os, std::stack<Lexeme> stack);

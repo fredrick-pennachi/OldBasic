@@ -17,3 +17,13 @@ Value ValueNode::eval()
 {
     return value;
 }
+
+bool ValueNode::evalBool()
+{
+    return value.evalBool();
+}
+
+void ValueNode::print()
+{
+    runtime << "ValueNode: " << lexeme.value << std::endl;
+}

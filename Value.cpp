@@ -31,6 +31,19 @@ bool Value::isVariable() const
 	return valueType == ValueType::VARIABLE;
 }
 
+bool Value::evalBool() const
+{
+	if (getType() == ValueType::INTEGER) {
+		return intValue != 0;
+	}
+	else if (getType() == ValueType::STRING) {
+		return strValue.length() > 0;
+	}
+	else {
+		return false;
+	}
+}
+
 Value operator*(const Value& lhs, const Value& rhs)
 {
 	if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::INTEGER) {

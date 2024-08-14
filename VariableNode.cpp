@@ -22,3 +22,26 @@ Value VariableNode::eval()
         throw ExpressionException("A variable must be named!");
     }
 }
+
+bool VariableNode::evalBool()
+{
+    if (lexeme.tokenName == ID) {
+        // Retrieve the variable value if it exists.
+        std::string& variableName = lexeme.value;
+        if (runtime.hasVariable(variableName)) {
+            return runtime.getVariable(lexeme.value).evalBool();
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        // A variable node really needs to have an id!
+        throw ExpressionException("A variable must be named!");
+    }
+}
+
+void VariableNode::print()
+{
+    runtime << "VariableNode: " << lexeme.value << std::endl;
+}

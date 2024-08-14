@@ -130,6 +130,7 @@
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="ExpressionNode.cpp" />
     <ClCompile Include="GotoCommand.cpp" />
+    <ClCompile Include="IfCommand.cpp" />
     <ClCompile Include="LetCommand.cpp" />
     <ClCompile Include="Lexeme.cpp" />
     <ClCompile Include="ListCommand.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="ExpressionNode.h" />
     <ClInclude Include="GotoCommand.h" />
+    <ClInclude Include="IfCommand.h" />
     <ClInclude Include="LetCommand.h" />
     <ClInclude Include="Lexeme.h" />
     <ClInclude Include="ListCommand.h" />

@@ -12,6 +12,10 @@ public:
 
 	virtual Value eval() = 0;
 
+	virtual bool evalBool() = 0;
+
+	virtual void print() = 0;
+
 	Lexeme lexeme;
 
 	NodeType nodeType;

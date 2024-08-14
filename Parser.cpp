@@ -1,6 +1,7 @@
 #include "Parser.h"
 
 #include "GotoCommand.h"
+#include "IfCommand.h"
 #include "LetCommand.h"
 #include "ListCommand.h"
 #include "NoOpCommand.h"
@@ -20,43 +21,43 @@ std::unique_ptr<Command> Parser::parse(const std::vector<Lexeme>& lexemes) {
 		return std::make_unique<NoOpCommand>(lexemes);
 	}
 
-	int currentIndex = 0;
+	std::vector<Lexeme>::const_iterator lexStart = lexemes.cbegin();
 
-	if (lexemes[currentIndex].tokenName == INTEGER) {
+	if ((*lexStart).tokenName == INTEGER) {
 		if (lexemes.size() == 1) {
 			return std::make_unique<NoOpCommand>(lexemes);
 		}
 		else {
 			// Skip past the line number.
-			currentIndex++;
+			lexStart++;
 		}
 	}
 
-	TokenName tokenName = lexemes[currentIndex].tokenName;
+	TokenName tokenName = (*lexStart).tokenName;
 	// Only ID should be valid in this position.
 	if (tokenName == ID) {
-		return parseId(lexemes, currentIndex);
+		return parseCommand(lexemes, lexStart);
 	}
 	else {
 		throw ParseException("Parsing error, unexpected token " + TokenNameMap.at(tokenName) + ".");
 	}
 }
 
-std::unique_ptr<Command> Parser::parseId(const std::vector<Lexeme>& lexemes, int index)
+std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes, std::vector<Lexeme>::const_iterator lexStart)
 {
-	const std::string& id = lexemes[index].value;
+	const std::string& id = (*lexStart).value;
 
 	// Is this a command?
 
 	// Maybe this logic should be tidied up with sets of commands and functions.
 	if (id == "PRINT") {
-		return std::make_unique<PrintCommand>(lexemes, parseExpression(lexemes));
+		return std::make_unique<PrintCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
 	}
 	else if (id == "GOTO") {
-		return std::make_unique<GotoCommand>(lexemes);
+		return std::make_unique<GotoCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
 	}
 	else if (id == "LET") {
-		return std::make_unique<LetCommand>(lexemes, parseExpression(lexemes));
+		return std::make_unique<LetCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
 	}
 	else if (id == "LIST") {
 		return std::make_unique<ListCommand>(lexemes);
@@ -64,25 +65,42 @@ std::unique_ptr<Command> Parser::parseId(const std::vector<Lexeme>& lexemes, int
 	else if (id == "RUN") {
 		return std::make_unique<RunCommand>(lexemes);
 	}
+	else if (id == "IF") {
+		// Break the statement up...
+		// IF (expr1)
+		// THEN (command) (expr2)
 
-	// Add else for if it is an existing variable.
+		Lexeme thenLexeme;
+		thenLexeme.tokenName = ID;
+		thenLexeme.value = "THEN";
+		
+		std::vector<Lexeme>::const_iterator thenIter =
+			std::find(lexemes.cbegin(), lexemes.cend(), thenLexeme);
+
+		if (thenIter == lexemes.end()) {
+			throw ParseException("IF without THEN not allowed!");
+		}
+
+		std::unique_ptr<ExpressionNode> expr1 = parseExpression(lexemes.cbegin(), thenIter);
+		std::unique_ptr<Command> thenCommand = parseCommand(lexemes, thenIter + 1);
+
+		return std::make_unique<IfCommand>(lexemes, move(expr1), move(thenCommand));
+	}
 
 	throw ParseException("Parsing error, unknown id " + id + ".");
 }
 
-std::unique_ptr<ExpressionNode> Parser::parseExpression(const std::vector<Lexeme>& lexemes)
+std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::const_iterator lexStart, std::vector<Lexeme>::const_iterator lexEnd)
 {
-	int i = 0;
-
 	// Skip over the first lexeme if it's a line number.
-	if (lexemes[i].tokenName == INTEGER) {
-		i++;
+	if ((*lexStart).tokenName == INTEGER) {
+		lexStart++;
 	}
 
-	// Skip over the LET id.
-	i++;
+	// Skip over the Command id.
+	lexStart++;
 
-	if (i == lexemes.size()) {
+	if (lexStart == lexEnd) {
 		// There isn't an expression! This might not be valid for some
 		// command types.
 		return std::make_unique<NullNode>();
@@ -91,12 +109,12 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(const std::vector<Lexeme
 	std::stack<Lexeme> operators;
 	std::stack<Lexeme> values;
 
-	for (; i < lexemes.size(); i++) {
-		if (lexemes[i].tokenName == OPERATOR) {
-			operators.push(lexemes[i]);
+	for (; lexStart != lexEnd; lexStart++) {
+		if ((*lexStart).tokenName == OPERATOR) {
+			operators.push(*lexStart);
 		}
 		else {
-			values.push(lexemes[i]);
+			values.push(*lexStart);
 		}
 	}
 

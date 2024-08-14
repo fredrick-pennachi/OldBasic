@@ -22,6 +22,8 @@ public:
 
 	bool isVariable() const;
 
+	bool evalBool() const;
+
 	int intValue;
 
 	std::string strValue;

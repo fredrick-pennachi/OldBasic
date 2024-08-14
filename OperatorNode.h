@@ -10,6 +10,10 @@ public:
 	// Inherited via ExpressionNode
 	Value eval() override;
 
+	bool evalBool() override;
+
+	void print() override;
+
 	std::unique_ptr<ExpressionNode> left;
 	std::unique_ptr<ExpressionNode> right;
 };

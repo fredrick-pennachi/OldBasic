@@ -1,7 +1,5 @@
 ﻿#include "Command.h"
 
-#include <iostream>
-
 Command::Command(const std::string& name, const std::vector<Lexeme>& lexemes) : name(name), lexemes(lexemes)
 {
 }

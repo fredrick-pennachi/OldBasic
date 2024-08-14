@@ -84,6 +84,9 @@
     <ClCompile Include="NullNode.cpp">
       <Filter>Source Files\expressions</Filter>
     </ClCompile>
+    <ClCompile Include="IfCommand.cpp">
+      <Filter>Source Files\commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lexeme.h">
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="ValueType.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IfCommand.h">
+      <Filter>Header Files\commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

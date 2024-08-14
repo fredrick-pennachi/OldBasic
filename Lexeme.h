@@ -19,3 +19,5 @@ public:
 	TokenName tokenName = UNSET;
 	std::string value;
 };
+
+bool operator==(const Lexeme& l1, const Lexeme& l2);

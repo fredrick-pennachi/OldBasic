@@ -46,3 +46,46 @@ Value OperatorNode::eval()
 
     return Value();
 }
+
+bool OperatorNode::evalBool()
+{
+    Value lhs = left->eval();
+    Value rhs = right->eval();
+
+    if (lhs.getType() != ValueType::INTEGER || rhs.getType() != ValueType::INTEGER) {
+        throw ExpressionException("Cannot evaluate non-integer arguments as bool!");
+    }
+
+    if (lexeme.value == "<") {
+        return lhs.intValue < rhs.intValue;
+    }
+    else if (lexeme.value == "<=") {
+        return lhs.intValue <= rhs.intValue;
+    }
+    else if (lexeme.value == ">") {
+        return lhs.intValue > rhs.intValue;
+    }
+    else if (lexeme.value == ">=") {
+        return lhs.intValue >= rhs.intValue;
+    }
+    else if (lexeme.value == "<>") {
+        return lhs.intValue != rhs.intValue;
+    }
+    else if (lexeme.value == "=") {
+        return lhs.intValue == rhs.intValue;
+    }
+    else {
+        throw ExpressionException("Unknown operator used in boolean evaluation!");
+    }
+}
+
+void OperatorNode::print()
+{
+    runtime << "OperatorNode: " << lexeme.value << std::endl;
+    runtime << "LeftHandSide" << std::endl;
+    runtime << "\\_ ";
+    left->print();
+    runtime << "RightHandSide" << std::endl;
+    runtime << "\\_ ";
+    right->print();
+}
