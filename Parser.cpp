@@ -143,9 +143,10 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 		std::unique_ptr<OperatorNode> opNode = std::make_unique<OperatorNode>(op);
 		operators.pop();
 
-		// If this node is lower precendence than the next one in the stack
+		// If this node is lower precedence than the next one in the stack
 		// hook up the right side and push it on the stack.
 
+		// TODO: Add better precedence logic.
 		if (op.value == "+" && !operators.empty() && operators.top().value == "*") {
 			opNode->right = move(currentNode);
 			lowerPrecedence.push(move(opNode));
@@ -163,6 +164,10 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 		}
 		else {
 			opNode->right = move(currentNode);
+
+			if (values.empty()) {
+				throw ParseException("Parsing error, not enough values for operator!");
+			}
 			
 			// Also populate the left side.
 			Lexeme value = values.top();

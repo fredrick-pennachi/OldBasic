@@ -35,6 +35,19 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 			continue;
 		}
 
+		// Negative number
+		if (*i == '-' && (i + 1) != line.end() && isdigit(*(i + 1))) {
+			lexeme.tokenName = INTEGER;
+			lexeme.value += *i;
+			i++;
+			while (i != line.end() && isdigit(*i)) {
+				lexeme.value += *i;
+				i++;
+			}
+			lexemes.push_back(lexeme);
+				continue;
+		}
+
 		// Id, convert to uppercase
 		if (isalpha(*i) || isHighBit(*i)) {
 			lexeme.tokenName = ID;
