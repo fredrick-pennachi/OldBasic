@@ -75,7 +75,7 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 		}
 
 		// Separator
-		if (*i == ',' || *i == ';') {
+		if (*i == ',' || *i == ';' || *i == ':') {
 			lexeme.tokenName = SEPARATOR;
 			lexeme.value += *i;
 			i++;

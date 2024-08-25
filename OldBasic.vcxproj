@@ -134,6 +134,7 @@
     <ClCompile Include="LetCommand.cpp" />
     <ClCompile Include="Lexeme.cpp" />
     <ClCompile Include="ListCommand.cpp" />
+    <ClCompile Include="MultiCommand.cpp" />
     <ClCompile Include="NoOpCommand.cpp" />
     <ClCompile Include="NullNode.cpp" />
     <ClCompile Include="OldBasic.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="LetCommand.h" />
     <ClInclude Include="Lexeme.h" />
     <ClInclude Include="ListCommand.h" />
+    <ClInclude Include="MultiCommand.h" />
     <ClInclude Include="NoOpCommand.h" />
     <ClInclude Include="NullNode.h" />
     <ClInclude Include="OperatorNode.h" />

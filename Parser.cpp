@@ -4,6 +4,7 @@
 #include "IfCommand.h"
 #include "LetCommand.h"
 #include "ListCommand.h"
+#include "MultiCommand.h"
 #include "NoOpCommand.h"
 #include "NullNode.h"
 #include "OperatorNode.h"
@@ -45,6 +46,43 @@ std::unique_ptr<Command> Parser::parse(const std::vector<Lexeme>& lexemes) {
 
 std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes, std::vector<Lexeme>::const_iterator lexStart)
 {
+	// Check if this is a multi command.
+
+	Lexeme colonLexeme;
+	colonLexeme.tokenName = SEPARATOR;
+	colonLexeme.value = ":";
+
+	std::vector<Lexeme>::const_iterator colonIter =
+		std::find(lexStart, lexemes.cend(), colonLexeme);
+
+	if (colonIter != lexemes.cend()) {
+		// Create a command for each colon delimited collection...		
+		std::unique_ptr<MultiCommand> multiCommand = std::make_unique<MultiCommand>(lexemes);
+
+		while (lexStart != lexemes.cend()) {
+
+			std::vector<Lexeme> delimitedLexemes;
+
+			delimitedLexemes.insert(delimitedLexemes.cbegin(), lexStart, colonIter);
+
+			std::unique_ptr<Command> delimitedCommand = parse(delimitedLexemes);
+
+			multiCommand->commands.push_back(move(delimitedCommand));
+
+			if (colonIter != lexemes.end()) {
+				// Skip over the colon to get to the next statement.
+				lexStart = colonIter + 1;
+				colonIter = std::find(lexStart, lexemes.cend(), colonLexeme);
+			}
+			else {
+				// We've parsed the last command and can exit the loop.
+				lexStart = lexemes.cend();
+			}
+		}
+
+		return multiCommand;
+	}
+
 	const std::string& id = (*lexStart).value;
 
 	// Is this a command?
@@ -75,13 +113,13 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 		thenLexeme.value = "THEN";
 		
 		std::vector<Lexeme>::const_iterator thenIter =
-			std::find(lexemes.cbegin(), lexemes.cend(), thenLexeme);
+			std::find(cbegin(lexemes), cend(lexemes), thenLexeme);
 
-		if (thenIter == lexemes.end()) {
+		if (thenIter == cend(lexemes)) {
 			throw ParseException("IF without THEN not allowed!");
 		}
 
-		std::unique_ptr<ExpressionNode> expr1 = parseExpression(lexemes.cbegin(), thenIter);
+		std::unique_ptr<ExpressionNode> expr1 = parseExpression(cbegin(lexemes), thenIter);
 		std::unique_ptr<Command> thenCommand = parseCommand(lexemes, thenIter + 1);
 
 		return std::make_unique<IfCommand>(lexemes, move(expr1), move(thenCommand));
@@ -135,6 +173,9 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 	else if (value.tokenName == ID) {
 		currentNode = std::make_unique<VariableNode>(value);
 	}
+	else {
+		currentNode = std::make_unique<NullNode>();
+	}
 
 	std::stack<std::unique_ptr<OperatorNode>> lowerPrecedence;
 
@@ -160,6 +201,9 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 			}
 			else if (value.tokenName == ID) {
 				currentNode = std::make_unique<VariableNode>(value);
+			}
+			else {
+				currentNode = std::make_unique<NullNode>();
 			}
 		}
 		else {
