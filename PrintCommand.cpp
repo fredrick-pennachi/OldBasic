@@ -18,9 +18,10 @@ PrintCommand::PrintCommand(
 Forms of PRINT:
 
 PRINT
-PRINT "std::string"
-PRINT std::string_VARIABLE$
+PRINT "Hello!"
+PRINT HELLO_VARIABLE$
 PRINT 2 + 2
+PRINT A(1)
 
 */
 

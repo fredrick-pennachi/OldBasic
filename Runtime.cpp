@@ -50,6 +50,15 @@ Value Runtime::getVariable(const std::string& name)
 	return variables.at(name);
 }
 
+void Runtime::clear()
+{
+	program.clear();
+
+	nextLineIter = program.cbegin();
+
+	variables.clear();
+}
+
 Runtime::~Runtime()
 {
 }

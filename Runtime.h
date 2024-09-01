@@ -25,6 +25,8 @@ public:
 
 	Value getVariable(const std::string& name);
 
+	void clear();
+
 	static std::map<int, std::unique_ptr<Command>> program;
 
 	std::map<int, std::unique_ptr<Command>>::const_iterator nextLineIter;

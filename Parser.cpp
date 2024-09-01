@@ -1,10 +1,12 @@
 #include "Parser.h"
 
+#include "DimCommand.h"
 #include "GotoCommand.h"
 #include "IfCommand.h"
 #include "LetCommand.h"
 #include "ListCommand.h"
 #include "MultiCommand.h"
+#include "NewCommand.h"
 #include "NoOpCommand.h"
 #include "NullNode.h"
 #include "OperatorNode.h"
@@ -83,25 +85,55 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 		return multiCommand;
 	}
 
+	// Parse the command.
+
 	const std::string& id = (*lexStart).value;
 
-	// Is this a command?
+	lexStart++;
 
-	// Maybe this logic should be tidied up with sets of commands and functions.
-	if (id == "PRINT") {
-		return std::make_unique<PrintCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
+	if (id == "DIM") {
+		
+		if (lexStart == lexemes.cend()) {
+			return std::make_unique<DimCommand>(lexemes, "", std::make_unique<NullNode>());
+		}
+
+		if ((*lexStart).tokenName != ID) {
+			throw ParseException("ID required for DIM!");
+		}
+
+		std::string arrayName = (*lexStart).value;
+
+		lexStart++;
+
+		if (lexStart == lexemes.cend()) {
+			throw ParseException("Parenthesis required for DIM array size!");
+		}
+
+		if ((*lexStart).value == "()") {
+			throw ParseException("Expression required for DIM array size!");
+		}
+
+		if ((*lexStart).value != "(") {
+			throw ParseException("Parenthesis required for DIM array size!");
+		}
+
+		lexStart++;
+
+		Lexeme closeParenLexeme;
+		closeParenLexeme.tokenName = OPERATOR;
+		closeParenLexeme.value = ")";
+
+		std::vector<Lexeme>::const_iterator closeParenIter =
+			std::find(lexStart, lexemes.cend(), closeParenLexeme);
+
+		if (closeParenIter == lexemes.cend()) {
+			throw ParseException("Close parenthesis required for DIM array size!");
+		}
+
+		return std::make_unique<DimCommand>(lexemes, arrayName, parseExpression(lexStart, closeParenIter));
 	}
 	else if (id == "GOTO") {
 		return std::make_unique<GotoCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
-	}
-	else if (id == "LET") {
-		return std::make_unique<LetCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
-	}
-	else if (id == "LIST") {
-		return std::make_unique<ListCommand>(lexemes);
-	}
-	else if (id == "RUN") {
-		return std::make_unique<RunCommand>(lexemes);
 	}
 	else if (id == "IF") {
 		// Break the statement up...
@@ -111,33 +143,43 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 		Lexeme thenLexeme;
 		thenLexeme.tokenName = ID;
 		thenLexeme.value = "THEN";
-		
-		std::vector<Lexeme>::const_iterator thenIter =
-			std::find(cbegin(lexemes), cend(lexemes), thenLexeme);
 
-		if (thenIter == cend(lexemes)) {
+		std::vector<Lexeme>::const_iterator thenIter =
+			std::find(lexemes.cbegin(), lexemes.cend(), thenLexeme);
+
+		if (thenIter == lexemes.cend()) {
 			throw ParseException("IF without THEN not allowed!");
 		}
 
-		std::unique_ptr<ExpressionNode> expr1 = parseExpression(cbegin(lexemes), thenIter);
+		std::unique_ptr<ExpressionNode> expr1 = parseExpression(lexemes.cbegin(), thenIter);
 		std::unique_ptr<Command> thenCommand = parseCommand(lexemes, thenIter + 1);
 
 		return std::make_unique<IfCommand>(lexemes, move(expr1), move(thenCommand));
 	}
-
+	else if (id == "LET") {
+		return std::make_unique<LetCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
+	}
+	else if (id == "LIST") {
+		return std::make_unique<ListCommand>(lexemes);
+	}
+	else if (id == "NEW") {
+		return std::make_unique<NewCommand>(lexemes);
+	}
+	else if (id == "PRINT") {
+		return std::make_unique<PrintCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
+	}
+	else if (id == "REM") {
+		return std::make_unique<NoOpCommand>(lexemes);
+	}
+	else if (id == "RUN") {
+		return std::make_unique<RunCommand>(lexemes);
+	}
+	
 	throw ParseException("Parsing error, unknown id " + id + ".");
 }
 
 std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::const_iterator lexStart, std::vector<Lexeme>::const_iterator lexEnd)
 {
-	// Skip over the first lexeme if it's a line number.
-	if ((*lexStart).tokenName == INTEGER) {
-		lexStart++;
-	}
-
-	// Skip over the Command id.
-	lexStart++;
-
 	if (lexStart == lexEnd) {
 		// There isn't an expression! This might not be valid for some
 		// command types.
