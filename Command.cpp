@@ -6,7 +6,9 @@ Command::Command(const std::string& name, const std::vector<Lexeme>& lexemes) : 
 
 Command::~Command()
 {
-	runtime << "Destroyed " << name << u8" command 👻" << std::endl;
+	if (runtime.getSetting("debug").evalBool()) {
+		runtime << "Destroyed " << name << u8" command 👻" << std::endl;
+	}
 }
 
 std::ostream& operator<<(std::ostream& stream, const Command& command) {

@@ -6,6 +6,8 @@ std::map<int, std::unique_ptr<Command>> Runtime::program;
 
 Runtime::Runtime()
 {
+	settings["debug"] = Value(0);
+	settings["run_tests"] = Value(1);
 }
 
 int Runtime::run()
@@ -48,6 +50,11 @@ bool Runtime::hasVariable(const std::string& name)
 Value Runtime::getVariable(const std::string& name)
 {
 	return variables.at(name);
+}
+
+Value Runtime::getSetting(const std::string& setting)
+{
+	return settings.at(setting);
 }
 
 void Runtime::clear()

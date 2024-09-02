@@ -145,6 +145,7 @@
     <ClCompile Include="PrintCommand.cpp" />
     <ClCompile Include="RunCommand.cpp" />
     <ClCompile Include="Runtime.cpp" />
+    <ClCompile Include="Test.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
     <ClCompile Include="Value.cpp" />
     <ClCompile Include="ValueNode.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="PrintCommand.h" />
     <ClInclude Include="RunCommand.h" />
     <ClInclude Include="Runtime.h" />
+    <ClInclude Include="Test.h" />
     <ClInclude Include="Tokenizer.h" />
     <ClInclude Include="Value.h" />
     <ClInclude Include="ValueNode.h" />

@@ -25,6 +25,8 @@ public:
 
 	Value getVariable(const std::string& name);
 
+	Value getSetting(const std::string& setting);
+
 	void clear();
 
 	static std::map<int, std::unique_ptr<Command>> program;
@@ -32,6 +34,8 @@ public:
 	std::map<int, std::unique_ptr<Command>>::const_iterator nextLineIter;
 
 	std::map<std::string, Value> variables;
+
+	std::map<std::string, Value> settings;
 
 	template<typename T>
 	Runtime& operator<<(const T& object)

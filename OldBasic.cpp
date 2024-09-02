@@ -1,7 +1,8 @@
-﻿#include "Tokenizer.h"
-#include "Lexeme.h"
+﻿#include "Lexeme.h"
 #include "Parser.h"
 #include "Runtime.h"
+#include "Test.h"
+#include "Tokenizer.h"
 
 #include <iostream>
 #include <string>
@@ -22,7 +23,9 @@ int main()
 	Tokenizer tokenizer;
 	Parser parser;
 
-	runTests(tokenizer, parser);
+	if (runtime.getSetting("run_tests").evalBool()) {
+		runTests(tokenizer, parser);
+	}
 	
 	runtime << u8"OLD BASIC 🐻 🎨 🥗 🍨 🍒 🤖 🦚 🍔 🌭 🥪" << std::endl;
 	runtime << std::endl;
@@ -79,20 +82,39 @@ void evalLine(Tokenizer& tokenizer, Parser& parser, std::string line)
 
 void runTests(Tokenizer& tokenizer, Parser& parser)
 {
-	std::string multiplyPrecedence = "LET A = 1 + 2 * 3";
+	std::vector<Test> tests;
 
-	runtime << "multiplyPrecedence: " << multiplyPrecedence << std::endl;
+	tests.push_back(Test("multiplyPrecedence", "LET A = 1 + 2 * 3",
+		[]() {
+			return runtime.getVariable("A").intValue == 7;
+		}));
 
-	evalLine(tokenizer, parser, multiplyPrecedence);
+	tests.push_back(Test("colonSeparation   ", "LET B = 4 : LET C = 5 : LET D = 6",
+		[]() {
+			return runtime.getVariable("B").intValue == 4 &&
+				runtime.getVariable("C").intValue == 5 &&
+				runtime.getVariable("D").intValue == 6;
+		}));
 
-	if (runtime.getVariable("A").intValue == 7) {
-		runtime << u8"🍇 OK" << std::endl;
+	tests.push_back(Test("negative numbers  ", "LET E = -5 + 2 : LET F = 3 - -7",
+		[]() {
+			return runtime.getVariable("E").intValue == -3 &&
+				runtime.getVariable("F").intValue == 10;
+		}));
+
+	for (Test test : tests) {
+		evalLine(tokenizer, parser, test.testStatement);
+		bool result = test.assert();
+		if (result) {
+			runtime << u8"🍇 OK   ";
+		}
+		else {
+			runtime << u8"🍄 FAIL ";
+		}
+		runtime << test.testName << u8" ⌨️ " << test.testStatement << std::endl;
 	}
-	else {
-		runtime << u8"🍄 FAILED" << std::endl;
-	}
 
-	evalLine(tokenizer, parser, "NEW");
+	runtime.clear();
 
 	runtime << std::endl;
 }
