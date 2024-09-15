@@ -84,19 +84,19 @@ void runTests(Tokenizer& tokenizer, Parser& parser)
 {
 	std::vector<Test> tests;
 
-	tests.push_back(Test("multiplyPrecedence", "LET A = 1 + 2 * 3",
+	tests.push_back(Test("multiply precedence", "LET A = 1 + 2 * 3",
 		[]() {
 			return runtime.getVariable("A").intValue == 7;
 		}));
 
-	tests.push_back(Test("colonSeparation   ", "LET B = 4 : LET C = 5 : LET D = 6",
+	tests.push_back(Test("colon separation   ", "LET B = 4 : LET C = 5 : LET D = 6",
 		[]() {
 			return runtime.getVariable("B").intValue == 4 &&
 				runtime.getVariable("C").intValue == 5 &&
 				runtime.getVariable("D").intValue == 6;
 		}));
 
-	tests.push_back(Test("negative numbers  ", "LET E = -5 + 2 : LET F = 3 - -7",
+	tests.push_back(Test("negative numbers   ", "LET E = -5 + 2 : LET F = 3 - -7",
 		[]() {
 			return runtime.getVariable("E").intValue == -3 &&
 				runtime.getVariable("F").intValue == 10;
@@ -117,4 +117,11 @@ void runTests(Tokenizer& tokenizer, Parser& parser)
 	runtime.clear();
 
 	runtime << std::endl;
+
+	evalLine(tokenizer, parser, "dim f(5)");
+	//evalLine(tokenizer, parser, "let myArray(1) = 5 : let myArray(2) = 7");
+	evalLine(tokenizer, parser, "dim");
+
+	runtime << std::endl;
+
 }

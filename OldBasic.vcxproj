@@ -127,6 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Array.cpp" />
+    <ClCompile Include="ArrayNode.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="DimCommand.cpp" />
     <ClCompile Include="ExpressionNode.cpp" />
@@ -153,6 +155,8 @@
     <ClCompile Include="VariableNode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Array.h" />
+    <ClInclude Include="ArrayNode.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="DimCommand.h" />
     <ClInclude Include="ExpressionNode.h" />

@@ -29,41 +29,5 @@ int GotoCommand::invoke()
 	else {
 		// Set the next line of the program.
 		runtime.setNextLine(val.intValue);
-	}	
+	}
 }
-
-//int GotoCommand::invoke() {
-//	
-//	int i = 0;
-//
-//	// Skip over the first lexeme if it's a line number.
-//	if (lexemes[i].tokenName == INTEGER) {
-//		i++;
-//	}
-//
-//	// Skip over the GOTO id.
-//	i++;
-//
-//	if (i == lexemes.size()) {
-//		// No argument, this isn't supported for GOTO.
-//		std::stringstream ss;
-//		ss << (*this);
-//
-//		throw InvalidSyntaxException("Unsupported syntax: Missing line number in \"" + ss.str() + "\"");
-//	}
-//	else if (lexemes[i].tokenName == INTEGER) {
-//		// Set the next line of the program.
-//		int lineNumber = stoi(lexemes[i].value);
-//		runtime.setNextLine(lineNumber);
-//	}
-//	else {
-//		std::stringstream ss;
-//		ss << (*this);
-//
-//		throw InvalidSyntaxException("Unsupported syntax: "
-//			+ lexemes[i].value
-//			+ " in \"" + ss.str() + "\"");
-//	}
-//
-//	return 0;
-//}

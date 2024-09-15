@@ -1,5 +1,6 @@
 #include "Parser.h"
 
+#include "ArrayNode.h"
 #include "DimCommand.h"
 #include "GotoCommand.h"
 #include "IfCommand.h"
@@ -50,12 +51,10 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 {
 	// Check if this is a multi command.
 
-	Lexeme colonLexeme;
-	colonLexeme.tokenName = SEPARATOR;
-	colonLexeme.value = ":";
+	auto isColon = [](Lexeme l) { return l.value == ":"; };
 
 	std::vector<Lexeme>::const_iterator colonIter =
-		std::find(lexStart, lexemes.cend(), colonLexeme);
+		std::find_if(lexStart, lexemes.cend(), isColon);
 
 	if (colonIter != lexemes.cend()) {
 		// Create a command for each colon delimited collection...		
@@ -74,7 +73,7 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 			if (colonIter != lexemes.end()) {
 				// Skip over the colon to get to the next statement.
 				lexStart = colonIter + 1;
-				colonIter = std::find(lexStart, lexemes.cend(), colonLexeme);
+				colonIter = std::find_if(lexStart, lexemes.cend(), isColon);
 			}
 			else {
 				// We've parsed the last command and can exit the loop.
@@ -119,12 +118,9 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 
 		lexStart++;
 
-		Lexeme closeParenLexeme;
-		closeParenLexeme.tokenName = OPERATOR;
-		closeParenLexeme.value = ")";
-
 		std::vector<Lexeme>::const_iterator closeParenIter =
-			std::find(lexStart, lexemes.cend(), closeParenLexeme);
+			std::find_if(lexStart, lexemes.cend(),
+				[](Lexeme l) { return l.value == ")"; });
 
 		if (closeParenIter == lexemes.cend()) {
 			throw ParseException("Close parenthesis required for DIM array size!");
@@ -140,12 +136,9 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 		// IF (expr1)
 		// THEN (command) (expr2)
 
-		Lexeme thenLexeme;
-		thenLexeme.tokenName = ID;
-		thenLexeme.value = "THEN";
-
 		std::vector<Lexeme>::const_iterator thenIter =
-			std::find(lexemes.cbegin(), lexemes.cend(), thenLexeme);
+			std::find_if(lexemes.cbegin(), lexemes.cend(), 
+				[](Lexeme l) { return l.value == "THEN"; });
 
 		if (thenIter == lexemes.cend()) {
 			throw ParseException("IF without THEN not allowed!");
@@ -186,15 +179,46 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 		return std::make_unique<NullNode>();
 	}
 
-	std::stack<Lexeme> operators;
-	std::stack<Lexeme> values;
+	std::stack<std::unique_ptr<OperatorNode>> operators;
+	std::stack<std::unique_ptr<ExpressionNode>> values;
 
 	for (; lexStart != lexEnd; lexStart++) {
-		if ((*lexStart).tokenName == OPERATOR) {
-			operators.push(*lexStart);
+		if ((*lexStart).tokenName == INTEGER || (*lexStart).tokenName == STRING) {
+			std::unique_ptr<ValueNode> valNode = std::make_unique<ValueNode>(*lexStart);
+			values.push(std::move(valNode));
+		}
+		else if ((*lexStart).tokenName == ID) {
+
+			//  Look ahead to see whether this is an Array.
+			if ((lexStart + 1) != lexEnd && (*(lexStart + 1)).value == "(") {
+				// This is an array id and subscript. Look forward
+				// to find the matching parenthesis and create an
+				// expression.
+				std::vector<Lexeme>::const_iterator closeParenIter =
+					std::find_if(lexStart, lexEnd,
+						[](Lexeme l) { return l.value == ")"; });
+
+				if (closeParenIter != lexEnd) {
+					std::unique_ptr<ExpressionNode> subscriptExpr = parseExpression(lexStart + 2, closeParenIter);
+					std::unique_ptr<ArrayNode> arrayNode = std::make_unique<ArrayNode>(*lexStart, std::move(subscriptExpr));
+					values.push(std::move(arrayNode));
+					lexStart = closeParenIter;
+				}
+				else {
+					throw ParseException("Parsing error, cannot find closing parenthesis!");
+				}
+			}
+			else {
+				std::unique_ptr<VariableNode> varNode = std::make_unique<VariableNode>(*lexStart);
+				values.push(std::move(varNode));
+			}
+		}
+		else if ((*lexStart).tokenName == OPERATOR) {
+			std::unique_ptr<OperatorNode> opNode = std::make_unique<OperatorNode>(*lexStart);
+			operators.push(std::move(opNode));
 		}
 		else {
-			values.push(*lexStart);
+			values.push(std::make_unique<NullNode>());
 		}
 	}
 
@@ -202,78 +226,51 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 		throw ParseException("Parsing error, did not parse any values!");
 	}
 
-	Lexeme value = values.top();
-	values.pop();
-
 	// Seed current node with the first value.
 
-	std::unique_ptr<ExpressionNode> currentNode;
-
-	if (value.tokenName == INTEGER || value.tokenName == STRING) {
-		currentNode = std::make_unique<ValueNode>(value);
-	}
-	else if (value.tokenName == ID) {
-		currentNode = std::make_unique<VariableNode>(value);
-	}
-	else {
-		currentNode = std::make_unique<NullNode>();
-	}
+	std::unique_ptr<ExpressionNode> currentNode = std::move(values.top());
+	values.pop();
 
 	std::stack<std::unique_ptr<OperatorNode>> lowerPrecedence;
 
 	while (operators.size() > 0) {
-		Lexeme op = operators.top();
-		std::unique_ptr<OperatorNode> opNode = std::make_unique<OperatorNode>(op);
+		std::unique_ptr<OperatorNode> opNode = std::move(operators.top());
 		operators.pop();
 
 		// If this node is lower precedence than the next one in the stack
 		// hook up the right side and push it on the stack.
 
 		// TODO: Add better precedence logic.
-		if (op.value == "+" && !operators.empty() && operators.top().value == "*") {
-			opNode->right = move(currentNode);
-			lowerPrecedence.push(move(opNode));
+		if (opNode->lexeme.value == "+"
+			&& !operators.empty()
+			&& operators.top()->lexeme.value == "*") {
+
+			opNode->right = std::move(currentNode);
+			lowerPrecedence.push(std::move(opNode));
 
 			// Repopulate current node with the next value.
-			Lexeme value = values.top();
+			currentNode = std::move(values.top());
 			values.pop();
-			
-			if (value.tokenName == INTEGER || value.tokenName == STRING) {
-				currentNode = std::make_unique<ValueNode>(value);
-			}
-			else if (value.tokenName == ID) {
-				currentNode = std::make_unique<VariableNode>(value);
-			}
-			else {
-				currentNode = std::make_unique<NullNode>();
-			}
 		}
 		else {
-			opNode->right = move(currentNode);
+			opNode->right = std::move(currentNode);
 
 			if (values.empty()) {
 				throw ParseException("Parsing error, not enough values for operator!");
 			}
 			
 			// Also populate the left side.
-			Lexeme value = values.top();
+			opNode->left = std::move(values.top());
 			values.pop();
-
-			if (value.tokenName == INTEGER || value.tokenName == STRING) {
-				opNode->left = std::make_unique<ValueNode>(value);
-			}
-			else if (value.tokenName == ID) {
-				opNode->left = std::make_unique<VariableNode>(value);
-			}
 
 			// If there is a lower precedence node, set this node to the left side.
 			if (!lowerPrecedence.empty()) {
-				lowerPrecedence.top()->left = move(opNode);
-				opNode = move(lowerPrecedence.top());
+				lowerPrecedence.top()->left = std::move(opNode);
+				opNode = std::move(lowerPrecedence.top());
 				lowerPrecedence.pop();
 			}
 
-			currentNode = move(opNode);
+			currentNode = std::move(opNode);
 		}
 	}
 

@@ -93,10 +93,16 @@
     <ClCompile Include="DimCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="NewCommand.cpp">
+    <ClCompile Include="Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
+    <ClCompile Include="ArrayNode.cpp">
+      <Filter>Source Files\expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCommand.cpp">
+      <Filter>Source Files\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Array.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,10 +173,16 @@
     <ClInclude Include="DimCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="NewCommand.h">
+    <ClInclude Include="Test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Test.h">
+    <ClInclude Include="ArrayNode.h">
+      <Filter>Header Files\expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCommand.h">
+      <Filter>Header Files\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

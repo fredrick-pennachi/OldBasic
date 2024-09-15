@@ -6,10 +6,10 @@
 class ExpressionNode
 {
 public:
-	enum NodeType { NULL_NODE, OPERATOR_NODE, VALUE_NODE, VARIABLE_NODE };
+	enum NodeType { NULL_NODE, OPERATOR_NODE, VALUE_NODE, VARIABLE_NODE, ARRAY_NODE };
 
 	ExpressionNode(const Lexeme& lexeme, NodeType nodeType);
-
+	
 	virtual Value eval() = 0;
 
 	virtual bool evalBool() = 0;

@@ -27,12 +27,12 @@ DIM A(I + 1)
 int DimCommand::invoke()
 {
 	if (expression->nodeType == ExpressionNode::NULL_NODE) {
-		// No expression, print all the variables.
-		std::map<std::string, Value>::const_iterator iter = runtime.variables.cbegin();
+		// No expression, print all the arrays.
+		std::map<std::string, Array>::const_iterator iter = runtime.arrays.cbegin();
 
-		runtime << "Variables:" << std::endl;
+		runtime << "Arrays:" << std::endl;
 
-		for (; iter != runtime.variables.cend(); iter++)
+		for (; iter != runtime.arrays.cend(); iter++)
 		{
 			runtime << iter->first << ": " << iter->second << std::endl;
 		}
@@ -44,7 +44,7 @@ int DimCommand::invoke()
 
 	if (arraySize.getType() == INTEGER) {
 
-		runtime.setVariable(arrayName, arraySize);
+		runtime.setArray(arrayName, arraySize.intValue);
 	}
 	else {
 		throw InvalidSyntaxException("DIM expression must evaluate to an INTEGER value!");

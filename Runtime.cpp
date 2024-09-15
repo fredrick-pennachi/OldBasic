@@ -52,6 +52,26 @@ Value Runtime::getVariable(const std::string& name)
 	return variables.at(name);
 }
 
+void Runtime::setArray(const std::string& name, int size)
+{
+	arrays[name] = Array(size);
+}
+
+bool Runtime::hasArray(const std::string& name)
+{
+	return arrays.count(name);
+}
+
+void Runtime::setArrayValue(const std::string& name, int subscript, const Value& value)
+{
+	arrays.at(name).putValue(subscript, value);
+}
+
+Value Runtime::getArrayValue(const std::string& name, int subscript)
+{
+	return arrays.at(name).getValue(subscript);
+}
+
 Value Runtime::getSetting(const std::string& setting)
 {
 	return settings.at(setting);

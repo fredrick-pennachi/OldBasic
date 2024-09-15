@@ -1,4 +1,5 @@
 #include "LetCommand.h"
+#include "OperatorNode.h"
 #include "ValueNode.h"
 
 #include <sstream>
@@ -34,21 +35,24 @@ int LetCommand::invoke()
 		{
 			runtime << iter->first << ": " << iter->second << std::endl;
 		}
-
-		return 0;
 	}
+	else if (expression->nodeType == ExpressionNode::OPERATOR_NODE
+		&& expression->lexeme.value == "=") {
 
-	Value value = expression->eval();
+		Value value = expression->eval();
 
-	if (value.isVariable()) {
-		runtime.setVariable(value.var.name, value);
+		if (value.isVariable()) {
+			runtime.setVariable(value.var.name, value);
+		}
+		else {
+			std::stringstream ss;
+			ss << (*this);
+			throw InvalidSyntaxException("Unsupported assignment: \"" + ss.str() + "\"");
+		}
 	}
 	else {
-		std::stringstream ss;
-		ss << (*this);
-		throw InvalidSyntaxException("Unsupported assignment: \"" + ss.str() + "\"");
+		throw InvalidSyntaxException("LET command requires an assignment expression!");
 	}
 
 	return 0;
 }
-
