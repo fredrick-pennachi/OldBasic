@@ -1,34 +1,20 @@
 #include "Value.h"
 
-Value::Value() : valueType(ValueType::NONE), intValue(0), strValue(""), var()
+Value::Value() : valueType(ValueType::NONE), intValue(0), strValue("")
 {
 }
 
-Value::Value(int intValue) : valueType(ValueType::INTEGER), intValue(intValue), strValue(""), var()
+Value::Value(int intValue) : valueType(ValueType::INTEGER), intValue(intValue), strValue("")
 {
 }
 
-Value::Value(std::string strValue) : valueType(ValueType::STRING), intValue(0), strValue(strValue), var()
-{
-}
-
-Value::Value(Variable var) : valueType(ValueType::VARIABLE), intValue(0), strValue(strValue), var(var)
+Value::Value(std::string strValue) : valueType(ValueType::STRING), intValue(0), strValue(strValue)
 {
 }
 
 ValueType::Enum Value::getType() const
 {
-	if (isVariable()) {
-		return var.valueType;
-	}
-	else {
-		return valueType;
-	}
-}
-
-bool Value::isVariable() const
-{
-	return valueType == ValueType::VARIABLE;
+	return valueType;
 }
 
 bool Value::evalBool() const
@@ -70,7 +56,7 @@ Value operator+(const Value& lhs, const Value& rhs)
 		return Value(lhs.intValue + rhs.intValue);
 	}
 	else {
-		// operator= is also allowed for strings.
+		// operator+ is also allowed for strings.
 		return Value(lhs.strValue + rhs.strValue);
 	}
 }
@@ -96,19 +82,8 @@ std::ostream& operator<<(std::ostream& stream, const Value& value) {
 	else if (value.getType() == ValueType::STRING) {
 		stream << value.strValue;
 	}
-	else if (value.getType() == ValueType::VARIABLE) {
-		if (value.var.valueType == ValueType::INTEGER) {
-			stream << value.intValue;
-		}
-		else if (value.var.valueType == ValueType::STRING) {
-			stream << value.strValue;
-		}
-		else {
-			stream << "UNKNOWN ValueType!";
-		}
-	}
 	else {
-		stream << value.strValue;
+		throw InvalidOperatorExeption("operator<< is not implemented for this type!");
 	}
 
 	return stream;

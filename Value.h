@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Variable.h"
 #include "ValueType.h"
 
 #include <ostream>
@@ -16,19 +15,13 @@ public:
 
 	Value(std::string strValue);
 
-	Value(Variable var);
-
 	ValueType::Enum getType() const;
-
-	bool isVariable() const;
 
 	bool evalBool() const;
 
 	int intValue;
 
 	std::string strValue;
-
-	Variable var;
 
 protected:
 	ValueType::Enum valueType;

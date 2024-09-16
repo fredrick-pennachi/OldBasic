@@ -107,9 +107,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Lexeme.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Tokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -184,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="Array.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lexeme.h">
+      <Filter>Header Files\expressions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -86,20 +86,20 @@ void runTests(Tokenizer& tokenizer, Parser& parser)
 
 	tests.push_back(Test("multiply precedence", "LET A = 1 + 2 * 3",
 		[]() {
-			return runtime.getVariable("A").intValue == 7;
+			return runtime.getVariable("A").value.intValue == 7;
 		}));
 
 	tests.push_back(Test("colon separation   ", "LET B = 4 : LET C = 5 : LET D = 6",
 		[]() {
-			return runtime.getVariable("B").intValue == 4 &&
-				runtime.getVariable("C").intValue == 5 &&
-				runtime.getVariable("D").intValue == 6;
+			return runtime.getVariable("B").value.intValue == 4 &&
+				runtime.getVariable("C").value.intValue == 5 &&
+				runtime.getVariable("D").value.intValue == 6;
 		}));
 
 	tests.push_back(Test("negative numbers   ", "LET E = -5 + 2 : LET F = 3 - -7",
 		[]() {
-			return runtime.getVariable("E").intValue == -3 &&
-				runtime.getVariable("F").intValue == 10;
+			return runtime.getVariable("E").value.intValue == -3 &&
+				runtime.getVariable("F").value.intValue == 10;
 		}));
 
 	for (Test test : tests) {

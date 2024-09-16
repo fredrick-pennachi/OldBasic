@@ -37,9 +37,9 @@ int Runtime::setNextLine(int nextLine)
 	return 0;
 }
 
-void Runtime::setVariable(const std::string& name, const Value& variable)
+void Runtime::setVariable(const Variable& variable)
 {
-	variables[name] = variable;
+	variables[variable.name] = variable;
 }
 
 bool Runtime::hasVariable(const std::string& name)
@@ -47,7 +47,7 @@ bool Runtime::hasVariable(const std::string& name)
 	return variables.count(name);
 }
 
-Value Runtime::getVariable(const std::string& name)
+Variable Runtime::getVariable(const std::string& name)
 {
 	return variables.at(name);
 }

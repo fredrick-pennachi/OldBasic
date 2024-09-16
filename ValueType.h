@@ -2,5 +2,5 @@
 
 class ValueType {
 public:
-	enum Enum { NONE, INTEGER, STRING, VARIABLE };
+	enum Enum { NONE, INTEGER, STRING };
 };

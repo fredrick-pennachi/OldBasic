@@ -40,7 +40,7 @@ void Array::putValue(int subscript, Value value)
 
 int Array::getSize() const
 {
-	return values.size();
+	return (int) values.size();
 }
 
 std::ostream& operator<<(std::ostream& stream, const Array& array)

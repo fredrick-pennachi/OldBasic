@@ -3,6 +3,7 @@
 #include "Array.h"
 #include "Command.h"
 #include "Value.h"
+#include "Variable.h"
 
 #include <iostream>
 #include <list>
@@ -20,11 +21,11 @@ public:
 
 	int setNextLine(int nextLine);
 
-	void setVariable(const std::string& name, const Value& variable);
+	void setVariable(const Variable& variable);
 
 	bool hasVariable(const std::string& name);
 
-	Value getVariable(const std::string& name);
+	Variable getVariable(const std::string& name);
 
 	void setArray(const std::string& name, int size);
 
@@ -42,7 +43,7 @@ public:
 
 	std::map<int, std::unique_ptr<Command>>::const_iterator nextLineIter;
 
-	std::map<std::string, Value> variables;
+	std::map<std::string, Variable> variables;
 
 	std::map<std::string, Array> arrays;
 

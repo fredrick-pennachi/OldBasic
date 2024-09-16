@@ -30,4 +30,6 @@ int GotoCommand::invoke()
 		// Set the next line of the program.
 		runtime.setNextLine(val.intValue);
 	}
+
+	return 0;
 }

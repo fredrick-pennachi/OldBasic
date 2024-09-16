@@ -1,44 +1,34 @@
 #include "VariableNode.h"
 
-VariableNode::VariableNode(const Lexeme& lexeme) : ExpressionNode(lexeme, VARIABLE_NODE)
+VariableNode::VariableNode(const Lexeme& lexeme) : ExpressionNode(lexeme, VARIABLE_NODE), name(lexeme.value)
 {
+}
+
+Variable VariableNode::getVariable()
+{
+    if (lexeme.tokenName == ID) {
+
+        if (runtime.hasVariable(name)) {
+            return runtime.getVariable(name);
+        }
+        else {
+            throw ExpressionException("No variable with this name exists!");
+        }
+    }
+    else {
+        // A variable node really needs to have an id!
+        throw ExpressionException("A variable must be named!");
+    }
 }
 
 Value VariableNode::eval()
 {
-    if (lexeme.tokenName == ID) {
-        // Retrieve the variable value if it exists.
-        std::string& variableName = lexeme.value;
-        if (runtime.hasVariable(variableName)) {
-            return runtime.getVariable(lexeme.value);
-        }
-        else {
-            Variable var(lexeme.value, ValueType::NONE);
-            return Value(var);
-        }
-    }
-    else {
-        // A variable node really needs to have an id!
-        throw ExpressionException("A variable must be named!");
-    }
+    return getVariable().value;
 }
 
 bool VariableNode::evalBool()
 {
-    if (lexeme.tokenName == ID) {
-        // Retrieve the variable value if it exists.
-        std::string& variableName = lexeme.value;
-        if (runtime.hasVariable(variableName)) {
-            return runtime.getVariable(lexeme.value).evalBool();
-        }
-        else {
-            return false;
-        }
-    }
-    else {
-        // A variable node really needs to have an id!
-        throw ExpressionException("A variable must be named!");
-    }
+    return getVariable().value.evalBool();
 }
 
 void VariableNode::print()

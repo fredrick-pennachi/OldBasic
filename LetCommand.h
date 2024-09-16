@@ -2,6 +2,7 @@
 
 #include "Command.h"
 #include "ExpressionNode.h"
+#include "OperatorNode.h"
 
 class LetCommand :
     public Command
@@ -14,5 +15,5 @@ public:
 
     static const std::string LET_COMMAND_NAME;
 
-    std::unique_ptr<ExpressionNode> expression;
+    std::unique_ptr<OperatorNode> assignExpr;
 };

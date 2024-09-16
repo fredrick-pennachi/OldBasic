@@ -1,6 +1,8 @@
+#include "ArrayNode.h"
 #include "LetCommand.h"
 #include "OperatorNode.h"
 #include "ValueNode.h"
+#include "VariableNode.h"
 
 #include <sstream>
 
@@ -9,8 +11,31 @@ const std::string LetCommand::LET_COMMAND_NAME = "LET";
 LetCommand::LetCommand(
 	const std::vector<Lexeme>& lexemes,
 	std::unique_ptr<ExpressionNode> expression)
-	: Command(LET_COMMAND_NAME, lexemes), expression(move(expression))
+	: Command(LET_COMMAND_NAME, lexemes)
 {
+	if (expression->nodeType == ExpressionNode::NULL_NODE) {
+		// No expression, leave assignExpr unset.
+		return;
+	}
+	else if (expression->nodeType == ExpressionNode::OPERATOR_NODE
+		&& expression->lexeme.value == "=") {
+
+		OperatorNode* opNode = dynamic_cast<OperatorNode*>(expression.get());
+
+		if (opNode != nullptr) {
+			assignExpr = std::unique_ptr<OperatorNode>(opNode);
+		}
+
+		if (assignExpr &&
+			assignExpr->left->nodeType == ExpressionNode::VARIABLE_NODE ||
+			assignExpr->left->nodeType == ExpressionNode::ARRAY_NODE) {
+
+			expression.release();
+			return;
+		}
+	}
+
+	throw InvalidSyntaxException("LET command requires an assignment expression!");
 }
 
 /*
@@ -25,24 +50,21 @@ LET A = A + 1
 
 int LetCommand::invoke()
 {
-	if (expression->nodeType == ExpressionNode::NULL_NODE) {
-		// No expression, print all the variables.
-		std::map<std::string, Value>::const_iterator iter = runtime.variables.cbegin();
+	if (assignExpr) {
 
-		runtime << "Variables:" << std::endl;
+		if (assignExpr->left->nodeType == ExpressionNode::VARIABLE_NODE) {
+			VariableNode* varNode = dynamic_cast<VariableNode*>(assignExpr->left.get());
 
-		for (; iter != runtime.variables.cend(); iter++)
-		{
-			runtime << iter->first << ": " << iter->second << std::endl;
+			if (varNode) {
+				Value value = assignExpr->right->eval();
+
+				Variable variable(varNode->name, value);
+
+				runtime.setVariable(variable);
+			}
 		}
-	}
-	else if (expression->nodeType == ExpressionNode::OPERATOR_NODE
-		&& expression->lexeme.value == "=") {
+		else if (assignExpr->left->nodeType == ExpressionNode::ARRAY_NODE) {
 
-		Value value = expression->eval();
-
-		if (value.isVariable()) {
-			runtime.setVariable(value.var.name, value);
 		}
 		else {
 			std::stringstream ss;
@@ -51,8 +73,16 @@ int LetCommand::invoke()
 		}
 	}
 	else {
-		throw InvalidSyntaxException("LET command requires an assignment expression!");
-	}
+		// No expression, print all the variables.
+		std::map<std::string, Variable>::const_iterator iter = runtime.variables.cbegin();
 
+		runtime << "Variables:" << std::endl;
+
+		for (; iter != runtime.variables.cend(); iter++) {
+
+			runtime << iter->second << std::endl;
+		}
+	}
+	
 	return 0;
 }
