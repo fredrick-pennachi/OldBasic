@@ -119,7 +119,7 @@ void runTests(Tokenizer& tokenizer, Parser& parser)
 	runtime << std::endl;
 
 	evalLine(tokenizer, parser, "dim f(5)");
-	//evalLine(tokenizer, parser, "let myArray(1) = 5 : let myArray(2) = 7");
+	evalLine(tokenizer, parser, "let f(1) = 5 : let f(2) = 7");
 	evalLine(tokenizer, parser, "dim");
 
 	runtime << std::endl;

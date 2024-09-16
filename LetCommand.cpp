@@ -45,6 +45,7 @@ Forms of LET:
 LET A = 1
 LET B$ = "B"
 LET A = A + 1
+LET ARR(1) = A
 
 */
 
@@ -64,7 +65,14 @@ int LetCommand::invoke()
 			}
 		}
 		else if (assignExpr->left->nodeType == ExpressionNode::ARRAY_NODE) {
+			ArrayNode* arrNode = dynamic_cast<ArrayNode*>(assignExpr->left.get());
 
+			if (arrNode) {
+				Value value = assignExpr->right->eval();
+
+				runtime.setArrayValue(arrNode->name,
+					arrNode->subscript->eval().intValue, value);
+			}
 		}
 		else {
 			std::stringstream ss;

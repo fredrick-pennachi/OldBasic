@@ -15,5 +15,7 @@ public:
 
     void print() override;
 
+    std::string name;
+
     std::unique_ptr<ExpressionNode> subscript;
 };
