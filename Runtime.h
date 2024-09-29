@@ -9,6 +9,7 @@
 #include <list>
 #include <map>
 #include <memory>
+#include <stack>
 
 class Command;
 
@@ -18,6 +19,8 @@ public:
 	Runtime();
 
 	int run();
+
+	int stop();
 
 	int setNextLine(int nextLine);
 
@@ -39,6 +42,10 @@ public:
 
 	void setForLoop(const Variable& variable);
 
+	void setGosub(int nextLine);
+
+	void returnGosub();
+
 	void clear();
 
 	std::map<int, std::unique_ptr<Command>> program;
@@ -52,6 +59,8 @@ public:
 	std::map<std::string, Array> arrays;
 
 	std::map<std::string, int> forLoops;
+
+	std::stack<int> gosubs;
 
 	std::map<std::string, Value> settings;
 

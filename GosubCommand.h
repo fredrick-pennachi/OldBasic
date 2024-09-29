@@ -1,19 +1,18 @@
 #pragma once
-
 #include "Command.h"
 #include "ExpressionNode.h"
 
-#include <string>
-
-class GotoCommand : public Command {
+class GosubCommand :
+    public Command
+{
 public:
-	GotoCommand(const std::vector<Lexeme>& lexemes,
+	GosubCommand(const std::vector<Lexeme>& lexemes,
 		std::unique_ptr<ExpressionNode> expression);
 
 	// Inherited via Command
 	int invoke() override;
 
-	static const std::string GOTO_COMMAND_NAME;
+	static const std::string GOSUB_COMMAND_NAME;
 
 	std::unique_ptr<ExpressionNode> expression;
 };

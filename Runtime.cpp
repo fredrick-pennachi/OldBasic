@@ -6,7 +6,7 @@ Runtime runtime;
 Runtime::Runtime() : currentLineNumber(0)
 {
 	settings["debug"] = Value(0);
-	settings["run_tests"] = Value(1);
+	settings["run_tests"] = Value(0);
 }
 
 int Runtime::run()
@@ -27,6 +27,13 @@ int Runtime::run()
 	}
 
     return 0;
+}
+
+int Runtime::stop()
+{
+	nextLineIter = program.cend();
+
+	return 0;
 }
 
 int Runtime::setNextLine(int nextLine)
@@ -81,6 +88,28 @@ void Runtime::setForLoop(const Variable& variable)
 	variables[variable.name] = variable;
 
 	forLoops[variable.name] = currentLineNumber;
+}
+
+void Runtime::setGosub(int nextLine)
+{
+	// Save the current line on the gosubs stack
+	// so it can be returned to.
+
+	gosubs.push(currentLineNumber);
+	setNextLine(nextLine);
+}
+
+void Runtime::returnGosub()
+{
+	// Set the next line to the line after the top of the gosubs
+	// stack then pop it off (setting to the gosubs line number
+	// would result in executing the gosubs jump again).
+
+	if (!gosubs.empty()) {
+		nextLineIter = program.find(gosubs.top());
+		nextLineIter++;
+		gosubs.pop();
+	}
 }
 
 void Runtime::clear()

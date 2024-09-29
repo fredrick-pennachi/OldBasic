@@ -3,6 +3,7 @@
 #include "ArrayNode.h"
 #include "DimCommand.h"
 #include "ForCommand.h"
+#include "GosubCommand.h"
 #include "GotoCommand.h"
 #include "IfCommand.h"
 #include "LetCommand.h"
@@ -14,7 +15,9 @@
 #include "NullNode.h"
 #include "OperatorNode.h"
 #include "PrintCommand.h"
+#include "ReturnCommand.h"
 #include "RunCommand.h"
+#include "StopCommand.h"
 #include "ValueNode.h"
 #include "VariableNode.h"
 
@@ -152,6 +155,9 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 
 		return std::make_unique<ForCommand>(lexemes, move(initExpr), move(toExpr));
 	}
+	else if (id == "GOSUB") {
+		return std::make_unique<GosubCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
+	}
 	else if (id == "GOTO") {
 		return std::make_unique<GotoCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
 	}
@@ -193,8 +199,14 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 	else if (id == "REM") {
 		return std::make_unique<NoOpCommand>(lexemes);
 	}
+	else if (id == "RETURN") {
+		return std::make_unique<ReturnCommand>(lexemes);
+	}
 	else if (id == "RUN") {
 		return std::make_unique<RunCommand>(lexemes);
+	}
+	else if (id == "STOP") {
+		return std::make_unique<StopCommand>(lexemes);
 	}
 	
 	throw ParseException("Parsing error, unknown id " + id + ".");

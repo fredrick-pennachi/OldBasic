@@ -9,8 +9,6 @@
 #include <stdexcept>
 #include <vector>
 
-
-
 class Parser
 {
 public:

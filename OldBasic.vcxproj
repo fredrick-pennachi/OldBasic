@@ -133,6 +133,7 @@
     <ClCompile Include="DimCommand.cpp" />
     <ClCompile Include="ExpressionNode.cpp" />
     <ClCompile Include="ForCommand.cpp" />
+    <ClCompile Include="GosubCommand.cpp" />
     <ClCompile Include="GotoCommand.cpp" />
     <ClCompile Include="IfCommand.cpp" />
     <ClCompile Include="LetCommand.cpp" />
@@ -147,8 +148,10 @@
     <ClCompile Include="OperatorNode.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="PrintCommand.cpp" />
+    <ClCompile Include="ReturnCommand.cpp" />
     <ClCompile Include="RunCommand.cpp" />
     <ClCompile Include="Runtime.cpp" />
+    <ClCompile Include="StopCommand.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
     <ClCompile Include="Value.cpp" />
@@ -163,6 +166,7 @@
     <ClInclude Include="DimCommand.h" />
     <ClInclude Include="ExpressionNode.h" />
     <ClInclude Include="ForCommand.h" />
+    <ClInclude Include="GosubCommand.h" />
     <ClInclude Include="GotoCommand.h" />
     <ClInclude Include="IfCommand.h" />
     <ClInclude Include="LetCommand.h" />
@@ -176,8 +180,10 @@
     <ClInclude Include="OperatorNode.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="PrintCommand.h" />
+    <ClInclude Include="ReturnCommand.h" />
     <ClInclude Include="RunCommand.h" />
     <ClInclude Include="Runtime.h" />
+    <ClInclude Include="StopCommand.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="Tokenizer.h" />
     <ClInclude Include="Value.h" />
