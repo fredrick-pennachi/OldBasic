@@ -45,8 +45,13 @@ int NextCommand::invoke()
 				forCommand = dynamic_cast<ForCommand*>((*commandIter).get());
 
 				if (forCommand) {
-					// FOR is part of a MultiCommand, that's okay.
-					break;
+					if (forCommand->varName == varName) {
+						// FOR is part of a MultiCommand, that's okay.
+						break;
+					}
+					else {
+						forCommand = NULL;
+					}
 				}
 			}
 		}
@@ -63,12 +68,18 @@ int NextCommand::invoke()
 
 	if (currentVal < toVal) {
 		runtime.setNextLine(lineNum);
+
+		// Return 1 to indicate that the program should loop.
+		// Is currently used in single line, immediate evaluation
+		// without line numbers.
+		return 1;
 	}
 	else {
 		// Loop is finished, reset the FOR loop so
 		// it will be re-initialized if called again.
 		forCommand->reset();
-	}
 
-	return 0;
+		// Return 0 to indicate that looping is finished.
+		return 0;
+	}
 }

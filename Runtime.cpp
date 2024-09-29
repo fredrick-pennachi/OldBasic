@@ -86,10 +86,11 @@ void Runtime::setForLoop(const Variable& variable)
 void Runtime::clear()
 {
 	program.clear();
-
 	nextLineIter = program.cbegin();
-
+	currentLineNumber = 0;
 	variables.clear();
+	arrays.clear();
+	forLoops.clear();
 }
 
 Runtime::~Runtime()

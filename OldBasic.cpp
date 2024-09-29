@@ -76,7 +76,14 @@ void evalLine(Tokenizer& tokenizer, Parser& parser, std::string line)
 	}
 	else {
 		// No line number, invoke immediately.
-		(*command).invoke();
+		// Write the line to line number zero though
+		// to support single line loops, then remove
+		// so that it isn't present for future execution.
+
+		Command* commandPtr = command.get();
+		runtime.program[0] = move(command);
+		commandPtr->invoke();
+		runtime.program.erase(0);
 	}
 }
 
@@ -100,6 +107,18 @@ void runTests(Tokenizer& tokenizer, Parser& parser)
 		[]() {
 			return runtime.getVariable("E").value.intValue == -3 &&
 				runtime.getVariable("F").value.intValue == 10;
+		}));
+
+	tests.push_back(Test("for loop           ",
+		"LET G = 0 : FOR I = 1 TO 10 : LET G = G + 1 : NEXT I",
+		[]() {
+			return runtime.getVariable("G").value.intValue == 10;
+		}));
+
+	tests.push_back(Test("nested for loop    ",
+		"LET H = 0 : FOR I = 1 TO 9 : FOR J = 1 TO 9 : LET H = H + 1 : NEXT J : NEXT I",
+		[]() {
+			return runtime.getVariable("H").value.intValue == 81;
 		}));
 
 	for (Test test : tests) {
