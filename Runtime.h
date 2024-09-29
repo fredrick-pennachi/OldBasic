@@ -25,7 +25,7 @@ public:
 
 	bool hasVariable(const std::string& name);
 
-	Variable getVariable(const std::string& name);
+	Variable& getVariable(const std::string& name);
 
 	void setArray(const std::string& name, int size);
 
@@ -37,15 +37,21 @@ public:
 
 	Value getSetting(const std::string& setting);
 
+	void setForLoop(const Variable& variable);
+
 	void clear();
 
-	static std::map<int, std::unique_ptr<Command>> program;
+	std::map<int, std::unique_ptr<Command>> program;
 
 	std::map<int, std::unique_ptr<Command>>::const_iterator nextLineIter;
+
+	int currentLineNumber;
 
 	std::map<std::string, Variable> variables;
 
 	std::map<std::string, Array> arrays;
+
+	std::map<std::string, int> forLoops;
 
 	std::map<std::string, Value> settings;
 

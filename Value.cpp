@@ -75,6 +75,26 @@ Value operator-(const Value& lhs, const Value& rhs)
 	return retVal;
 }
 
+bool operator<(const Value& lhs, const Value& rhs)
+{
+	if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::INTEGER) {
+		return lhs.intValue < rhs.intValue;
+	}
+	else {
+		throw InvalidOperatorExeption("operator<= is not valid for these values!");
+	}
+}
+
+bool operator<=(const Value& lhs, const Value& rhs)
+{
+	if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::INTEGER) {
+		return lhs.intValue <= rhs.intValue;
+	}
+	else {
+		throw InvalidOperatorExeption("operator<= is not valid for these values!");
+	}
+}
+
 std::ostream& operator<<(std::ostream& stream, const Value& value) {
 	if (value.getType() == ValueType::INTEGER) {
 		stream << value.intValue;

@@ -32,3 +32,8 @@ class InvalidSyntaxException : public std::runtime_error {
 public:
 	InvalidSyntaxException(std::string what);
 };
+
+class RuntimeException : public std::runtime_error {
+public:
+	RuntimeException(std::string what);
+};

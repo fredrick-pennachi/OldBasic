@@ -2,12 +2,14 @@
 
 #include "ArrayNode.h"
 #include "DimCommand.h"
+#include "ForCommand.h"
 #include "GotoCommand.h"
 #include "IfCommand.h"
 #include "LetCommand.h"
 #include "ListCommand.h"
 #include "MultiCommand.h"
 #include "NewCommand.h"
+#include "NextCommand.h"
 #include "NoOpCommand.h"
 #include "NullNode.h"
 #include "OperatorNode.h"
@@ -128,13 +130,34 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 
 		return std::make_unique<DimCommand>(lexemes, arrayName, parseExpression(lexStart, closeParenIter));
 	}
+	else if (id == "FOR") {
+
+		// FOR (var name) = (expr1) to (expr2)
+		// FOR (initExpr) TO (toExpr)
+
+		if (lexStart == lexemes.cend()) {
+			return std::make_unique<ForCommand>(lexemes, std::make_unique<NullNode>(), std::make_unique<NullNode>());
+		}
+
+		std::vector<Lexeme>::const_iterator toIter =
+			std::find_if(lexemes.cbegin(), lexemes.cend(),
+				[](Lexeme l) { return l.value == "TO"; });
+
+		if (toIter == lexemes.cend()) {
+			throw ParseException("FOR missing TO!");
+		}
+
+		std::unique_ptr<ExpressionNode> initExpr = parseExpression(lexemes.cbegin(), toIter);
+		std::unique_ptr<ExpressionNode> toExpr = parseExpression(toIter + 1, lexemes.cend());
+
+		return std::make_unique<ForCommand>(lexemes, move(initExpr), move(toExpr));
+	}
 	else if (id == "GOTO") {
 		return std::make_unique<GotoCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
 	}
 	else if (id == "IF") {
-		// Break the statement up...
-		// IF (expr1)
-		// THEN (command) (expr2)
+
+		// IF (expr1) THEN (command) (expr2)
 
 		std::vector<Lexeme>::const_iterator thenIter =
 			std::find_if(lexemes.cbegin(), lexemes.cend(), 
@@ -157,6 +180,12 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 	}
 	else if (id == "NEW") {
 		return std::make_unique<NewCommand>(lexemes);
+	}
+	else if (id == "NEXT") {
+		if (lexStart == lexemes.cend() || (*lexStart).tokenName != ID) {
+			throw ParseException("ID required for NEXT!");
+		}
+		return std::make_unique<NextCommand>(lexemes, (*lexStart).value);
 	}
 	else if (id == "PRINT") {
 		return std::make_unique<PrintCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
