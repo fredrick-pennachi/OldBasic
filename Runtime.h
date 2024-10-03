@@ -64,6 +64,8 @@ public:
 
 	std::map<std::string, Value> settings;
 
+	bool isReturn;
+
 	template<typename T>
 	Runtime& operator<<(const T& object)
 	{

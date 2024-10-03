@@ -3,7 +3,7 @@
 
 Runtime runtime;
 
-Runtime::Runtime() : currentLineNumber(0)
+Runtime::Runtime() : currentLineNumber(0), isReturn(false)
 {
 	settings["debug"] = Value(0);
 	settings["run_tests"] = Value(0);
@@ -101,13 +101,14 @@ void Runtime::setGosub(int nextLine)
 
 void Runtime::returnGosub()
 {
-	// Set the next line to the line after the top of the gosubs
-	// stack then pop it off (setting to the gosubs line number
-	// would result in executing the gosubs jump again).
+	// Set the next line to the line at the top of the gosubs
+	// stack then pop it off, set the return flag so that gosub
+	// doesn't jump again.
+
 
 	if (!gosubs.empty()) {
 		nextLineIter = program.find(gosubs.top());
-		nextLineIter++;
+		isReturn = true;
 		gosubs.pop();
 	}
 }

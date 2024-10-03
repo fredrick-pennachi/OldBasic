@@ -10,6 +10,13 @@ GosubCommand::GosubCommand(const std::vector<Lexeme>& lexemes,
 
 int GosubCommand::invoke()
 {
-	runtime.setGosub(expression->eval().intValue);
-	return 0;
+	if (!runtime.isReturn) {
+		runtime.setGosub(expression->eval().intValue);
+		return 2;
+	}
+	else {
+		// This is a return to the gosub so don't jump again.
+		runtime.isReturn = false;
+		return 0;
+	}	
 }

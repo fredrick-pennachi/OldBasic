@@ -20,6 +20,11 @@ int MultiCommand::invoke()
 
 		int retVal = (*commandIter)->invoke();
 
+		// If a Gosub jump occurred, execute that first.
+		if (retVal == 2) {
+			break;
+		}
+
 		// Allow for nested loops by tracking nesting level.
 		int nestCount = 0;
 
