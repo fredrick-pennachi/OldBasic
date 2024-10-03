@@ -6,7 +6,7 @@ public:
 	ListCommand(const std::vector<Lexeme>& lexemes);
 
 	// Inherited via Command
-	int invoke() override;
+	CommandStatus invoke() override;
 
 	static const std::string LIST_COMMAND_NAME;
 };

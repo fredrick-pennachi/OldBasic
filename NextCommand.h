@@ -9,7 +9,7 @@ public:
 		const std::string& varName);
 
 	// Inherited via Command
-	int invoke() override;
+	CommandStatus invoke() override;
 
 	static const std::string NEXT_COMMAND_NAME;
 

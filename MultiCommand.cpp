@@ -10,7 +10,7 @@ MultiCommand::MultiCommand(const std::vector<Lexeme>& lexemes)
 {
 }
 
-int MultiCommand::invoke()
+CommandStatus MultiCommand::invoke()
 {
 	auto commandIter = commands.cbegin();
 
@@ -21,7 +21,7 @@ int MultiCommand::invoke()
 		int retVal = (*commandIter)->invoke();
 
 		// If a Gosub jump occurred, execute that first.
-		if (retVal == 2) {
+		if (retVal == CALLER_SHOULD_BREAK) {
 			break;
 		}
 
@@ -52,5 +52,5 @@ int MultiCommand::invoke()
 		}
 	}
 
-	return 0;
+	return OK;
 }

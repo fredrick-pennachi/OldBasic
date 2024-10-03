@@ -41,7 +41,7 @@ ForCommand::ForCommand(const std::vector<Lexeme>& lexemes,
 	throw InvalidSyntaxException("FOR command requires initialization and condition expressions!");
 }
 
-int ForCommand::invoke()
+CommandStatus ForCommand::invoke()
 {
 	// If this FOR loop is already in progress then
 	// increment by STEP (not added yet) and continue
@@ -80,7 +80,7 @@ int ForCommand::invoke()
 		}
 	}
 
-	return 0;
+	return OK;
 }
 
 int ForCommand::reset()
@@ -89,6 +89,6 @@ int ForCommand::reset()
 	runtime.variables.erase(varName);
 	varName = "";
 
-	return 0;
+	return OK;
 }
 

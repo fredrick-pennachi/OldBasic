@@ -11,7 +11,7 @@ public:
     LetCommand(const std::vector<Lexeme>& lexemes, std::unique_ptr<ExpressionNode> expression);
 
     // Inherited via Command
-    int invoke() override;
+    CommandStatus invoke() override;
 
     static const std::string LET_COMMAND_NAME;
 

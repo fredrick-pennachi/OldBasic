@@ -24,7 +24,7 @@ DIM A(I + 1)
 
 */
 
-int DimCommand::invoke()
+CommandStatus DimCommand::invoke()
 {
 	if (expression->nodeType == ExpressionNode::NULL_NODE) {
 		// No expression, print all the arrays.
@@ -37,7 +37,7 @@ int DimCommand::invoke()
 			runtime << iter->first << ": " << iter->second << std::endl;
 		}
 
-		return 0;
+		return OK;
 	}
 
 	Value arraySize = expression->eval();
@@ -50,6 +50,6 @@ int DimCommand::invoke()
 		throw InvalidSyntaxException("DIM expression must evaluate to an INTEGER value!");
 	}
 
-	return 0;
+	return OK;
 }
 

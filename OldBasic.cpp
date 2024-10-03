@@ -1,6 +1,7 @@
 ﻿#include "ForCommand.h"
 #include "Lexeme.h"
 #include "Parser.h"
+#include "RunCommand.h"
 #include "Runtime.h"
 #include "Test.h"
 #include "Tokenizer.h"
@@ -54,7 +55,7 @@ int main()
 
 	runtime << u8"Goodbye! 👋" << std::endl;
 
-	return 0;
+	return OK;
 }
 
 void evalLine(Tokenizer& tokenizer, Parser& parser, std::string line)
@@ -79,18 +80,18 @@ void evalLine(Tokenizer& tokenizer, Parser& parser, std::string line)
 		// No line number, invoke immediately.
 		Command* commandPtr = command.get();
 
-		if (commandPtr->name == ForCommand::FOR_COMMAND_NAME)
+		if (commandPtr->name == RunCommand::RUN_COMMAND_NAME)
 		{
-			// Write the line to line number zero if
-			// it's a single line loop, then remove
+			commandPtr->invoke();
+		}
+		else {
+			// Write the line to line number zero to
+			// support single line loops, then remove
 			// it so that it isn't present for future
 			// execution.
 			runtime.program[0] = move(command);
 			commandPtr->invoke();
 			runtime.program.erase(0);
-		}
-		else {
-			commandPtr->invoke();
 		}
 	}
 }

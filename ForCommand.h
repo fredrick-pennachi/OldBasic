@@ -14,7 +14,7 @@ public:
         std::unique_ptr<ExpressionNode> toExpr);
 
     // Inherited via Command
-    int invoke() override;
+    CommandStatus invoke() override;
 
     int reset();
 

@@ -19,7 +19,7 @@ GOTO A (where A == 10)
 
 */
 
-int GotoCommand::invoke()
+CommandStatus GotoCommand::invoke()
 {
 	Value val = expression->eval();
 
@@ -31,5 +31,5 @@ int GotoCommand::invoke()
 		runtime.setNextLine(val.intValue);
 	}
 
-	return 0;
+	return OK;
 }

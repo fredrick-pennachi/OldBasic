@@ -8,7 +8,7 @@ NoOpCommand::NoOpCommand(const std::vector<Lexeme>& lexemes) : Command(NOOP_COMM
 }
 
 
-int NoOpCommand::invoke()
+CommandStatus NoOpCommand::invoke()
 {
-    return 0;
+    return OK;
 }

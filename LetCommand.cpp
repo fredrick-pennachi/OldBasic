@@ -49,7 +49,7 @@ LET ARR(1) = A
 
 */
 
-int LetCommand::invoke()
+CommandStatus LetCommand::invoke()
 {
 	if (assignExpr) {
 
@@ -92,5 +92,5 @@ int LetCommand::invoke()
 		}
 	}
 	
-	return 0;
+	return OK;
 }

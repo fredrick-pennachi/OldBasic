@@ -8,9 +8,9 @@ RunCommand::RunCommand(const std::vector<Lexeme>& lexemes) : Command(RUN_COMMAND
 
 }
 
-int RunCommand::invoke()
+CommandStatus RunCommand::invoke()
 {
 	runtime.run();
 
-    return 0;
+    return OK;
 }

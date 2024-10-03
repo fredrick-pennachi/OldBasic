@@ -10,7 +10,7 @@ NextCommand::NextCommand(const std::vector<Lexeme>& lexemes,
 {
 }
 
-int NextCommand::invoke()
+CommandStatus NextCommand::invoke()
 {
 	// Get the line number for the FOR loop by varName.
 	auto lineNumIter = runtime.forLoops.find(varName);
@@ -69,10 +69,10 @@ int NextCommand::invoke()
 	if (currentVal < toVal) {
 		runtime.setNextLine(lineNum);
 
-		// Return 1 to indicate that the program should loop.
+		// Return value to indicate that the program should loop.
 		// Is currently used in single line, immediate evaluation
 		// without line numbers.
-		return 1;
+		return CALLER_SHOULD_LOOP;
 	}
 	else {
 		// Loop is finished, reset the FOR loop so
@@ -80,6 +80,6 @@ int NextCommand::invoke()
 		forCommand->reset();
 
 		// Return 0 to indicate that looping is finished.
-		return 0;
+		return OK;
 	}
 }

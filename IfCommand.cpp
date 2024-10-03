@@ -10,11 +10,11 @@ IfCommand::IfCommand(
 {
 }
 
-int IfCommand::invoke()
+CommandStatus IfCommand::invoke()
 {
 	if (expression->evalBool()) {
 		command->invoke();
 	}
 
-    return 0;
+    return OK;
 }

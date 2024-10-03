@@ -7,9 +7,9 @@ ReturnCommand::ReturnCommand(const std::vector<Lexeme>& lexemes)
 {
 }
 
-int ReturnCommand::invoke()
+CommandStatus ReturnCommand::invoke()
 {
 	runtime.returnGosub();
 
-	return 0;
+	return OK;
 }

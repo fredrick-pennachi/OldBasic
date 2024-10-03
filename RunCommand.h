@@ -9,7 +9,7 @@ public:
     RunCommand(const std::vector<Lexeme>& lexemes);
 
     // Inherited via Command
-    int invoke() override;
+    CommandStatus invoke() override;
 
     static const std::string RUN_COMMAND_NAME;
 };

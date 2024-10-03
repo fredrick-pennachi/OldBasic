@@ -7,7 +7,7 @@ const std::string ListCommand::LIST_COMMAND_NAME = "LIST";
 ListCommand::ListCommand(const std::vector<Lexeme>& lexemes) : Command(LIST_COMMAND_NAME, lexemes) {
 }
 
-int ListCommand::invoke()
+CommandStatus ListCommand::invoke()
 {
 	std::map<int, std::unique_ptr<Command>>::const_iterator it;
 
@@ -16,5 +16,5 @@ int ListCommand::invoke()
 		runtime << command << std::endl;
 	}
 
-	return 0;
+	return OK;
 }

@@ -10,7 +10,7 @@ public:
     PrintCommand(const std::vector<Lexeme>& lexemes, std::unique_ptr<ExpressionNode> expression);
 
     // Inherited via Command
-    int invoke() override;
+    CommandStatus invoke() override;
 
     static const std::string PRINT_COMMAND_NAME;
 

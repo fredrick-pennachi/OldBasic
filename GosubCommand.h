@@ -10,7 +10,7 @@ public:
 		std::unique_ptr<ExpressionNode> expression);
 
 	// Inherited via Command
-	int invoke() override;
+	CommandStatus invoke() override;
 
 	static const std::string GOSUB_COMMAND_NAME;
 

@@ -8,7 +8,7 @@ public:
 	StopCommand(const std::vector<Lexeme>& lexemes);
 
 	// Inherited via Command
-	int invoke() override;
+	CommandStatus invoke() override;
 
 	static const std::string STOP_COMMAND_NAME;
 };

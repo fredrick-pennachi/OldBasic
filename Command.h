@@ -10,11 +10,17 @@
 
 class Runtime;
 
+enum CommandStatus {
+	OK,
+	CALLER_SHOULD_LOOP,
+	CALLER_SHOULD_BREAK
+};
+
 class Command {
 public:
 	Command(const std::string& name, const std::vector<Lexeme>& lexemes);
 
-	virtual int invoke() = 0;
+	virtual CommandStatus invoke() = 0;
 
 	virtual ~Command();
 

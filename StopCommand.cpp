@@ -7,9 +7,9 @@ StopCommand::StopCommand(const std::vector<Lexeme>& lexemes)
 {
 }
 
-int StopCommand::invoke()
+CommandStatus StopCommand::invoke()
 {
 	runtime.stop();
 
-	return 0;
+	return OK;
 }

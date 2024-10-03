@@ -25,7 +25,7 @@ PRINT A(1)
 
 */
 
-int PrintCommand::invoke()
+CommandStatus PrintCommand::invoke()
 {
 	if (expression->nodeType != ExpressionNode::NULL_NODE) {
 		Value value = expression->eval();
@@ -36,5 +36,5 @@ int PrintCommand::invoke()
 		runtime << std::endl;
 	}
 
-	return 0;
+	return OK;
 }

@@ -11,7 +11,7 @@ public:
     MultiCommand(const std::vector<Lexeme>&lexemes);
 
     // Inherited via Command
-    int invoke() override;
+    CommandStatus invoke() override;
 
     static const std::string MULTI_COMMAND_NAME;
 

@@ -6,7 +6,7 @@ Runtime runtime;
 Runtime::Runtime() : currentLineNumber(0), isReturn(false)
 {
 	settings["debug"] = Value(0);
-	settings["run_tests"] = Value(0);
+	settings["run_tests"] = Value(1);
 }
 
 int Runtime::run()
@@ -26,21 +26,21 @@ int Runtime::run()
 		command.invoke();
 	}
 
-    return 0;
+    return OK;
 }
 
 int Runtime::stop()
 {
 	nextLineIter = program.cend();
 
-	return 0;
+	return OK;
 }
 
 int Runtime::setNextLine(int nextLine)
 {
 	nextLineIter = program.find(nextLine);
 
-	return 0;
+	return OK;
 }
 
 void Runtime::setVariable(const Variable& variable)
