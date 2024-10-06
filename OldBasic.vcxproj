@@ -129,13 +129,17 @@
   <ItemGroup>
     <ClCompile Include="Array.cpp" />
     <ClCompile Include="ArrayNode.cpp" />
+    <ClCompile Include="ClsCommand.cpp" />
     <ClCompile Include="Command.cpp" />
+    <ClCompile Include="DataCommand.cpp" />
     <ClCompile Include="DimCommand.cpp" />
+    <ClCompile Include="DrawCommand.cpp" />
     <ClCompile Include="ExpressionNode.cpp" />
     <ClCompile Include="ForCommand.cpp" />
     <ClCompile Include="GosubCommand.cpp" />
     <ClCompile Include="GotoCommand.cpp" />
     <ClCompile Include="IfCommand.cpp" />
+    <ClCompile Include="InputCommand.cpp" />
     <ClCompile Include="LetCommand.cpp" />
     <ClCompile Include="Lexeme.cpp" />
     <ClCompile Include="ListCommand.cpp" />
@@ -145,9 +149,12 @@
     <ClCompile Include="NoOpCommand.cpp" />
     <ClCompile Include="NullNode.cpp" />
     <ClCompile Include="OldBasic.cpp" />
+    <ClCompile Include="OnCommand.cpp" />
     <ClCompile Include="OperatorNode.cpp" />
     <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="PlotCommand.cpp" />
     <ClCompile Include="PrintCommand.cpp" />
+    <ClCompile Include="ReadCommand.cpp" />
     <ClCompile Include="ReturnCommand.cpp" />
     <ClCompile Include="RunCommand.cpp" />
     <ClCompile Include="Runtime.cpp" />
@@ -162,13 +169,17 @@
   <ItemGroup>
     <ClInclude Include="Array.h" />
     <ClInclude Include="ArrayNode.h" />
+    <ClInclude Include="ClsCommand.h" />
     <ClInclude Include="Command.h" />
+    <ClInclude Include="DataCommand.h" />
     <ClInclude Include="DimCommand.h" />
+    <ClInclude Include="DrawCommand.h" />
     <ClInclude Include="ExpressionNode.h" />
     <ClInclude Include="ForCommand.h" />
     <ClInclude Include="GosubCommand.h" />
     <ClInclude Include="GotoCommand.h" />
     <ClInclude Include="IfCommand.h" />
+    <ClInclude Include="InputCommand.h" />
     <ClInclude Include="LetCommand.h" />
     <ClInclude Include="Lexeme.h" />
     <ClInclude Include="ListCommand.h" />
@@ -177,9 +188,12 @@
     <ClInclude Include="NextCommand.h" />
     <ClInclude Include="NoOpCommand.h" />
     <ClInclude Include="NullNode.h" />
+    <ClInclude Include="OnCommand.h" />
     <ClInclude Include="OperatorNode.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="PlotCommand.h" />
     <ClInclude Include="PrintCommand.h" />
+    <ClInclude Include="ReadCommand.h" />
     <ClInclude Include="ReturnCommand.h" />
     <ClInclude Include="RunCommand.h" />
     <ClInclude Include="Runtime.h" />

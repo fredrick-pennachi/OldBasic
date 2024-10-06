@@ -1,6 +1,7 @@
 #include "Parser.h"
 
 #include "ArrayNode.h"
+#include "ClsCommand.h"
 #include "DimCommand.h"
 #include "ForCommand.h"
 #include "GosubCommand.h"
@@ -95,7 +96,10 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 
 	lexStart++;
 
-	if (id == "DIM") {
+	if (id == "CLS") {
+		return std::make_unique<ClsCommand>(lexemes);
+	}
+	else if (id == "DIM") {
 		
 		if (lexStart == lexemes.cend()) {
 			return std::make_unique<DimCommand>(lexemes, "", std::make_unique<NullNode>());
