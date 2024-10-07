@@ -141,6 +141,9 @@
     <ClCompile Include="PlotCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
+    <ClCompile Include="SleepCommand.cpp">
+      <Filter>Source Files\commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tokenizer.h">
@@ -255,6 +258,9 @@
       <Filter>Header Files\commands</Filter>
     </ClInclude>
     <ClInclude Include="PlotCommand.h">
+      <Filter>Header Files\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SleepCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
   </ItemGroup>

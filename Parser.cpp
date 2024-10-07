@@ -18,6 +18,7 @@
 #include "PrintCommand.h"
 #include "ReturnCommand.h"
 #include "RunCommand.h"
+#include "SleepCommand.h"
 #include "StopCommand.h"
 #include "ValueNode.h"
 #include "VariableNode.h"
@@ -208,6 +209,9 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 	}
 	else if (id == "RUN") {
 		return std::make_unique<RunCommand>(lexemes);
+	}
+	else if (id == "SLEEP") {
+		return std::make_unique<SleepCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
 	}
 	else if (id == "STOP") {
 		return std::make_unique<StopCommand>(lexemes);

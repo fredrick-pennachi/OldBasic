@@ -187,6 +187,11 @@ void Runtime::clearScreen()
 	SetConsoleCursorPosition(hStdOut, csbi.dwCursorPosition);
 }
 
+void Runtime::sleep(int millis)
+{
+	Sleep(millis);
+}
+
 Runtime::~Runtime()
 {
 }

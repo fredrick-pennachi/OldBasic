@@ -50,6 +50,8 @@ public:
 
 	void clearScreen();
 
+	void sleep(int millis);
+
 	std::map<int, std::unique_ptr<Command>> program;
 
 	std::map<int, std::unique_ptr<Command>>::const_iterator nextLineIter;
