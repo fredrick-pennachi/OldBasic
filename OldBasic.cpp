@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <string>
-#include <windows.h>
 #include <sstream>
 #include <map>
 #include <memory>
@@ -17,11 +16,7 @@ void evalLine(Tokenizer& tokenizer, Parser& parser, std::string line);
 void runTests(Tokenizer& tokenizer, Parser& parser);
 
 int main()
-{
-	SetConsoleOutputCP(CP_UTF8);    // Sets console output
-	SetConsoleCP(CP_UTF8);          // Sets console input
-	setlocale(LC_ALL, ".UTF8");     // Sets locale?
-	
+{	
 	Tokenizer tokenizer;
 	Parser parser;
 
@@ -142,7 +137,7 @@ void runTests(Tokenizer& tokenizer, Parser& parser)
 		runtime << test.testName << u8" ⌨️ " << test.testStatement << std::endl;
 	}
 
-	runtime.clear();
+	runtime.clearProgram();
 
 	runtime << std::endl;
 

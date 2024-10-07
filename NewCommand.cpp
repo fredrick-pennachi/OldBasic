@@ -10,7 +10,7 @@ NewCommand::NewCommand(const std::vector<Lexeme>& lexemes) : Command(NEW_COMMAND
 
 CommandStatus NewCommand::invoke()
 {
-	runtime.clear();
+	runtime.clearProgram();
 
 	return OK;
 }

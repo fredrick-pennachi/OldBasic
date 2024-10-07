@@ -46,7 +46,9 @@ public:
 
 	void returnGosub();
 
-	void clear();
+	void clearProgram();
+
+	void clearScreen();
 
 	std::map<int, std::unique_ptr<Command>> program;
 

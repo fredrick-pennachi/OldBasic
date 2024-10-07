@@ -11,7 +11,7 @@ ClsCommand::ClsCommand(const std::vector<Lexeme>& lexemes) : Command(CLS_COMMAND
 
 CommandStatus ClsCommand::invoke()
 {
-	runtime << "ClsCommand::invoke not implemented yet!" << std::endl;
+	runtime.clearScreen();
 
 	return OK;
 }
