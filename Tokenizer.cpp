@@ -24,12 +24,25 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 
 		// Number
 		if (isdigit(*i)) {
-			lexeme.tokenName = INTEGER;
 			lexeme.value += *i;
 			i++;
-			while (i != line.end() && isdigit(*i)) {
+			bool decimal = false;
+			while (i != line.end() && (isdigit(*i) || *i == '.')) {
+				if (*i == '.') {
+					if (!decimal) {
+						decimal = true;
+					} else {
+						throw InvalidTokenExeption("Too many decimal points in DBL_FLOAT number!");
+					}
+				}
 				lexeme.value += *i;
 				i++;
+			}
+			if (decimal) {
+				lexeme.tokenName = DBL_FLOAT;
+			}
+			else {
+				lexeme.tokenName = INTEGER;
 			}
 			lexemes.push_back(lexeme);
 			continue;
@@ -37,15 +50,29 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 
 		// Negative number
 		if (*i == '-' && (i + 1) != line.end() && isdigit(*(i + 1))) {
-			lexeme.tokenName = INTEGER;
 			lexeme.value += *i;
 			i++;
-			while (i != line.end() && isdigit(*i)) {
+			bool decimal = false;
+			while (i != line.end() && (isdigit(*i) || *i == '.')) {
+				if (*i == '.') {
+					if (!decimal) {
+						decimal = true;
+					}
+					else {
+						throw InvalidTokenExeption("Too many decimal points in DBL_FLOAT number!");
+					}
+				}
 				lexeme.value += *i;
 				i++;
 			}
+			if (decimal) {
+				lexeme.tokenName = DBL_FLOAT;
+			}
+			else {
+				lexeme.tokenName = INTEGER;
+			}
 			lexemes.push_back(lexeme);
-				continue;
+			continue;
 		}
 
 		// Id, convert to uppercase

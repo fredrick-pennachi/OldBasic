@@ -3,11 +3,12 @@
 #include <string>
 #include <map>
 
-enum TokenName { UNSET, INTEGER, ID, OPERATOR, SEPARATOR, STRING };
+enum TokenName { UNSET, INTEGER, DBL_FLOAT, ID, OPERATOR, SEPARATOR, STRING };
 
 static const std::map<TokenName, std::string> TokenNameMap = {
 	{UNSET, "UNSET"},
 	{INTEGER, "INTEGER"},
+	{DBL_FLOAT, "DBL_FLOAT"},
 	{ID, "ID"},
 	{OPERATOR, "OPERATOR"},
 	{SEPARATOR, "SEPARATOR"},

@@ -232,7 +232,9 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 	std::stack<std::unique_ptr<ExpressionNode>> values;
 
 	for (; lexStart != lexEnd; lexStart++) {
-		if ((*lexStart).tokenName == INTEGER || (*lexStart).tokenName == STRING) {
+		if ((*lexStart).tokenName == INTEGER ||
+			(*lexStart).tokenName == DBL_FLOAT ||
+			(*lexStart).tokenName == STRING) {
 			std::unique_ptr<ValueNode> valNode = std::make_unique<ValueNode>(*lexStart);
 			values.push(std::move(valNode));
 		}

@@ -8,12 +8,15 @@
 class Value
 {
 public:
+	static const double FLOAT_EPSILON;
 
 	Value();
 
 	Value(int intValue);
 
 	Value(std::string strValue);
+
+	Value(double floatValue);
 
 	ValueType::Enum getType() const;
 
@@ -22,6 +25,8 @@ public:
 	int intValue;
 
 	std::string strValue;
+
+	double floatValue;
 
 protected:
 	ValueType::Enum valueType;
