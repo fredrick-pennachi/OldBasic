@@ -80,7 +80,8 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 			lexeme.tokenName = ID;
 			lexeme.value += toupper(*i);
 			i++;
-			while (i != line.end() && !isspace(*i) && !ispunct(*i)) {
+			while (i != line.end() && !isspace(*i) && !isOperator(*i) &&
+				(isalpha(*i) || *i == '_' || *i == '$' || isHighBit(*i))) {
 				lexeme.value += toupper(*i);
 				i++;
 			}

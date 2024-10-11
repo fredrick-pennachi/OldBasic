@@ -100,6 +100,13 @@ void runTests(Tokenizer& tokenizer, Parser& parser)
 			return runtime.getVariable("A").value.intValue == 7;
 		}));
 
+	tests.push_back(Test("string join        ", u8"LET A$ = \"🍷\" : LET B$ = \"🧀\" : LET C$ = A$ + B$",
+		[]() {
+			return runtime.getVariable("A$").value.strValue == u8"🍷" &&
+				runtime.getVariable("B$").value.strValue == u8"🧀" &&
+			runtime.getVariable("C$").value.strValue == u8"🍷🧀";
+		}));
+
 	tests.push_back(Test("colon separation   ", "LET B = 4 : LET C = 5 : LET D = 6",
 		[]() {
 			return runtime.getVariable("B").value.intValue == 4 &&
@@ -125,6 +132,19 @@ void runTests(Tokenizer& tokenizer, Parser& parser)
 			return runtime.getVariable("H").value.intValue == 81;
 		}));
 
+	tests.push_back(Test("decimal numbers    ", "LET K = 0.5 : LET K_INT = 123 : LET L = K + K_INT",
+		[]() {
+			return runtime.getVariable("K").value.floatValue == 0.5f &&
+				runtime.getVariable("K_INT").value.intValue == 123 &&
+				runtime.getVariable("L").value.floatValue == 123.5f;
+		}));
+
+	tests.push_back(Test("array values       ", "DIM A(5) : LET A(1) = 5 : LET A(2) = 7",
+		[]() {
+			return runtime.getArrayValue("A", 1).intValue == 5 &&
+				runtime.getArrayValue("A", 2).intValue == 7;
+		}));
+
 	for (Test test : tests) {
 		evalLine(tokenizer, parser, test.testStatement);
 		bool result = test.assert();
@@ -135,16 +155,9 @@ void runTests(Tokenizer& tokenizer, Parser& parser)
 			runtime << u8"🍄 FAIL ";
 		}
 		runtime << test.testName << u8" ⌨️ " << test.testStatement << std::endl;
+
+		runtime.clearProgram();
 	}
 
-	runtime.clearProgram();
-
 	runtime << std::endl;
-
-	evalLine(tokenizer, parser, "dim f(5)");
-	evalLine(tokenizer, parser, "let f(1) = 5 : let f(2) = 7");
-	evalLine(tokenizer, parser, "dim");
-
-	runtime << std::endl;
-
 }
