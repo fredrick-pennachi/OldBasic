@@ -136,6 +136,7 @@
     <ClCompile Include="DrawCommand.cpp" />
     <ClCompile Include="ExpressionNode.cpp" />
     <ClCompile Include="ForCommand.cpp" />
+    <ClCompile Include="FunctionNode.cpp" />
     <ClCompile Include="GosubCommand.cpp" />
     <ClCompile Include="GotoCommand.cpp" />
     <ClCompile Include="IfCommand.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="DrawCommand.h" />
     <ClInclude Include="ExpressionNode.h" />
     <ClInclude Include="ForCommand.h" />
+    <ClInclude Include="FunctionNode.h" />
     <ClInclude Include="GosubCommand.h" />
     <ClInclude Include="GotoCommand.h" />
     <ClInclude Include="IfCommand.h" />

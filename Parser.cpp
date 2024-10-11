@@ -4,6 +4,7 @@
 #include "ClsCommand.h"
 #include "DimCommand.h"
 #include "ForCommand.h"
+#include "FunctionNode.h"
 #include "GosubCommand.h"
 #include "GotoCommand.h"
 #include "IfCommand.h"
@@ -240,19 +241,27 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 		}
 		else if ((*lexStart).tokenName == ID) {
 
-			//  Look ahead to see whether this is an Array.
+			//  Look ahead to see whether this is an Array or Function.
 			if ((lexStart + 1) != lexEnd && (*(lexStart + 1)).value == "(") {
-				// This is an array id and subscript. Look forward
-				// to find the matching parenthesis and create an
-				// expression.
+				// This is an array or function id and subscript.
+				// Look forward to find the matching parenthesis
+				// and create an expression.
 				std::vector<Lexeme>::const_iterator closeParenIter =
 					std::find_if(lexStart, lexEnd,
 						[](Lexeme l) { return l.value == ")"; });
 
 				if (closeParenIter != lexEnd) {
 					std::unique_ptr<ExpressionNode> subscriptExpr = parseExpression(lexStart + 2, closeParenIter);
-					std::unique_ptr<ArrayNode> arrayNode = std::make_unique<ArrayNode>(*lexStart, std::move(subscriptExpr));
-					values.push(std::move(arrayNode));
+
+					if (lexStart->value == "RND") {
+						std::unique_ptr<FunctionNode> functionNode = std::make_unique<FunctionNode>(*lexStart, std::move(subscriptExpr));
+						values.push(std::move(functionNode));
+					}
+					else {
+						std::unique_ptr<ArrayNode> arrayNode = std::make_unique<ArrayNode>(*lexStart, std::move(subscriptExpr));
+						values.push(std::move(arrayNode));
+					}
+					
 					lexStart = closeParenIter;
 				}
 				else {

@@ -6,7 +6,8 @@
 class ExpressionNode
 {
 public:
-	enum NodeType { NULL_NODE, OPERATOR_NODE, VALUE_NODE, VARIABLE_NODE, ARRAY_NODE };
+	enum NodeType { NULL_NODE, OPERATOR_NODE, VALUE_NODE,
+		VARIABLE_NODE, ARRAY_NODE, FUNCTION_NODE };
 
 	ExpressionNode(const Lexeme& lexeme, NodeType nodeType);
 	

@@ -144,6 +144,9 @@
     <ClCompile Include="SleepCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
+    <ClCompile Include="FunctionNode.cpp">
+      <Filter>Source Files\expressions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tokenizer.h">
@@ -221,9 +224,6 @@
     <ClInclude Include="Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Lexeme.h">
-      <Filter>Header Files\expressions</Filter>
-    </ClInclude>
     <ClInclude Include="ForCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
@@ -262,6 +262,12 @@
     </ClInclude>
     <ClInclude Include="SleepCommand.h">
       <Filter>Header Files\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Lexeme.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionNode.h">
+      <Filter>Header Files\expressions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
