@@ -8,6 +8,7 @@
 #include "GosubCommand.h"
 #include "GotoCommand.h"
 #include "IfCommand.h"
+#include "InputCommand.h"
 #include "LetCommand.h"
 #include "ListCommand.h"
 #include "MultiCommand.h"
@@ -183,6 +184,9 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 		std::unique_ptr<Command> thenCommand = parseCommand(lexemes, thenIter + 1);
 
 		return std::make_unique<IfCommand>(lexemes, move(expr1), move(thenCommand));
+	}
+	else if (id == "INPUT") {
+		return std::make_unique<InputCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
 	}
 	else if (id == "LET") {
 		return std::make_unique<LetCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
