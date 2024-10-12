@@ -253,7 +253,7 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 				if (closeParenIter != lexEnd) {
 					std::unique_ptr<ExpressionNode> subscriptExpr = parseExpression(lexStart + 2, closeParenIter);
 
-					if (lexStart->value == "RND") {
+					if (FunctionNode::isFunction(lexStart->value)) {
 						std::unique_ptr<FunctionNode> functionNode = std::make_unique<FunctionNode>(*lexStart, std::move(subscriptExpr));
 						values.push(std::move(functionNode));
 					}
@@ -269,8 +269,14 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 				}
 			}
 			else {
-				std::unique_ptr<VariableNode> varNode = std::make_unique<VariableNode>(*lexStart);
-				values.push(std::move(varNode));
+				if (FunctionNode::isFunction(lexStart->value)) {
+					std::unique_ptr<FunctionNode> functionNode = std::make_unique<FunctionNode>(*lexStart, std::make_unique<NullNode>());
+					values.push(std::move(functionNode));
+				}
+				else {
+					std::unique_ptr<VariableNode> varNode = std::make_unique<VariableNode>(*lexStart);
+					values.push(std::move(varNode));
+				}
 			}
 		}
 		else if ((*lexStart).tokenName == OPERATOR) {

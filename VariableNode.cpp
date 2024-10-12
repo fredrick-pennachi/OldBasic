@@ -12,7 +12,7 @@ Variable VariableNode::getVariable()
             return runtime.getVariable(name);
         }
         else {
-            throw ExpressionException("No variable with this name exists!");
+            throw ExpressionException("No variable with the name \"" + name + "\" exists!");
         }
     }
     else {

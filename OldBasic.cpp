@@ -6,6 +6,8 @@
 #include "Test.h"
 #include "Tokenizer.h"
 
+#include <algorithm>
+#include <cctype>
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -44,7 +46,17 @@ int main()
 			evalLine(tokenizer, parser, line);
 		}
 		catch (std::exception& e) {
-			runtime << u8"🐞 ERROR: " << e.what() << std::endl;
+			std::string uppercaseLine;
+			uppercaseLine.resize(line.size());
+			std::transform(line.begin(), line.end(), uppercaseLine.begin(), std::toupper);
+			if (uppercaseLine == "RUN") {
+				runtime << u8"🐞 ERROR (line "
+					<< runtime.currentLineNumber << "): "
+					<< e.what() << std::endl;
+			}
+			else {
+				runtime << u8"🐞 ERROR: " << e.what() << std::endl;
+			}
 		}
 	}
 

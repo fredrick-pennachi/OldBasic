@@ -1,9 +1,12 @@
 #include "FunctionNode.h"
 
+#include <algorithm>
 #include <random>
 
-FunctionNode::FunctionNode(const Lexeme& lexeme, std::unique_ptr<ExpressionNode> subscript)
-    : ExpressionNode(lexeme, FUNCTION_NODE), subscript(std::move(subscript))
+const std::array<const std::string, 2> FunctionNode::functionNames = { "RND", "INT" };
+
+FunctionNode::FunctionNode(const Lexeme& lexeme, std::unique_ptr<ExpressionNode> argument)
+    : ExpressionNode(lexeme, FUNCTION_NODE), argument(std::move(argument))
 {
     if (lexeme.tokenName == ID) {
         // Retrieve the name of this function.
@@ -15,12 +18,44 @@ FunctionNode::FunctionNode(const Lexeme& lexeme, std::unique_ptr<ExpressionNode>
     }
 }
 
+bool FunctionNode::isFunction(const std::string& id)
+{
+    auto it = find(functionNames.cbegin(), functionNames.cend(), id);
+
+    return it != functionNames.cend();
+}
+
 Value FunctionNode::eval()
 {
-    std::default_random_engine generator(time(nullptr));
-    std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    if (name == "RND") {
+        std::default_random_engine generator(time(nullptr));
+        std::uniform_real_distribution<double> distribution(0.0, 1.0);
+        return Value(distribution(generator));
+    }
+    else if (name == "INT") {
+        if (argument != nullptr) {
+            Value val = argument->eval();
+            if (val.getType() == ValueType::DBL_FLOAT) {
+                return Value((int)val.floatValue);
+            }
+            else if (val.getType() == ValueType::INTEGER) {
+                return val;
+            }
+            else {
+                throw ExpressionException("Cannot cast non-numeric Value to INT!");
+            }
+        }
+        else {
+            return Value(0);
+        }
+    }
 
-    return Value(distribution(generator));
+    if (argument != nullptr) {
+        return argument->eval();
+    }
+    else {
+        return Value(0);
+    }
 }
 
 bool FunctionNode::evalBool()
@@ -31,5 +66,5 @@ bool FunctionNode::evalBool()
 void FunctionNode::print()
 {
     runtime << "FunctionNode: " << name
-        << "(" << subscript->eval() << ")" << std::endl;
+        << "(" << argument->eval() << ")" << std::endl;
 }
