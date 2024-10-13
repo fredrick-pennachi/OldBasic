@@ -1,5 +1,7 @@
 #include "Value.h"
 
+#include <sstream>
+
 const double Value::FLOAT_EPSILON = 1e-9;
 
 Value::Value() : valueType(ValueType::NONE), intValue(0), strValue(""), floatValue(0.0f)
@@ -16,6 +18,13 @@ Value::Value(std::string strValue) : valueType(ValueType::STRING), intValue(0), 
 
 Value::Value(double floatValue) : valueType(ValueType::DBL_FLOAT), intValue(0), strValue(""), floatValue(floatValue)
 {
+}
+
+Value Value::concat(const Value& lhs, const Value& rhs)
+{
+	std::stringstream ss;
+	ss << lhs << rhs;
+	return Value(ss.str());
 }
 
 ValueType::Enum Value::getType() const
@@ -92,8 +101,7 @@ Value operator+(const Value& lhs, const Value& rhs)
 		return Value(lhs.floatValue + rhs.floatValue);
 	}
 	else {
-		// operator+ is also allowed for strings.
-		return Value(lhs.strValue + rhs.strValue);
+		throw InvalidOperatorExeption("operator+ is not valid for these values!");
 	}
 }
 
@@ -170,6 +178,9 @@ std::ostream& operator<<(std::ostream& stream, const Value& value) {
 	}
 	else if (value.getType() == ValueType::STRING) {
 		stream << value.strValue;
+	}
+	else if (value.getType() == ValueType::NONE) {
+		// Do nothing.
 	}
 	else {
 		throw InvalidOperatorExeption("operator<< is not implemented for this type!");

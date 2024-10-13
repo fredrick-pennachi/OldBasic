@@ -16,6 +16,8 @@ Runtime::Runtime() : currentLineNumber(0), isReturn(false)
 
 int Runtime::run()
 {
+	forLoops.clear();
+
 	nextLineIter = program.cbegin();
 
 	while (nextLineIter != program.cend()) {

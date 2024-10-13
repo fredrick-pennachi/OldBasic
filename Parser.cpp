@@ -326,13 +326,23 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 			opNode->right = std::move(currentNode);
 
 			if (values.empty()) {
-				throw ParseException("Parsing error, not enough values for operator!");
+				if (opNode->lexeme.value == ";") {
+					// String concat operator is allowed
+					// to be empty on right side.
+					opNode->left = std::move(opNode->right);
+					opNode->right = std::make_unique<NullNode>();
+				}
+				else {
+					throw ParseException("Parsing error, not enough values for operator!");
+				}
+			}
+			else {
+				// Also populate the left side.
+				opNode->left = std::move(values.top());
+				values.pop();
 			}
 			
-			// Also populate the left side.
-			opNode->left = std::move(values.top());
-			values.pop();
-
+			
 			// If there is a lower precedence node, set this node to the left side.
 			if (!lowerPrecedence.empty()) {
 				lowerPrecedence.top()->left = std::move(opNode);

@@ -18,6 +18,8 @@ public:
 
 	Value(double floatValue);
 
+	static Value concat(const Value& lhs, const Value& rhs);
+
 	ValueType::Enum getType() const;
 
 	bool evalBool() const;

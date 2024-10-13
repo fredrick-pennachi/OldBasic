@@ -20,6 +20,9 @@ Value OperatorNode::eval()
     else if (lexeme.value == "-") {
         return left->eval() - right->eval();
     }
+    else if (lexeme.value == ";") {
+        return Value::concat(left->eval(), right->eval());
+    }
     else if (lexeme.value == "=") {
         throw ExpressionException("Assignment must be evaluated using LET command!");
     }

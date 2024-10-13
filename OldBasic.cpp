@@ -112,7 +112,7 @@ void runTests(Tokenizer& tokenizer, Parser& parser)
 			return runtime.getVariable("A").value.intValue == 7;
 		}));
 
-	tests.push_back(Test("string join        ", u8"LET A$ = \"🍷\" : LET B$ = \"🧀\" : LET C$ = A$ + B$",
+	tests.push_back(Test("string join        ", u8"LET A$ = \"🍷\" : LET B$ = \"🧀\" : LET C$ = A$;B$",
 		[]() {
 			return runtime.getVariable("A$").value.strValue == u8"🍷" &&
 				runtime.getVariable("B$").value.strValue == u8"🧀" &&

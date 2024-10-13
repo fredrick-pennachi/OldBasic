@@ -1,3 +1,4 @@
+#include "OperatorNode.h"
 #include "PrintCommand.h"
 
 #include <iostream>
@@ -28,8 +29,24 @@ PRINT A(1)
 CommandStatus PrintCommand::invoke()
 {
 	if (expression->nodeType != ExpressionNode::NULL_NODE) {
+
+		bool newLine = true;
+
+		if (expression->nodeType == ExpressionNode::OPERATOR_NODE) {
+			OperatorNode* opNode = dynamic_cast<OperatorNode*>(expression.get());
+			if (opNode && opNode->right->nodeType == ExpressionNode::NULL_NODE) {
+				newLine = false;
+			}
+		}
+
 		Value value = expression->eval();
-		runtime << value << std::endl;
+
+		if (newLine) {
+			runtime << value << std::endl;
+		}
+		else {
+			runtime << value;
+		}
 	}
 	else {
 		// No argument, just print a newline.
