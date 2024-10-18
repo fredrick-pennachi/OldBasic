@@ -310,10 +310,8 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 		// If this node is lower precedence than the next one in the stack
 		// hook up the right side and push it on the stack.
 
-		// TODO: Add better precedence logic.
-		if (opNode->lexeme.value == "+"
-			&& !operators.empty()
-			&& operators.top()->lexeme.value == "*") {
+		if (!operators.empty() &&
+			opNode->getPrecendence() < operators.top()->getPrecendence()) {
 
 			opNode->right = std::move(currentNode);
 			lowerPrecedence.push(std::move(opNode));

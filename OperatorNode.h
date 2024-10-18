@@ -2,6 +2,8 @@
 
 #include "ExpressionNode.h"
 
+#include <map>
+
 class OperatorNode : public ExpressionNode
 {
 public:
@@ -14,6 +16,10 @@ public:
 
 	void print() override;
 
+	int getPrecendence();
+
 	std::unique_ptr<ExpressionNode> left;
 	std::unique_ptr<ExpressionNode> right;
+
+	static std::map<std::string, int> Precedence;
 };

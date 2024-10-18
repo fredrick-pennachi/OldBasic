@@ -143,7 +143,7 @@ bool operator<(const Value& lhs, const Value& rhs)
 		return lhs.floatValue < rhs.floatValue;
 	}
 	else {
-		throw InvalidOperatorExeption("operator<= is not valid for these values!");
+		throw InvalidOperatorExeption("operator< is not valid for these values!");
 	}
 }
 
@@ -167,6 +167,74 @@ bool operator<=(const Value& lhs, const Value& rhs)
 	else {
 		throw InvalidOperatorExeption("operator<= is not valid for these values!");
 	}
+}
+
+bool operator>(const Value& lhs, const Value& rhs)
+{
+	if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::INTEGER) {
+		return lhs.intValue > rhs.intValue;
+	}
+	else if (lhs.getType() == ValueType::DBL_FLOAT && rhs.getType() == ValueType::INTEGER) {
+		return lhs.floatValue > (double)rhs.intValue;
+	}
+	else if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::DBL_FLOAT) {
+		return (double)lhs.intValue > rhs.floatValue;
+	}
+	else if (lhs.getType() == ValueType::DBL_FLOAT && rhs.getType() == ValueType::DBL_FLOAT) {
+		return lhs.floatValue > rhs.floatValue;
+	}
+	else {
+		throw InvalidOperatorExeption("operator> is not valid for these values!");
+	}
+}
+
+bool operator>=(const Value & lhs, const Value & rhs)
+{
+	if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::INTEGER) {
+		return lhs.intValue >= rhs.intValue;
+	}
+	else if (lhs.getType() == ValueType::DBL_FLOAT && rhs.getType() == ValueType::INTEGER) {
+		return (lhs.floatValue > (double)rhs.intValue) ||
+			(fabs(lhs.floatValue - (double)rhs.intValue) < Value::FLOAT_EPSILON);
+	}
+	else if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::DBL_FLOAT) {
+		return ((double)lhs.intValue > rhs.floatValue) ||
+			(fabs((double)lhs.intValue - rhs.floatValue) < Value::FLOAT_EPSILON);
+	}
+	else if (lhs.getType() == ValueType::DBL_FLOAT && rhs.getType() == ValueType::DBL_FLOAT) {
+		return (lhs.floatValue > rhs.floatValue) ||
+			(fabs(lhs.floatValue - rhs.floatValue) < Value::FLOAT_EPSILON);
+	}
+	else {
+		throw InvalidOperatorExeption("operator>= is not valid for these values!");
+	}
+}
+
+bool operator==(const Value& lhs, const Value& rhs)
+{
+	if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::INTEGER) {
+		return lhs.intValue == rhs.intValue;
+	}
+	else if (lhs.getType() == ValueType::DBL_FLOAT && rhs.getType() == ValueType::INTEGER) {
+		return abs(lhs.floatValue - (double)rhs.intValue) < Value::FLOAT_EPSILON;
+	}
+	else if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::DBL_FLOAT) {
+		return abs((double)lhs.intValue - rhs.floatValue) < Value::FLOAT_EPSILON;
+	}
+	else if (lhs.getType() == ValueType::DBL_FLOAT && rhs.getType() == ValueType::DBL_FLOAT) {
+		return abs(lhs.floatValue - rhs.floatValue) < Value::FLOAT_EPSILON;
+	}
+	else if (lhs.getType() == ValueType::STRING && rhs.getType() == ValueType::STRING) {
+		return lhs.strValue == rhs.strValue;
+	}
+	else {
+		throw InvalidOperatorExeption("operator== is not valid for these values!");
+	}
+}
+
+bool operator!=(const Value& lhs, const Value& rhs)
+{
+	return !(lhs == rhs);
 }
 
 std::ostream& operator<<(std::ostream& stream, const Value& value) {

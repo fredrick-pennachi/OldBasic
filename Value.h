@@ -41,6 +41,10 @@ Value operator-(const Value& lhs, const Value& rhs);
 
 bool operator<(const Value& lhs, const Value& rhs);
 bool operator<=(const Value& lhs, const Value& rhs);
+bool operator>(const Value& lhs, const Value& rhs);
+bool operator>=(const Value& lhs, const Value& rhs);
+bool operator==(const Value& lhs, const Value& rhs);
+bool operator!=(const Value& lhs, const Value& rhs);
 
 std::ostream& operator<<(std::ostream& stream, const Value& value);
 

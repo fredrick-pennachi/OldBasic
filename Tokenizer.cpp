@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cctype>
 
-const char Tokenizer::HIGH_BIT = 128;
+const unsigned char Tokenizer::HIGH_BIT = 128;
 
 std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 
@@ -85,6 +85,12 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 				lexeme.value += toupper(*i);
 				i++;
 			}
+
+			// Some ids are actually operators.
+			if (lexeme.value == "AND" || lexeme.value == "OR") {
+				lexeme.tokenName = OPERATOR;
+			}
+
 			lexemes.push_back(lexeme);
 			continue;
 		}
@@ -93,17 +99,29 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 		if (isOperator(*i)) {
 			lexeme.tokenName = OPERATOR;
 			lexeme.value += *i;
+			char c = *i;
 			i++;
-			while (i != line.end() && isOperator(*i)) {
-				lexeme.value += *i;
-				i++;
+			if (c == '<') {
+				// Could be less than or equal to, or not equal to.
+				if (i != line.end() && (*i == '>' || *i == '=')) {
+					lexeme.value += *i;
+					i++;
+				}
 			}
+			else if (c == '>') {
+				// Could be greater than or equal to.
+				if (i != line.end() && *i == '=') {
+					lexeme.value += *i;
+					i++;
+				}
+			}
+			
 			lexemes.push_back(lexeme);
 			continue;
 		}
 
 		// Separator
-		if (*i == ',' || *i == ';' || *i == ':') {
+		if (*i == ',' || *i == ':') {
 			lexeme.tokenName = SEPARATOR;
 			lexeme.value += *i;
 			i++;

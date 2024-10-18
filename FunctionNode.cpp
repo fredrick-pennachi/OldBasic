@@ -1,9 +1,11 @@
 #include "FunctionNode.h"
 
 #include <algorithm>
+#include <cmath>
 #include <random>
 
-const std::array<const std::string, 2> FunctionNode::functionNames = { "RND", "INT" };
+const std::array<const std::string, 5> FunctionNode::functionNames = {
+    "RND", "INT", "ATN", "ABS", "SQR" };
 
 FunctionNode::FunctionNode(const Lexeme& lexeme, std::unique_ptr<ExpressionNode> argument)
     : ExpressionNode(lexeme, FUNCTION_NODE), argument(std::move(argument))
@@ -28,7 +30,7 @@ bool FunctionNode::isFunction(const std::string& id)
 Value FunctionNode::eval()
 {
     if (name == "RND") {
-        std::default_random_engine generator(time(nullptr));
+        std::default_random_engine generator((unsigned int)time(nullptr));
         std::uniform_real_distribution<double> distribution(0.0, 1.0);
         return Value(distribution(generator));
     }
@@ -48,6 +50,54 @@ Value FunctionNode::eval()
         else {
             return Value(0);
         }
+    }
+    else if (name == "ATN") {
+        if (argument != nullptr) {
+            Value val = argument->eval();
+            if (val.getType() == ValueType::DBL_FLOAT) {
+                return Value(atan(val.floatValue));
+            }
+            else if (val.getType() == ValueType::INTEGER) {
+                return Value(atan((double)val.intValue));
+            }
+            else {
+                throw ExpressionException("Cannot use non-numeric Value with ATN!");
+            }
+        }
+        
+        return Value(atan(0.0));
+    }
+    else if (name == "ABS") {
+        if (argument != nullptr) {
+            Value val = argument->eval();
+            if (val.getType() == ValueType::DBL_FLOAT) {
+                return Value(abs(val.floatValue));
+            }
+            else if (val.getType() == ValueType::INTEGER) {
+                return Value(abs((double)val.intValue));
+            }
+            else {
+                throw ExpressionException("Cannot use non-numeric Value with ABS!");
+            }
+        }
+
+        return Value(abs(0.0));
+    }
+    else if (name == "SQR") {
+        if (argument != nullptr) {
+            Value val = argument->eval();
+            if (val.getType() == ValueType::DBL_FLOAT) {
+                return Value(sqrt(val.floatValue));
+            }
+            else if (val.getType() == ValueType::INTEGER) {
+                return Value(sqrt((double)val.intValue));
+            }
+            else {
+                throw ExpressionException("Cannot use non-numeric Value with SQR!");
+            }
+        }
+
+        return Value(abs(0.0));
     }
 
     if (argument != nullptr) {

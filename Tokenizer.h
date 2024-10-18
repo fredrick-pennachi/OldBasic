@@ -9,7 +9,7 @@
 class Tokenizer {
 public:
 	std::vector<Lexeme> tokenize(const std::string& line);
-	static const char HIGH_BIT;
+	static const unsigned char HIGH_BIT;
 	bool isOperator(char c);
 	bool isHighBit(char c);
 };
