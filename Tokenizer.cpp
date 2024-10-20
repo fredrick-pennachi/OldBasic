@@ -8,6 +8,10 @@ const unsigned char Tokenizer::HIGH_BIT = 128;
 std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 
 	std::vector<Lexeme> lexemes;
+	
+	// Control whether '-' should be parsed as the sign part
+	// of a negative number or a subtraction operator.
+	bool canNegative = true;
 
 	for (std::string::const_iterator i = line.begin(); i != line.end(); /* iterator is advanced inside loop */) {
 
@@ -45,11 +49,12 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 				lexeme.tokenName = INTEGER;
 			}
 			lexemes.push_back(lexeme);
+			canNegative = false;
 			continue;
 		}
 
 		// Negative number
-		if (*i == '-' && (i + 1) != line.end() && isdigit(*(i + 1))) {
+		if (canNegative && *i == '-' && (i + 1) != line.end() && isdigit(*(i + 1))) {
 			lexeme.value += *i;
 			i++;
 			bool decimal = false;
@@ -72,6 +77,7 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 				lexeme.tokenName = INTEGER;
 			}
 			lexemes.push_back(lexeme);
+			canNegative = false;
 			continue;
 		}
 
@@ -92,6 +98,7 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 			}
 
 			lexemes.push_back(lexeme);
+			canNegative = false;
 			continue;
 		}
 
@@ -117,6 +124,7 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 			}
 			
 			lexemes.push_back(lexeme);
+			canNegative = true;
 			continue;
 		}
 
@@ -126,6 +134,7 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 			lexeme.value += *i;
 			i++;
 			lexemes.push_back(lexeme);
+			canNegative = true;
 			continue;
 		}
 
@@ -156,6 +165,7 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 				lexeme.value += *i;
 				i++;
 				lexemes.push_back(lexeme);
+				canNegative = false;
 				continue;
 			}
 		}

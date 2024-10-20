@@ -81,7 +81,6 @@ void evalLine(Tokenizer& tokenizer, Parser& parser, std::string line)
 	if (lexemes[0].tokenName == INTEGER) {
 		int lineNumber = stoi(lexemes[0].value);
 		runtime.program[lineNumber] = move(command);
-		runtime << u8"🥗 OK" << std::endl;
 	}
 	else {
 		// No line number, invoke immediately.
