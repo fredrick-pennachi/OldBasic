@@ -4,8 +4,8 @@
 #include <cmath>
 #include <random>
 
-const std::array<const std::string, 5> FunctionNode::functionNames = {
-    "RND", "INT", "ATN", "ABS", "SQR" };
+const std::array<const std::string, 6> FunctionNode::functionNames = {
+    "RND", "INT", "ATN", "ABS", "SQR", "INKEY$"};
 
 FunctionNode::FunctionNode(const Lexeme& lexeme, std::unique_ptr<ExpressionNode> argument)
     : ExpressionNode(lexeme, FUNCTION_NODE), argument(std::move(argument))
@@ -98,6 +98,9 @@ Value FunctionNode::eval()
         }
 
         return Value(abs(0.0));
+    }
+    else if (name == "INKEY$") {
+        return Value(runtime.getInkeyInput());
     }
 
     if (argument != nullptr) {

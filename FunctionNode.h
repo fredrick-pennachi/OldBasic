@@ -10,7 +10,7 @@ class FunctionNode :
 public:
     FunctionNode(const Lexeme& lexeme, std::unique_ptr<ExpressionNode> argument);
 
-    const static std::array<const std::string, 5> functionNames;
+    const static std::array<const std::string, 6> functionNames;
 
     static bool isFunction(const std::string& id);
 

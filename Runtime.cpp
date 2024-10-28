@@ -1,6 +1,7 @@
 #include "Runtime.h"
 
 #include <windows.h>
+#include <conio.h>
 
 Runtime runtime;
 
@@ -88,6 +89,16 @@ Value Runtime::getArrayValue(const std::string& name, int subscript)
 Value Runtime::getSetting(const std::string& setting)
 {
 	return settings.at(setting);
+}
+
+std::string Runtime::getInkeyInput()
+{
+	if (_kbhit()) {
+		return std::string({ (char) _getch() });
+	}
+	else {
+		return std::string("");
+	}
 }
 
 void Runtime::setForLoop(const Variable& variable)

@@ -40,6 +40,8 @@ public:
 
 	Value getSetting(const std::string& setting);
 
+	std::string getInkeyInput();
+
 	void setForLoop(const Variable& variable);
 
 	void setGosub(int nextLine);
