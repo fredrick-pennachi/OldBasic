@@ -1,5 +1,6 @@
 #include "Value.h"
 
+#include <cmath>
 #include <sstream>
 
 const double Value::FLOAT_EPSILON = 1e-9;

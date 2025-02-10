@@ -25,6 +25,7 @@
 #include "ValueNode.h"
 #include "VariableNode.h"
 
+#include <algorithm>
 #include <stack>
 
 std::unique_ptr<Command> Parser::parse(const std::vector<Lexeme>& lexemes) {

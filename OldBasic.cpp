@@ -48,7 +48,7 @@ int main()
 		catch (std::exception& e) {
 			std::string uppercaseLine;
 			uppercaseLine.resize(line.size());
-			std::transform(line.begin(), line.end(), uppercaseLine.begin(), std::toupper);
+			std::transform(line.begin(), line.end(), uppercaseLine.begin(), ::toupper);
 			if (uppercaseLine == "RUN") {
 				runtime << u8"🐞 ERROR (line "
 					<< runtime.currentLineNumber << "): "
