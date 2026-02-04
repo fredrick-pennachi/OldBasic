@@ -158,7 +158,6 @@
     <ClCompile Include="ReadCommand.cpp" />
     <ClCompile Include="ReturnCommand.cpp" />
     <ClCompile Include="RunCommand.cpp" />
-    <ClCompile Include="Runtime.cpp" />
     <ClCompile Include="SleepCommand.cpp" />
     <ClCompile Include="StopCommand.cpp" />
     <ClCompile Include="Test.cpp" />
@@ -167,6 +166,7 @@
     <ClCompile Include="ValueNode.cpp" />
     <ClCompile Include="Variable.cpp" />
     <ClCompile Include="VariableNode.cpp" />
+    <ClCompile Include="windows\Runtime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
@@ -209,6 +209,9 @@
     <ClInclude Include="ValueType.h" />
     <ClInclude Include="Variable.h" />
     <ClInclude Include="VariableNode.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

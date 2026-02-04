@@ -42,9 +42,6 @@
     <ClCompile Include="PrintCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="Runtime.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="NoOpCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
@@ -146,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="FunctionNode.cpp">
       <Filter>Source Files\expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="windows\Runtime.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -269,5 +269,8 @@
     <ClInclude Include="FunctionNode.h">
       <Filter>Header Files\expressions</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
 </Project>
