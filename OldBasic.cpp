@@ -1,4 +1,6 @@
-﻿#include "ForCommand.h"
+﻿#include "CLI11.hpp"
+
+#include "ForCommand.h"
 #include "Lexeme.h"
 #include "Parser.h"
 #include "RunCommand.h"
@@ -9,6 +11,7 @@
 #include <algorithm>
 #include <cctype>
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <sstream>
 #include <map>
@@ -17,50 +20,95 @@
 void evalLine(Tokenizer& tokenizer, Parser& parser, std::string line);
 void runTests(Tokenizer& tokenizer, Parser& parser);
 
-int main()
-{	
+int main(int argc, char** argv)
+{
+	// Command line options.
+
+	CLI::App app{ "OldBasic BASIC Interpreter" };
+	argv = app.ensure_utf8(argv);
+
+	std::string filename = "";
+	app.add_option("filename", filename, "Filename for a BASIC program");
+
+	CLI11_PARSE(app, argc, argv);
+
+	// If a filename is supplied then load the program from it
+	// and run it then exit. Otherwise start the REPL.
+
 	Tokenizer tokenizer;
 	Parser parser;
 
-	if (runtime.getSetting("run_tests").evalBool()) {
-		runTests(tokenizer, parser);
-	}
-	
-	runtime << u8"OLD BASIC 🐻 🎨 🥗 🍨 🍒 🤖 🦚 🍔 🌭 🥪" << std::endl;
-	runtime << std::endl;
+	if (filename != "") {
+		
+		// Read the program file.
+		std::ifstream programFile(filename);
+		std::string line;
 
-	const std::string PROMPT = u8"> ";
-	std::string line;
+		while (getline(programFile, line)) {
+			// Eval the lines in the file.
 
-	while (true) {
-		runtime << PROMPT;
-
-		// Get a line of input
-		getline(std::cin, line);
-
-		if (line == "q" || line == "Q" || line == "exit") {
-			break;
-		}
-
-		try {
-			evalLine(tokenizer, parser, line);
-		}
-		catch (std::exception& e) {
-			std::string uppercaseLine;
-			uppercaseLine.resize(line.size());
-			std::transform(line.begin(), line.end(), uppercaseLine.begin(), ::toupper);
-			if (uppercaseLine == "RUN") {
-				runtime << u8"🐞 ERROR (line "
-					<< runtime.currentLineNumber << "): "
-					<< e.what() << std::endl;
+			try {
+				evalLine(tokenizer, parser, line);
 			}
-			else {
+			catch (std::exception& e) {
 				runtime << u8"🐞 ERROR: " << e.what() << std::endl;
 			}
 		}
-	}
 
-	runtime << u8"Goodbye! 👋" << std::endl;
+		// Close the file.
+		programFile.close();
+
+		// Run the program.
+		try {
+			runtime.run();
+		}
+		catch (std::exception& e) {
+			runtime << u8"🐞 ERROR (line "
+				<< runtime.currentLineNumber << "): "
+				<< e.what() << std::endl;
+		}
+	}
+	else {
+		if (runtime.getSetting("run_tests").evalBool()) {
+			runTests(tokenizer, parser);
+		}
+
+		runtime << u8"OLD BASIC 🐻 🎨 🥗 🍨 🍒 🤖 🦚 🍔 🌭 🥪" << std::endl;
+		runtime << std::endl;
+
+		const std::string PROMPT = u8"> ";
+		std::string line;
+
+		while (true) {
+			runtime << PROMPT;
+
+			// Get a line of input
+			getline(std::cin, line);
+
+			if (line == "q" || line == "Q" || line == "exit") {
+				break;
+			}
+
+			try {
+				evalLine(tokenizer, parser, line);
+			}
+			catch (std::exception& e) {
+				std::string uppercaseLine;
+				uppercaseLine.resize(line.size());
+				std::transform(line.begin(), line.end(), uppercaseLine.begin(), ::toupper);
+				if (uppercaseLine == "RUN") {
+					runtime << u8"🐞 ERROR (line "
+						<< runtime.currentLineNumber << "): "
+						<< e.what() << std::endl;
+				}
+				else {
+					runtime << u8"🐞 ERROR: " << e.what() << std::endl;
+				}
+			}
+		}
+
+		runtime << u8"Goodbye! 👋" << std::endl;
+	}
 
 	return OK;
 }

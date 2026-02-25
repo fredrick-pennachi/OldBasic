@@ -171,6 +171,7 @@
   <ItemGroup>
     <ClInclude Include="Array.h" />
     <ClInclude Include="ArrayNode.h" />
+    <ClInclude Include="CLI11.hpp" />
     <ClInclude Include="ClsCommand.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="DataCommand.h" />
