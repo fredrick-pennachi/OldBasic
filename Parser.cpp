@@ -131,9 +131,14 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 
 		lexStart++;
 
-		std::vector<Lexeme>::const_iterator closeParenIter =
-			std::find_if(lexStart, lexemes.cend(),
-				[](Lexeme l) { return l.value == ")"; });
+		std::vector<Lexeme>::const_iterator lexStartCopy = lexStart;
+		std::vector<Lexeme>::const_iterator closeParenIter = lexemes.cend();
+
+		for (; lexStartCopy != lexemes.cend(); ++lexStartCopy) {
+			if ((*lexStartCopy).value == ")") {
+				closeParenIter = lexStartCopy;
+			}
+		}
 
 		if (closeParenIter == lexemes.cend()) {
 			throw ParseException("Close parenthesis required for DIM array size!");
@@ -251,9 +256,15 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 				// This is an array or function id and subscript.
 				// Look forward to find the matching parenthesis
 				// and create an expression.
-				std::vector<Lexeme>::const_iterator closeParenIter =
-					std::find_if(lexStart, lexEnd,
-						[](Lexeme l) { return l.value == ")"; });
+
+				std::vector<Lexeme>::const_iterator lexStartCopy = lexStart;
+				std::vector<Lexeme>::const_iterator closeParenIter = lexEnd;
+
+				for (; lexStartCopy != lexEnd; ++lexStartCopy) {
+					if ((*lexStartCopy).value == ")") {
+						closeParenIter = lexStartCopy;
+					}
+				}
 
 				if (closeParenIter != lexEnd) {
 					std::unique_ptr<ExpressionNode> subscriptExpr = parseExpression(lexStart + 2, closeParenIter);

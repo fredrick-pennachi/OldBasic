@@ -3,6 +3,7 @@
 #include "ExpressionNode.h"
 
 #include <array>
+#include <random>
 
 class FunctionNode :
     public ExpressionNode
@@ -10,9 +11,12 @@ class FunctionNode :
 public:
     FunctionNode(const Lexeme& lexeme, std::unique_ptr<ExpressionNode> argument);
 
-    const static std::array<const std::string, 6> functionNames;
+    const static std::array<const std::string, 7> functionNames;
 
     static bool isFunction(const std::string& id);
+
+    static std::default_random_engine generator;
+    static std::uniform_real_distribution<double> distribution;
 
     // Inherited via ExpressionNode
     Value eval() override;

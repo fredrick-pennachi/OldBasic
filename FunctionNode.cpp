@@ -2,10 +2,12 @@
 
 #include <algorithm>
 #include <cmath>
-#include <random>
 
-const std::array<const std::string, 6> FunctionNode::functionNames = {
-    "RND", "INT", "ATN", "ABS", "SQR", "INKEY$"};
+const std::array<const std::string, 7> FunctionNode::functionNames = {
+    "RND", "INT", "ATN", "ABS", "SQR", "INKEY$", "CHR$"};
+
+std::default_random_engine FunctionNode::generator = std::default_random_engine((unsigned int)time(nullptr));
+std::uniform_real_distribution<double> FunctionNode::distribution = std::uniform_real_distribution<double>(0.0, 1.0);
 
 FunctionNode::FunctionNode(const Lexeme& lexeme, std::unique_ptr<ExpressionNode> argument)
     : ExpressionNode(lexeme, FUNCTION_NODE), argument(std::move(argument))
@@ -30,8 +32,6 @@ bool FunctionNode::isFunction(const std::string& id)
 Value FunctionNode::eval()
 {
     if (name == "RND") {
-        std::default_random_engine generator((unsigned int)time(nullptr));
-        std::uniform_real_distribution<double> distribution(0.0, 1.0);
         return Value(distribution(generator));
     }
     else if (name == "INT") {
@@ -101,6 +101,20 @@ Value FunctionNode::eval()
     }
     else if (name == "INKEY$") {
         return Value(runtime.getInkeyInput());
+    }
+    else if (name == "CHR$") {
+
+        if (argument != nullptr) {
+            Value val = argument->eval();
+            if (val.getType() != ValueType::INTEGER) {
+                throw ExpressionException("Cannot use CHR$ with non-integer argument!");
+            }
+
+            return Value(std::string(1, (char) val.intValue));
+        }
+        else {
+            throw ExpressionException("Cannot use CHR$ without argument!");
+        }
     }
 
     if (argument != nullptr) {

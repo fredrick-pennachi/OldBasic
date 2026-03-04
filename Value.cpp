@@ -143,6 +143,9 @@ bool operator<(const Value& lhs, const Value& rhs)
 	else if (lhs.getType() == ValueType::DBL_FLOAT && rhs.getType() == ValueType::DBL_FLOAT) {
 		return lhs.floatValue < rhs.floatValue;
 	}
+	else if (lhs.getType() == ValueType::STRING && rhs.getType() == ValueType::STRING) {
+		return lhs.strValue < rhs.strValue;
+	}
 	else {
 		throw InvalidOperatorExeption("operator< is not valid for these values!");
 	}
@@ -165,6 +168,9 @@ bool operator<=(const Value& lhs, const Value& rhs)
 		return (lhs.floatValue < rhs.floatValue) ||
 			(fabs(lhs.floatValue - rhs.floatValue) < Value::FLOAT_EPSILON);
 	}
+	else if (lhs.getType() == ValueType::STRING && rhs.getType() == ValueType::STRING) {
+		return lhs.strValue <= rhs.strValue;
+	}
 	else {
 		throw InvalidOperatorExeption("operator<= is not valid for these values!");
 	}
@@ -183,6 +189,9 @@ bool operator>(const Value& lhs, const Value& rhs)
 	}
 	else if (lhs.getType() == ValueType::DBL_FLOAT && rhs.getType() == ValueType::DBL_FLOAT) {
 		return lhs.floatValue > rhs.floatValue;
+	}
+	else if (lhs.getType() == ValueType::STRING && rhs.getType() == ValueType::STRING) {
+		return lhs.strValue > rhs.strValue;
 	}
 	else {
 		throw InvalidOperatorExeption("operator> is not valid for these values!");
@@ -205,6 +214,9 @@ bool operator>=(const Value & lhs, const Value & rhs)
 	else if (lhs.getType() == ValueType::DBL_FLOAT && rhs.getType() == ValueType::DBL_FLOAT) {
 		return (lhs.floatValue > rhs.floatValue) ||
 			(fabs(lhs.floatValue - rhs.floatValue) < Value::FLOAT_EPSILON);
+	}
+	else if (lhs.getType() == ValueType::STRING && rhs.getType() == ValueType::STRING) {
+		return lhs.strValue >= rhs.strValue;
 	}
 	else {
 		throw InvalidOperatorExeption("operator>= is not valid for these values!");

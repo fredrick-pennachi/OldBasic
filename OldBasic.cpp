@@ -52,6 +52,7 @@ int main(int argc, char** argv)
 			}
 			catch (std::exception& e) {
 				runtime << u8"🐞 ERROR: " << e.what() << std::endl;
+				runtime << u8"🐞 FROM : " << line << std::endl;
 			}
 		}
 

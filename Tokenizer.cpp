@@ -26,6 +26,13 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 		// Identify the type of token by the starting character then parse
 		// additional characters to create the Lexeme.
 
+		// Comment
+		if (*i == '\'') {
+			// Either this line, or the remainder of this line is a comment.
+			std::cout << line << std::endl;
+			return lexemes;
+		}
+
 		// Number
 		if (isdigit(*i)) {
 			lexeme.value += *i;
