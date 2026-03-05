@@ -29,7 +29,6 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 		// Comment
 		if (*i == '\'') {
 			// Either this line, or the remainder of this line is a comment.
-			std::cout << line << std::endl;
 			return lexemes;
 		}
 
