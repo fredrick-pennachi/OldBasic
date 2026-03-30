@@ -1,6 +1,7 @@
 #include "ArrayNode.h"
 #include "LetCommand.h"
 #include "OperatorNode.h"
+#include "NullNode.h"
 #include "ValueNode.h"
 #include "VariableNode.h"
 
@@ -9,33 +10,28 @@
 const std::string LetCommand::LET_COMMAND_NAME = "LET";
 
 LetCommand::LetCommand(
+	const std::vector<Lexeme>& lexemes)
+	: Command(LET_COMMAND_NAME, lexemes)
+{
+	// No expression, set members to NullNodes.
+	this->variable = std::make_unique<NullNode>();
+	this->expression = std::make_unique<NullNode>();
+}
+
+LetCommand::LetCommand(
 	const std::vector<Lexeme>& lexemes,
+	std::unique_ptr<ExpressionNode> variable,
 	std::unique_ptr<ExpressionNode> expression)
 	: Command(LET_COMMAND_NAME, lexemes)
 {
-	if (expression->nodeType == ExpressionNode::NULL_NODE) {
-		// No expression, leave assignExpr unset.
-		return;
-	}
-	else if (expression->nodeType == ExpressionNode::OPERATOR_NODE
-		&& expression->lexeme.value == "=") {
-
-		OperatorNode* opNode = dynamic_cast<OperatorNode*>(expression.get());
-
-		if (opNode != nullptr) {
-			assignExpr = std::unique_ptr<OperatorNode>(opNode);
-		}
-
-		if (assignExpr &&
-			assignExpr->left->nodeType == ExpressionNode::VARIABLE_NODE ||
-			assignExpr->left->nodeType == ExpressionNode::ARRAY_NODE) {
-
-			expression.release();
-			return;
-		}
+	if (variable->nodeType != ExpressionNode::NULL_NODE &&
+		variable->nodeType != ExpressionNode::VARIABLE_NODE &&
+		variable->nodeType != ExpressionNode::ARRAY_NODE) {
+		throw InvalidSyntaxException("LET command variable must be VARIABLE or ARRAY!");
 	}
 
-	throw InvalidSyntaxException("LET command requires an assignment expression!");
+	this->variable = std::move(variable);
+	this->expression = std::move(expression);
 }
 
 /*
@@ -51,24 +47,24 @@ LET ARR(1) = A
 
 CommandStatus LetCommand::invoke()
 {
-	if (assignExpr) {
+	if (variable->nodeType != ExpressionNode::NULL_NODE) {
 
-		if (assignExpr->left->nodeType == ExpressionNode::VARIABLE_NODE) {
-			VariableNode* varNode = dynamic_cast<VariableNode*>(assignExpr->left.get());
+		if (variable->nodeType == ExpressionNode::VARIABLE_NODE) {
+			VariableNode* varNode = dynamic_cast<VariableNode*>(variable.get());
 
 			if (varNode) {
-				Value value = assignExpr->right->eval();
+				Value value = expression->eval();
 
 				Variable variable(varNode->name, value);
 
 				runtime.setVariable(variable);
 			}
 		}
-		else if (assignExpr->left->nodeType == ExpressionNode::ARRAY_NODE) {
-			ArrayNode* arrNode = dynamic_cast<ArrayNode*>(assignExpr->left.get());
+		else if (variable->nodeType == ExpressionNode::ARRAY_NODE) {
+			ArrayNode* arrNode = dynamic_cast<ArrayNode*>(variable.get());
 
 			if (arrNode) {
-				Value value = assignExpr->right->eval();
+				Value value = expression->eval();
 
 				runtime.setArrayValue(arrNode->name,
 					arrNode->subscript->eval().intValue, value);

@@ -195,7 +195,37 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 		return std::make_unique<InputCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
 	}
 	else if (id == "LET") {
-		return std::make_unique<LetCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
+		
+		// LET
+		// LET (var) = (expr)
+
+		if (lexStart == lexemes.cend()) {
+			return std::make_unique<LetCommand>(lexemes);
+		}
+
+		if ((*lexStart).tokenName != ID) {
+			throw ParseException("ID required for LET!");
+		}
+
+		std::vector<Lexeme>::const_iterator varStart = lexStart;
+
+		std::vector<Lexeme>::const_iterator assignIter =
+			std::find_if(lexemes.cbegin(), lexemes.cend(),
+				[](Lexeme l) { return l.value == "="; });
+
+		if (assignIter == lexemes.cend()) {
+			throw ParseException("= operator required for LET!");
+		}
+
+		std::unique_ptr<ExpressionNode> variable = parseExpression(varStart, assignIter);
+		
+		if (assignIter + 1 == lexemes.cend()) {
+			throw ParseException("Expression required for LET!");
+		}
+
+		std::unique_ptr<ExpressionNode> expression = parseExpression(assignIter + 1, lexemes.cend());
+
+		return std::make_unique<LetCommand>(lexemes, std::move(variable), std::move(expression));
 	}
 	else if (id == "LIST") {
 		return std::make_unique<ListCommand>(lexemes);
@@ -292,6 +322,14 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 				else {
 					std::unique_ptr<VariableNode> varNode = std::make_unique<VariableNode>(*lexStart);
 					values.push(std::move(varNode));
+
+					/*if (runtime.hasVariable(lexStart->value)) {
+						std::unique_ptr<VariableNode> varNode = std::make_unique<VariableNode>(*lexStart);
+						values.push(std::move(varNode));
+					}
+					else {
+						throw ParseException("Parsing error, unknown id " + lexStart->value + ".");
+					}*/
 				}
 			}
 		}

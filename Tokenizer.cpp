@@ -130,7 +130,16 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 			}
 			
 			lexemes.push_back(lexeme);
-			canNegative = true;
+
+			if (c == ')') {
+				// A closing parenthesis means the next token
+				// should be an operator or separator.
+				canNegative = false;
+			}
+			else {
+				canNegative = true;
+			}
+			
 			continue;
 		}
 
