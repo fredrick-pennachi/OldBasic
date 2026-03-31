@@ -322,20 +322,45 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 				else {
 					std::unique_ptr<VariableNode> varNode = std::make_unique<VariableNode>(*lexStart);
 					values.push(std::move(varNode));
-
-					/*if (runtime.hasVariable(lexStart->value)) {
-						std::unique_ptr<VariableNode> varNode = std::make_unique<VariableNode>(*lexStart);
-						values.push(std::move(varNode));
-					}
-					else {
-						throw ParseException("Parsing error, unknown id " + lexStart->value + ".");
-					}*/
 				}
 			}
 		}
 		else if ((*lexStart).tokenName == OPERATOR) {
-			std::unique_ptr<OperatorNode> opNode = std::make_unique<OperatorNode>(*lexStart);
-			operators.push(std::move(opNode));
+			if ((*lexStart).value != "(") {
+				// This is a regular 2 value infix operator.
+				std::unique_ptr<OperatorNode> opNode = std::make_unique<OperatorNode>(*lexStart);
+				operators.push(std::move(opNode));
+			}
+			else if ((*lexStart).value == "(") {
+				// This is a parenthesized expression, calculate the
+				// value for the enclosed expression and add to the
+				// values stack.
+
+				std::vector<Lexeme>::const_iterator lexStartCopy = lexStart;
+				std::vector<Lexeme>::const_iterator closeParenIter = lexEnd;
+
+				++lexStart;
+				int parenCount = 1;
+				for (; lexStart != lexEnd; ++lexStart) {
+					if ((*lexStart).value == ")") {
+						--parenCount;
+						if (parenCount == 0) {
+							closeParenIter = lexStart;
+							break;
+						}
+					}
+					else if ((*lexStart).value == "(") {
+						++parenCount;
+					}
+				}
+
+				if (lexStart == lexEnd) {
+					throw ParseException("Parsing error, cannot find closing parenthesis!");
+				}
+
+				std::unique_ptr<ExpressionNode> parenthesized = parseExpression(lexStartCopy + 1, closeParenIter);
+				values.push(std::move(parenthesized));
+			}
 		}
 		else {
 			values.push(std::make_unique<NullNode>());
@@ -367,8 +392,14 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 			lowerPrecedence.push(std::move(opNode));
 
 			// Repopulate current node with the next value.
-			currentNode = std::move(values.top());
-			values.pop();
+			if (!values.empty()) {
+				currentNode = std::move(values.top());
+				values.pop();
+			}
+			else {
+				throw ParseException("Parsing error, not enough values for operator: "
+					+ lowerPrecedence.top()->lexeme.value);
+			}			
 		}
 		else {
 			opNode->right = std::move(currentNode);
@@ -381,15 +412,15 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 					opNode->right = std::make_unique<NullNode>();
 				}
 				else {
-					throw ParseException("Parsing error, not enough values for operator!");
+					throw ParseException("Parsing error, not enough values for operator: "
+						+ opNode->lexeme.value);
 				}
 			}
 			else {
 				// Also populate the left side.
 				opNode->left = std::move(values.top());
 				values.pop();
-			}
-			
+			}			
 			
 			// If there is a lower precedence node, set this node to the left side.
 			if (!lowerPrecedence.empty()) {
