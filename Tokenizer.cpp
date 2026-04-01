@@ -93,7 +93,7 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 			lexeme.value += toupper(*i);
 			i++;
 			while (i != line.end() && !isspace(*i) && !isOperator(*i) &&
-				(isalpha(*i) || *i == '_' || *i == '$' || isHighBit(*i))) {
+				(isalpha(*i) || isdigit(*i) || *i == '_' || *i == '$' || isHighBit(*i))) {
 				lexeme.value += toupper(*i);
 				i++;
 			}

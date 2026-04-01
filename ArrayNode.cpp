@@ -15,7 +15,13 @@ ArrayNode::ArrayNode(const Lexeme& lexeme, std::unique_ptr<ExpressionNode> subsc
 
 Value ArrayNode::eval()
 {
-    return runtime.getArrayValue(name, subscript->eval().intValue);
+    if (runtime.hasArray(name)) {
+        return runtime.getArrayValue(name, subscript->eval().intValue);
+    }
+    else {
+        throw ExpressionException("No array with the name \"" + name + "\" exists!");
+    }
+    
 }
 
 bool ArrayNode::evalBool()
