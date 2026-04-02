@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <cmath>
 
-const std::array<const std::string, 7> FunctionNode::functionNames = {
-    "RND", "INT", "ATN", "ABS", "SQR", "INKEY$", "CHR$"};
+const std::array<const std::string, 10> FunctionNode::functionNames = {
+    "RND", "INT", "ATN", "ABS", "SQR", "INKEY$", "CHR$", "SIN", "COS", "TAN"};
 
 std::default_random_engine FunctionNode::generator = std::default_random_engine((unsigned int)time(nullptr));
 std::uniform_real_distribution<double> FunctionNode::distribution = std::uniform_real_distribution<double>(0.0, 1.0);
@@ -115,6 +115,54 @@ Value FunctionNode::eval()
         else {
             throw ExpressionException("Cannot use CHR$ without argument!");
         }
+    }
+    else if (name == "SIN") {
+        if (argument != nullptr) {
+            Value val = argument->eval();
+            if (val.getType() == ValueType::DBL_FLOAT) {
+                return Value(sin(val.floatValue));
+            }
+            else if (val.getType() == ValueType::INTEGER) {
+                return Value(sin((double)val.intValue));
+            }
+            else {
+                throw ExpressionException("Cannot use non-numeric Value with SIN!");
+            }
+        }
+
+        return Value(sin(0.0));
+    }
+    else if (name == "COS") {
+        if (argument != nullptr) {
+            Value val = argument->eval();
+            if (val.getType() == ValueType::DBL_FLOAT) {
+                return Value(cos(val.floatValue));
+            }
+            else if (val.getType() == ValueType::INTEGER) {
+                return Value(cos((double)val.intValue));
+            }
+            else {
+                throw ExpressionException("Cannot use non-numeric Value with COS!");
+            }
+        }
+
+        return Value(cos(0.0));
+    }
+    else if (name == "TAN") {
+        if (argument != nullptr) {
+            Value val = argument->eval();
+            if (val.getType() == ValueType::DBL_FLOAT) {
+                return Value(tan(val.floatValue));
+            }
+            else if (val.getType() == ValueType::INTEGER) {
+                return Value(tan((double)val.intValue));
+            }
+            else {
+                throw ExpressionException("Cannot use non-numeric Value with TAN!");
+            }
+        }
+
+        return Value(tan(0.0));
     }
 
     if (argument != nullptr) {
