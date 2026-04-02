@@ -186,7 +186,7 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 			throw ParseException("IF without THEN not allowed!");
 		}
 
-		std::unique_ptr<ExpressionNode> expr1 = parseExpression(lexemes.cbegin(), thenIter);
+		std::unique_ptr<ExpressionNode> expr1 = parseExpression(lexemes.cbegin() + 1, thenIter);
 		std::unique_ptr<Command> thenCommand = parseCommand(lexemes, thenIter + 1);
 
 		return std::make_unique<IfCommand>(lexemes, move(expr1), move(thenCommand));
@@ -287,30 +287,38 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 				// Look forward to find the matching parenthesis
 				// and create an expression.
 
-				std::vector<Lexeme>::const_iterator lexStartCopy = lexStart;
+				std::vector<Lexeme>::const_iterator lexStartCopy = lexStart + 2;
 				std::vector<Lexeme>::const_iterator closeParenIter = lexEnd;
 
+				int parenCount = 1;
 				for (; lexStartCopy != lexEnd; ++lexStartCopy) {
 					if ((*lexStartCopy).value == ")") {
-						closeParenIter = lexStartCopy;
+						--parenCount;
+						if (parenCount == 0) {
+							closeParenIter = lexStartCopy;
+							break;
+						}
+					}
+					else if ((*lexStartCopy).value == "(") {
+						++parenCount;
 					}
 				}
 
 				if (closeParenIter != lexEnd) {
 					std::unique_ptr<ExpressionNode> subscriptExpr = parseExpression(lexStart + 2, closeParenIter);
 
-					if (FunctionNode::isFunction(lexStart->value)) {
-						std::unique_ptr<FunctionNode> functionNode = std::make_unique<FunctionNode>(*lexStart, std::move(subscriptExpr));
-						values.push(std::move(functionNode));
-					}
-					else {
-						std::unique_ptr<ArrayNode> arrayNode = std::make_unique<ArrayNode>(*lexStart, std::move(subscriptExpr));
-						values.push(std::move(arrayNode));
-					}
-					
-					lexStart = closeParenIter;
+				if (FunctionNode::isFunction(lexStart->value)) {
+					std::unique_ptr<FunctionNode> functionNode = std::make_unique<FunctionNode>(*lexStart, std::move(subscriptExpr));
+					values.push(std::move(functionNode));
 				}
 				else {
+					std::unique_ptr<ArrayNode> arrayNode = std::make_unique<ArrayNode>(*lexStart, std::move(subscriptExpr));
+					values.push(std::move(arrayNode));
+				}
+
+				lexStart = closeParenIter;
+			}
+			else {
 					throw ParseException("Parsing error, cannot find closing parenthesis!");
 				}
 			}
