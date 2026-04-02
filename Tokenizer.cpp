@@ -33,10 +33,14 @@ std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {
 		}
 
 		// Number
-		if (isdigit(*i)) {
+		if (isdigit(*i) || *i == '.') {
+			bool decimal = false;
+			if (*i == '.') {
+				lexeme.value += '0';
+				decimal = true;
+			}
 			lexeme.value += *i;
 			i++;
-			bool decimal = false;
 			while (i != line.end() && (isdigit(*i) || *i == '.')) {
 				if (*i == '.') {
 					if (!decimal) {
