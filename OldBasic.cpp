@@ -160,6 +160,11 @@ void runTests(Tokenizer& tokenizer, Parser& parser)
 			return runtime.getVariable("A").value.intValue == 7;
 		}));
 
+	tests.push_back(Test("order of div/mult  ", "LET Y = 12 / 2 * 3",
+		[]() {
+			return runtime.getVariable("Y").value.intValue == 18;
+		}));
+
 	tests.push_back(Test("string join        ", u8"LET A$ = \"🍷\" : LET B$ = \"🧀\" : LET C$ = A$;B$",
 		[]() {
 			return runtime.getVariable("A$").value.strValue == u8"🍷" &&

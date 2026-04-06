@@ -1,12 +1,11 @@
 #include "OperatorNode.h"
 
-
 std::map<std::string, int> OperatorNode::Precedence = {
-    {"*", 50},
+    {"*", 40},
     {"/", 40},
     {"+", 30},
+    {"-", 30},
     {";", 25},
-    {"-", 20},
     {"<", 15},
     {"<=", 15},
     {">", 15},

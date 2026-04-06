@@ -390,11 +390,13 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 		std::unique_ptr<OperatorNode> opNode = std::move(operators.top());
 		operators.pop();
 
-		// If this node is lower precedence than the next one in the stack
-		// hook up the right side and push it on the stack.
+		// If this node is lower or equal precedence than the next one in
+		// the stack hook up the right side and push it on the stack.
+		// Equal precedence operators are processed left to right in the
+		// expression so operators higher in the stack are lower precedence.
 
 		if (!operators.empty() &&
-			opNode->getPrecendence() < operators.top()->getPrecendence()) {
+			opNode->getPrecendence() <= operators.top()->getPrecendence()) {
 
 			opNode->right = std::move(currentNode);
 			lowerPrecedence.push(std::move(opNode));
