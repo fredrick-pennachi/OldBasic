@@ -71,7 +71,14 @@ Value operator*(const Value& lhs, const Value& rhs)
 Value operator/(const Value& lhs, const Value& rhs)
 {
 	if (lhs.getType() == ValueType::INTEGER && rhs.getType() == ValueType::INTEGER) {
-		return Value(lhs.intValue / rhs.intValue);
+		// Required for Desert Tank Battle, if there is a remainder
+		// then the expression should return a float.
+		if (lhs.intValue % rhs.intValue == 0) {
+			return Value(lhs.intValue / rhs.intValue);
+		}
+		else {
+			return Value((double) lhs.intValue / (double) rhs.intValue);
+		}
 	}
 	else if (lhs.getType() == ValueType::DBL_FLOAT && rhs.getType() == ValueType::INTEGER) {
 		return Value(lhs.floatValue / (double) rhs.intValue);
