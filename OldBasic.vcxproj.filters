@@ -27,249 +27,249 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OldBasic.cpp">
+    <ClCompile Include="src\OldBasic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Lexeme.cpp">
+    <ClCompile Include="src\Lexeme.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tokenizer.cpp">
+    <ClCompile Include="src\Tokenizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Parser.cpp">
+    <ClCompile Include="src\Parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PrintCommand.cpp">
+    <ClCompile Include="src\PrintCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="NoOpCommand.cpp">
+    <ClCompile Include="src\NoOpCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="GotoCommand.cpp">
+    <ClCompile Include="src\GotoCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="RunCommand.cpp">
+    <ClCompile Include="src\RunCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="ListCommand.cpp">
+    <ClCompile Include="src\ListCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="Command.cpp">
+    <ClCompile Include="src\Command.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="LetCommand.cpp">
+    <ClCompile Include="src\LetCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="Variable.cpp">
+    <ClCompile Include="src\Variable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Value.cpp">
+    <ClCompile Include="src\Value.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ExpressionNode.cpp">
+    <ClCompile Include="src\ExpressionNode.cpp">
       <Filter>Source Files\expressions</Filter>
     </ClCompile>
-    <ClCompile Include="OperatorNode.cpp">
+    <ClCompile Include="src\OperatorNode.cpp">
       <Filter>Source Files\expressions</Filter>
     </ClCompile>
-    <ClCompile Include="ValueNode.cpp">
+    <ClCompile Include="src\ValueNode.cpp">
       <Filter>Source Files\expressions</Filter>
     </ClCompile>
-    <ClCompile Include="VariableNode.cpp">
+    <ClCompile Include="src\VariableNode.cpp">
       <Filter>Source Files\expressions</Filter>
     </ClCompile>
-    <ClCompile Include="NullNode.cpp">
+    <ClCompile Include="src\NullNode.cpp">
       <Filter>Source Files\expressions</Filter>
     </ClCompile>
-    <ClCompile Include="IfCommand.cpp">
+    <ClCompile Include="src\IfCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="MultiCommand.cpp">
+    <ClCompile Include="src\MultiCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="DimCommand.cpp">
+    <ClCompile Include="src\DimCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
+    <ClCompile Include="src\Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ArrayNode.cpp">
+    <ClCompile Include="src\ArrayNode.cpp">
       <Filter>Source Files\expressions</Filter>
     </ClCompile>
-    <ClCompile Include="NewCommand.cpp">
+    <ClCompile Include="src\NewCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="Array.cpp">
+    <ClCompile Include="src\Array.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ForCommand.cpp">
+    <ClCompile Include="src\ForCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="NextCommand.cpp">
+    <ClCompile Include="src\NextCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="GosubCommand.cpp">
+    <ClCompile Include="src\GosubCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="ReturnCommand.cpp">
+    <ClCompile Include="src\ReturnCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="StopCommand.cpp">
+    <ClCompile Include="src\StopCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="ClsCommand.cpp">
+    <ClCompile Include="src\ClsCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="DataCommand.cpp">
+    <ClCompile Include="src\DataCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="DrawCommand.cpp">
+    <ClCompile Include="src\DrawCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="InputCommand.cpp">
+    <ClCompile Include="src\InputCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="OnCommand.cpp">
+    <ClCompile Include="src\OnCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="ReadCommand.cpp">
+    <ClCompile Include="src\ReadCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="PlotCommand.cpp">
+    <ClCompile Include="src\PlotCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="SleepCommand.cpp">
+    <ClCompile Include="src\SleepCommand.cpp">
       <Filter>Source Files\commands</Filter>
     </ClCompile>
-    <ClCompile Include="FunctionNode.cpp">
+    <ClCompile Include="src\FunctionNode.cpp">
       <Filter>Source Files\expressions</Filter>
     </ClCompile>
-    <ClCompile Include="windows\Runtime.cpp">
+    <ClCompile Include="src\windows\Runtime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Tokenizer.h">
+    <ClInclude Include="src\Tokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Parser.h">
+    <ClInclude Include="src\Parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PrintCommand.h">
+    <ClInclude Include="src\PrintCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
+    <ClInclude Include="src\Command.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="Runtime.h">
+    <ClInclude Include="src\Runtime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NoOpCommand.h">
+    <ClInclude Include="src\NoOpCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="GotoCommand.h">
+    <ClInclude Include="src\GotoCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="RunCommand.h">
+    <ClInclude Include="src\RunCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="ListCommand.h">
+    <ClInclude Include="src\ListCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="LetCommand.h">
+    <ClInclude Include="src\LetCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="Variable.h">
+    <ClInclude Include="src\Variable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Value.h">
+    <ClInclude Include="src\Value.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ExpressionNode.h">
+    <ClInclude Include="src\ExpressionNode.h">
       <Filter>Header Files\expressions</Filter>
     </ClInclude>
-    <ClInclude Include="OperatorNode.h">
+    <ClInclude Include="src\OperatorNode.h">
       <Filter>Header Files\expressions</Filter>
     </ClInclude>
-    <ClInclude Include="VariableNode.h">
+    <ClInclude Include="src\VariableNode.h">
       <Filter>Header Files\expressions</Filter>
     </ClInclude>
-    <ClInclude Include="ValueNode.h">
+    <ClInclude Include="src\ValueNode.h">
       <Filter>Header Files\expressions</Filter>
     </ClInclude>
-    <ClInclude Include="NullNode.h">
+    <ClInclude Include="src\NullNode.h">
       <Filter>Header Files\expressions</Filter>
     </ClInclude>
-    <ClInclude Include="ValueType.h">
+    <ClInclude Include="src\ValueType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IfCommand.h">
+    <ClInclude Include="src\IfCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="MultiCommand.h">
+    <ClInclude Include="src\MultiCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="DimCommand.h">
+    <ClInclude Include="src\DimCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="Test.h">
+    <ClInclude Include="src\Test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ArrayNode.h">
+    <ClInclude Include="src\ArrayNode.h">
       <Filter>Header Files\expressions</Filter>
     </ClInclude>
-    <ClInclude Include="NewCommand.h">
+    <ClInclude Include="src\NewCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="Array.h">
+    <ClInclude Include="src\Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ForCommand.h">
+    <ClInclude Include="src\ForCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="NextCommand.h">
+    <ClInclude Include="src\NextCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="GosubCommand.h">
+    <ClInclude Include="src\GosubCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="ReturnCommand.h">
+    <ClInclude Include="src\ReturnCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="StopCommand.h">
+    <ClInclude Include="src\StopCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="ClsCommand.h">
+    <ClInclude Include="src\ClsCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="DataCommand.h">
+    <ClInclude Include="src\DataCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="DrawCommand.h">
+    <ClInclude Include="src\DrawCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="InputCommand.h">
+    <ClInclude Include="src\InputCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="OnCommand.h">
+    <ClInclude Include="src\OnCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="ReadCommand.h">
+    <ClInclude Include="src\ReadCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="PlotCommand.h">
+    <ClInclude Include="src\PlotCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="SleepCommand.h">
+    <ClInclude Include="src\SleepCommand.h">
       <Filter>Header Files\commands</Filter>
     </ClInclude>
-    <ClInclude Include="Lexeme.h">
+    <ClInclude Include="src\Lexeme.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FunctionNode.h">
+    <ClInclude Include="src\FunctionNode.h">
       <Filter>Header Files\expressions</Filter>
     </ClInclude>
-    <ClInclude Include="CLI11.hpp">
+    <ClInclude Include="src\CLI11.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
