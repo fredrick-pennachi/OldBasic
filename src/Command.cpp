@@ -1,4 +1,8 @@
-﻿#include "Command.h"
+﻿// SPDX-FileCopyrightText: 2026 Fredrick Pennachi
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+#include "Command.h"
 
 Command::Command(const std::string& name, const std::vector<Lexeme>& lexemes) : name(name), lexemes(lexemes)
 {

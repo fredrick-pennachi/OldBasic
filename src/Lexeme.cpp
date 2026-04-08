@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Fredrick Pennachi
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #include "Lexeme.h"
 
 bool operator==(const Lexeme& l1, const Lexeme& l2) {

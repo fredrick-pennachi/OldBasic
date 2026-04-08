@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Fredrick Pennachi
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
 #include "../Runtime.h"
 
 #include <windows.h>

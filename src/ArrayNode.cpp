@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Fredrick Pennachi
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #include "ArrayNode.h"
 
 ArrayNode::ArrayNode(const Lexeme& lexeme, std::unique_ptr<ExpressionNode> subscript)

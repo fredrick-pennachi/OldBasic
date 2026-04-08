@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Fredrick Pennachi
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #include "IfCommand.h"
 
 const std::string IfCommand::IF_COMMAND_NAME = "IF";

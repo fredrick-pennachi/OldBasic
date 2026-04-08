@@ -1,4 +1,8 @@
-﻿#include "CLI11.hpp"
+﻿// SPDX-FileCopyrightText: 2026 Fredrick Pennachi
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+#include "CLI11.hpp"
 
 #include "ForCommand.h"
 #include "Lexeme.h"

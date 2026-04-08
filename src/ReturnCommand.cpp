@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Fredrick Pennachi
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #include "ReturnCommand.h"
 
 const std::string ReturnCommand::RETURN_COMMAND_NAME = "RETURN";

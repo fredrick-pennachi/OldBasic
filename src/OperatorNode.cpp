@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Fredrick Pennachi
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #include "OperatorNode.h"
 
 std::map<std::string, int> OperatorNode::Precedence = {
