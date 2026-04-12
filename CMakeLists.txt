@@ -13,53 +13,53 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 
 add_executable(oldbasic
-	Array.cpp
-	ArrayNode.cpp
-	ClsCommand.cpp
-	Command.cpp
-	DataCommand.cpp
-	DimCommand.cpp
-	DrawCommand.cpp
-	ExpressionNode.cpp
-	ForCommand.cpp
-	FunctionNode.cpp
-	GosubCommand.cpp
-	GotoCommand.cpp
-	IfCommand.cpp
-	InputCommand.cpp
-	LetCommand.cpp
-	Lexeme.cpp
-	ListCommand.cpp
-	MultiCommand.cpp
-	NewCommand.cpp
-	NextCommand.cpp
-	NoOpCommand.cpp
-	NullNode.cpp
-	OldBasic.cpp
-	OnCommand.cpp
-	OperatorNode.cpp
-	Parser.cpp
-	PlotCommand.cpp
-	PrintCommand.cpp
-	ReadCommand.cpp
-	ReturnCommand.cpp
-	RunCommand.cpp
-	SleepCommand.cpp
-	StopCommand.cpp
-	Test.cpp
-	Tokenizer.cpp
-	Value.cpp
-	ValueNode.cpp
-	Variable.cpp
-	VariableNode.cpp
+	src/Array.cpp
+	src/ArrayNode.cpp
+	src/ClsCommand.cpp
+	src/Command.cpp
+	src/DataCommand.cpp
+	src/DimCommand.cpp
+	src/DrawCommand.cpp
+	src/ExpressionNode.cpp
+	src/ForCommand.cpp
+	src/FunctionNode.cpp
+	src/GosubCommand.cpp
+	src/GotoCommand.cpp
+	src/IfCommand.cpp
+	src/InputCommand.cpp
+	src/LetCommand.cpp
+	src/Lexeme.cpp
+	src/ListCommand.cpp
+	src/MultiCommand.cpp
+	src/NewCommand.cpp
+	src/NextCommand.cpp
+	src/NoOpCommand.cpp
+	src/NullNode.cpp
+	src/OldBasic.cpp
+	src/OnCommand.cpp
+	src/OperatorNode.cpp
+	src/Parser.cpp
+	src/PlotCommand.cpp
+	src/PrintCommand.cpp
+	src/ReadCommand.cpp
+	src/ReturnCommand.cpp
+	src/RunCommand.cpp
+	src/SleepCommand.cpp
+	src/StopCommand.cpp
+	src/Test.cpp
+	src/Tokenizer.cpp
+	src/Value.cpp
+	src/ValueNode.cpp
+	src/Variable.cpp
+	src/VariableNode.cpp
 )
 
 if (WIN32)
 	message("Platform is Windows")
-	target_sources(oldbasic PUBLIC "windows/Runtime.cpp")
+	target_sources(oldbasic PUBLIC "src/windows/Runtime.cpp")
 endif()
 
 if (LINUX)
 	message("Platform is Linux")
-	target_sources(oldbasic PUBLIC "linux/Runtime.cpp")
+	target_sources(oldbasic PUBLIC "src/linux/Runtime.cpp")
 endif()
