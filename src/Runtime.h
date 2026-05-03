@@ -24,6 +24,8 @@ class Runtime
 public:
 	Runtime();
 
+	virtual ~Runtime();
+
 	int run();
 
 	int stop();
@@ -90,8 +92,8 @@ public:
 		std::cout << (*pManip);
 		return *this;
 	}
-
-	~Runtime();
 };
 
 extern Runtime runtime;
+
+extern bool runtimeIsDestroyed;

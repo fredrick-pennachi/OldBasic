@@ -7,6 +7,7 @@
 #include "ForCommand.h"
 #include "Lexeme.h"
 #include "Parser.h"
+#include "ReadEval.h"
 #include "RunCommand.h"
 #include "Runtime.h"
 #include "Test.h"
@@ -14,15 +15,12 @@
 
 #include <algorithm>
 #include <cctype>
-#include <iostream>
-#include <fstream>
 #include <string>
 #include <sstream>
 #include <map>
 #include <memory>
 
-void evalLine(Tokenizer& tokenizer, Parser& parser, std::string line);
-void runTests(Tokenizer& tokenizer, Parser& parser);
+void runTests();
 
 int main(int argc, char** argv)
 {
@@ -39,29 +37,9 @@ int main(int argc, char** argv)
 	// If a filename is supplied then load the program from it
 	// and run it then exit. Otherwise start the REPL.
 
-	Tokenizer tokenizer;
-	Parser parser;
-
 	if (filename != "") {
 		
-		// Read the program file.
-		std::ifstream programFile(filename);
-		std::string line;
-
-		while (getline(programFile, line)) {
-			// Eval the lines in the file.
-
-			try {
-				evalLine(tokenizer, parser, line);
-			}
-			catch (std::exception& e) {
-				runtime << u8"🐞 ERROR: " << e.what() << std::endl;
-				runtime << u8"🐞 FROM : " << line << std::endl;
-			}
-		}
-
-		// Close the file.
-		programFile.close();
+		readEval.readFile(filename);
 
 		// Run the program.
 		try {
@@ -75,7 +53,7 @@ int main(int argc, char** argv)
 	}
 	else {
 		if (runtime.getSetting("run_tests").evalBool()) {
-			runTests(tokenizer, parser);
+			runTests();
 		}
 
 		runtime << u8"OLD BASIC 🐻 🎨 🥗 🍨 🍒 🤖 🦚 🍔 🌭 🥪" << std::endl;
@@ -90,12 +68,12 @@ int main(int argc, char** argv)
 			// Get a line of input
 			getline(std::cin, line);
 
-			if (line == "q" || line == "Q" || line == "exit") {
+			if (line == "q" || line == "Q" || line == "quit" || line == "exit") {
 				break;
 			}
 
 			try {
-				evalLine(tokenizer, parser, line);
+				readEval.evalLine(line);
 			}
 			catch (std::exception& e) {
 				std::string uppercaseLine;
@@ -118,44 +96,7 @@ int main(int argc, char** argv)
 	return OK;
 }
 
-void evalLine(Tokenizer& tokenizer, Parser& parser, std::string line)
-{
-	// Tokenize line
-	std::vector<Lexeme> lexemes = tokenizer.tokenize(line);
-
-	if (lexemes.size() == 0) {
-		return;
-	}
-
-	// Turn tokens into command
-	std::unique_ptr<Command> command = parser.parse(lexemes);
-	// If first token is a line number then add to program
-	// otherwise invoke immediately.
-	if (lexemes[0].tokenName == INTEGER) {
-		int lineNumber = stoi(lexemes[0].value);
-		runtime.program[lineNumber] = move(command);
-	}
-	else {
-		// No line number, invoke immediately.
-		Command* commandPtr = command.get();
-
-		if (commandPtr->name == RunCommand::RUN_COMMAND_NAME)
-		{
-			commandPtr->invoke();
-		}
-		else {
-			// Write the line to line number zero to
-			// support single line loops, then remove
-			// it so that it isn't present for future
-			// execution.
-			runtime.program[0] = move(command);
-			commandPtr->invoke();
-			runtime.program.erase(0);
-		}
-	}
-}
-
-void runTests(Tokenizer& tokenizer, Parser& parser)
+void runTests()
 {
 	std::vector<Test> tests;
 
@@ -215,7 +156,7 @@ void runTests(Tokenizer& tokenizer, Parser& parser)
 		}));
 
 	for (Test test : tests) {
-		evalLine(tokenizer, parser, test.testStatement);
+		readEval.evalLine(test.testStatement);
 		bool result = test.assert();
 		if (result) {
 			runtime << u8"🍇 OK   ";

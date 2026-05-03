@@ -7,6 +7,8 @@
 #include <iostream>
 #include <cctype>
 
+Tokenizer tokenizer;
+
 const unsigned char Tokenizer::HIGH_BIT = 128;
 
 std::vector<Lexeme> Tokenizer::tokenize(const std::string& line) {

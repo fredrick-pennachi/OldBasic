@@ -15,6 +15,7 @@
 #include "InputCommand.h"
 #include "LetCommand.h"
 #include "ListCommand.h"
+#include "LoadCommand.h"
 #include "MultiCommand.h"
 #include "NewCommand.h"
 #include "NextCommand.h"
@@ -31,6 +32,8 @@
 
 #include <algorithm>
 #include <stack>
+
+Parser parser;
 
 std::unique_ptr<Command> Parser::parse(const std::vector<Lexeme>& lexemes) {
 
@@ -233,6 +236,9 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 	}
 	else if (id == "LIST") {
 		return std::make_unique<ListCommand>(lexemes);
+	}
+	else if (id == "LOAD") {
+		return std::make_unique<LoadCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
 	}
 	else if (id == "NEW") {
 		return std::make_unique<NewCommand>(lexemes);

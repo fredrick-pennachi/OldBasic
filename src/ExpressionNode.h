@@ -16,6 +16,8 @@ public:
 		VARIABLE_NODE, ARRAY_NODE, FUNCTION_NODE };
 
 	ExpressionNode(const Lexeme& lexeme, NodeType nodeType);
+
+	virtual ~ExpressionNode();
 	
 	virtual Value eval() = 0;
 

@@ -10,13 +10,9 @@ Command::Command(const std::string& name, const std::vector<Lexeme>& lexemes) : 
 
 Command::~Command()
 {
-	// Commenting this out for now because it's causing an
-	// exception at program exit, presumably accessing
-	// a destroyed map or something.
-	
-	//if (runtime.getSetting("debug").evalBool()) {
-	//	runtime << "Destroyed " << name << u8" command 👻" << std::endl;
-	//}
+	if (!runtimeIsDestroyed && runtime.getSetting("debug").evalBool()) {
+		runtime << "Destroyed " << name << u8" command 👻" << std::endl;
+	}
 }
 
 std::ostream& operator<<(std::ostream& stream, const Command& command) {

@@ -30,6 +30,7 @@ add_executable(oldbasic
 	src/LetCommand.cpp
 	src/Lexeme.cpp
 	src/ListCommand.cpp
+	src/LoadCommand.cpp
 	src/MultiCommand.cpp
 	src/NewCommand.cpp
 	src/NextCommand.cpp

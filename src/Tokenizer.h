@@ -24,3 +24,5 @@ class InvalidTokenExeption : public std::runtime_error {
 public:
 	InvalidTokenExeption(const std::string what);
 };
+
+extern Tokenizer tokenizer;

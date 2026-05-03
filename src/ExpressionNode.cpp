@@ -9,6 +9,10 @@ ExpressionNode::ExpressionNode(const Lexeme& lexeme, NodeType nodeType)
 {
 }
 
+ExpressionNode::~ExpressionNode()
+{
+}
+
 ExpressionException::ExpressionException(std::string what) : runtime_error(what)
 {
 }

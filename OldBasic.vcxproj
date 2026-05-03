@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\LoadCommand.cpp" />
     <ClCompile Include="src\Array.cpp" />
     <ClCompile Include="src\ArrayNode.cpp" />
     <ClCompile Include="src\ClsCommand.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="src\Parser.cpp" />
     <ClCompile Include="src\PlotCommand.cpp" />
     <ClCompile Include="src\PrintCommand.cpp" />
+    <ClCompile Include="src\ReadEval.cpp" />
     <ClCompile Include="src\ReadCommand.cpp" />
     <ClCompile Include="src\ReturnCommand.cpp" />
     <ClCompile Include="src\RunCommand.cpp" />
@@ -169,6 +171,7 @@
     <ClCompile Include="src\windows\Runtime.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\LoadCommand.h" />
     <ClInclude Include="src\Array.h" />
     <ClInclude Include="src\ArrayNode.h" />
     <ClInclude Include="src\CLI11.hpp" />
@@ -197,6 +200,7 @@
     <ClInclude Include="src\Parser.h" />
     <ClInclude Include="src\PlotCommand.h" />
     <ClInclude Include="src\PrintCommand.h" />
+    <ClInclude Include="src\ReadEval.h" />
     <ClInclude Include="src\ReadCommand.h" />
     <ClInclude Include="src\ReturnCommand.h" />
     <ClInclude Include="src\RunCommand.h" />

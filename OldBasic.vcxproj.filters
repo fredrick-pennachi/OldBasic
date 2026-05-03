@@ -25,6 +25,9 @@
     <Filter Include="Header Files\expressions">
       <UniqueIdentifier>{1336a600-9c20-4ef3-9ddb-664445b5a598}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\windows">
+      <UniqueIdentifier>{c99f1825-d101-45ce-83ce-79df31f13fb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OldBasic.cpp">
@@ -144,7 +147,13 @@
     <ClCompile Include="src\FunctionNode.cpp">
       <Filter>Source Files\expressions</Filter>
     </ClCompile>
+    <ClCompile Include="src\LoadCommand.cpp">
+      <Filter>Source Files\commands</Filter>
+    </ClCompile>
     <ClCompile Include="src\windows\Runtime.cpp">
+      <Filter>Source Files\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ReadEval.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -270,6 +279,12 @@
       <Filter>Header Files\expressions</Filter>
     </ClInclude>
     <ClInclude Include="src\CLI11.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LoadCommand.h">
+      <Filter>Header Files\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ReadEval.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

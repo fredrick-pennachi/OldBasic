@@ -31,3 +31,5 @@ class ParseException : public std::runtime_error {
 public:
 	ParseException(const std::string what);
 };
+
+extern Parser parser;
