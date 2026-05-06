@@ -156,6 +156,9 @@
     <ClCompile Include="src\ReadEval.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\HelpCommand.cpp">
+      <Filter>Source Files\commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Tokenizer.h">
@@ -286,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="src\ReadEval.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HelpCommand.h">
+      <Filter>Header Files\commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

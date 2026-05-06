@@ -32,7 +32,15 @@ int main(int argc, char** argv)
 	std::string filename = "";
 	app.add_option("filename", filename, "Filename for a BASIC program");
 
+	bool showCommands = false;
+	app.add_flag("-c, --commands", showCommands, "Prints a command listing");
+
 	CLI11_PARSE(app, argc, argv);
+
+
+	if (showCommands) {
+		std::cout << "show the commands!\n";
+	}
 
 	// If a filename is supplied then load the program from it
 	// and run it then exit. Otherwise start the REPL.

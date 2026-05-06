@@ -7,8 +7,6 @@
 
 #include <sstream>
 
-const std::string ForCommand::FOR_COMMAND_NAME = "FOR";
-
 ForCommand::ForCommand(const std::vector<Lexeme>& lexemes,
 	std::unique_ptr<ExpressionNode> initExpr,
 	std::unique_ptr<ExpressionNode> toExpr)

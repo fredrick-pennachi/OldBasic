@@ -10,6 +10,9 @@
 #include "ExpressionNode.h"
 #include "OperatorNode.h"
 
+#define FOR_COMMAND_NAME "FOR"
+#define FOR_HELP "Start loop over range (end loop with NEXT); FOR I = 1 TO 10"
+
 class ForCommand :
     public Command
 {
@@ -23,8 +26,6 @@ public:
     CommandStatus invoke() override;
 
     int reset();
-
-    static const std::string FOR_COMMAND_NAME;
 
     std::unique_ptr<OperatorNode> initExpr;
     std::unique_ptr<ExpressionNode> toExpr;

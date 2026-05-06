@@ -4,8 +4,6 @@
 
 #include "IfCommand.h"
 
-const std::string IfCommand::IF_COMMAND_NAME = "IF";
-
 IfCommand::IfCommand(
 	const std::vector<Lexeme>& lexemes,
 	std::unique_ptr<ExpressionNode> expression,

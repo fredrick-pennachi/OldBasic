@@ -5,17 +5,17 @@
  */
 
 #pragma once
+
 #include "Command.h"
 
-#define DRAW_COMMAND_NAME "DRAW"
+#define HELP_COMMAND_NAME "HELP"
+#define HELP_HELP "Prints the help for each command."
 
-class DrawCommand :
+class HelpCommand :
     public Command
-
-{
+{   
 public:
-
-    DrawCommand(const std::vector<Lexeme>& lexemes);
+    HelpCommand(const std::vector<Lexeme>&lexemes);
 
     // Inherited via Command
     CommandStatus invoke() override;

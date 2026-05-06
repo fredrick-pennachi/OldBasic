@@ -6,8 +6,6 @@
 
 #include <iostream>
 
-const std::string DrawCommand::DRAW_COMMAND_NAME = "DRAW";
-
 DrawCommand::DrawCommand(const std::vector<Lexeme>& lexemes) : Command(DRAW_COMMAND_NAME, lexemes)
 {
 }

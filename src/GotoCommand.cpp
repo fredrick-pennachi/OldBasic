@@ -7,8 +7,6 @@
 #include <iostream>
 #include <sstream>
 
-const std::string GotoCommand::GOTO_COMMAND_NAME = "GOTO";
-
 GotoCommand::GotoCommand(const std::vector<Lexeme>& lexemes, std::unique_ptr<ExpressionNode> expression)
 	: Command(GOTO_COMMAND_NAME, lexemes), expression(move(expression)) {
 }

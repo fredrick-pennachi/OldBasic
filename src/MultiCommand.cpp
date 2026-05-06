@@ -41,7 +41,7 @@ CommandStatus MultiCommand::invoke()
 					nestCount++;
 				}
 
-				if ((*commandIter)->name == ForCommand::FOR_COMMAND_NAME) {
+				if ((*commandIter)->name == FOR_COMMAND_NAME) {
 					if (nestCount == 0) {
 						break;
 					}

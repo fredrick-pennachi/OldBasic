@@ -8,8 +8,6 @@
 
 #include <sstream>
 
-const std::string DimCommand::DIM_COMMAND_NAME = "DIM";
-
 DimCommand::DimCommand(
 	const std::vector<Lexeme>& lexemes,
 	std::string arrayName,

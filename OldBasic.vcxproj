@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\HelpCommand.cpp" />
     <ClCompile Include="src\LoadCommand.cpp" />
     <ClCompile Include="src\Array.cpp" />
     <ClCompile Include="src\ArrayNode.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="src\windows\Runtime.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\HelpCommand.h" />
     <ClInclude Include="src\LoadCommand.h" />
     <ClInclude Include="src\Array.h" />
     <ClInclude Include="src\ArrayNode.h" />

@@ -11,6 +11,7 @@
 #include "FunctionNode.h"
 #include "GosubCommand.h"
 #include "GotoCommand.h"
+#include "HelpCommand.h"
 #include "IfCommand.h"
 #include "InputCommand.h"
 #include "LetCommand.h"
@@ -180,6 +181,9 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 	}
 	else if (id == "GOTO") {
 		return std::make_unique<GotoCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
+	}
+	else if (id == "HELP") {
+		return std::make_unique<HelpCommand>(lexemes);
 	}
 	else if (id == "IF") {
 

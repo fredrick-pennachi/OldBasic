@@ -7,6 +7,9 @@
 #pragma once
 #include "Command.h"
 
+#define CLS_COMMAND_NAME "CLS"
+#define CLS_HELP "Clears the screen."
+
 class ClsCommand :
     public Command
 
@@ -17,6 +20,4 @@ public:
 
     // Inherited via Command
     CommandStatus invoke() override;
-
-    static const std::string CLS_COMMAND_NAME;
 };

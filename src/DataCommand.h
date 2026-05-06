@@ -7,6 +7,8 @@
 #pragma once
 #include "Command.h"
 
+#define DATA_COMMAND_NAME "DATA"
+
 class DataCommand :
     public Command
 
@@ -18,5 +20,4 @@ public:
     // Inherited via Command
     CommandStatus invoke() override;
 
-    static const std::string DATA_COMMAND_NAME;
 };

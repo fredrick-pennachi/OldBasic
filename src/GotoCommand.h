@@ -11,6 +11,9 @@
 
 #include <string>
 
+#define GOTO_COMMAND_NAME "GOTO"
+#define GOTO_HELP "Jump to a line and continue execution; GOTO 10"
+
 class GotoCommand : public Command {
 public:
 	GotoCommand(const std::vector<Lexeme>& lexemes,
@@ -18,8 +21,6 @@ public:
 
 	// Inherited via Command
 	CommandStatus invoke() override;
-
-	static const std::string GOTO_COMMAND_NAME;
 
 	std::unique_ptr<ExpressionNode> expression;
 };

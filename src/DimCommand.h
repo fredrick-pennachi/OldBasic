@@ -9,6 +9,9 @@
 #include "Command.h"
 #include "ExpressionNode.h"
 
+#define DIM_COMMAND_NAME "DIM"
+#define DIM_HELP "Declare an array; DIM A(10)"
+
 class DimCommand :
     public Command
 {
@@ -17,8 +20,6 @@ public:
 
     // Inherited via Command
     CommandStatus invoke() override;
-
-    static const std::string DIM_COMMAND_NAME;
 
     std::string arrayName;
 

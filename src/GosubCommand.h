@@ -8,6 +8,9 @@
 #include "Command.h"
 #include "ExpressionNode.h"
 
+#define GOSUB_COMMAND_NAME "GOSUB"
+#define GOSUB_HELP "Jump to a line, then jump back on RETURN; GOSUB 500"
+
 class GosubCommand :
     public Command
 {
@@ -17,8 +20,6 @@ public:
 
 	// Inherited via Command
 	CommandStatus invoke() override;
-
-	static const std::string GOSUB_COMMAND_NAME;
 
 	std::unique_ptr<ExpressionNode> expression;
 };

@@ -9,6 +9,9 @@
 #include "Command.h"
 #include "ExpressionNode.h"
 
+#define IF_COMMAND_NAME "IF"
+#define IF_HELP "Conditional expression; IF 2 > 1 THEN PRINT \"GREATER!\""
+
 class IfCommand :
     public Command
 {
@@ -17,8 +20,6 @@ public:
 
     // Inherited via Command
     CommandStatus invoke() override;
-
-    static const std::string IF_COMMAND_NAME;
 
     std::unique_ptr<ExpressionNode> expression;
 
