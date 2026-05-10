@@ -6,9 +6,6 @@
 #include "MultiCommand.h"
 #include "NextCommand.h"
 
-const std::string MultiCommand::MULTI_COMMAND_NAME = "MULTI";
-
-
 MultiCommand::MultiCommand(const std::vector<Lexeme>& lexemes)
 	: Command(MULTI_COMMAND_NAME, lexemes)
 {
@@ -32,12 +29,12 @@ CommandStatus MultiCommand::invoke()
 		// Allow for nested loops by tracking nesting level.
 		int nestCount = 0;
 
-		if (retVal && (*commandIter)->name == NextCommand::NEXT_COMMAND_NAME) {
+		if (retVal && (*commandIter)->name == NEXT_COMMAND_NAME) {
 
 			do {
 				commandIter--;
 
-				if ((*commandIter)->name == NextCommand::NEXT_COMMAND_NAME) {
+				if ((*commandIter)->name == NEXT_COMMAND_NAME) {
 					nestCount++;
 				}
 

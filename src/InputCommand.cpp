@@ -7,8 +7,6 @@
 
 #include <iostream>
 
-const std::string InputCommand::INPUT_COMMAND_NAME = "INPUT";
-
 InputCommand::InputCommand(const std::vector<Lexeme>& lexemes, std::unique_ptr<ExpressionNode> expression) : Command(INPUT_COMMAND_NAME, lexemes), expression(std::move(expression))
 {
 }

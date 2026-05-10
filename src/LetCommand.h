@@ -9,6 +9,9 @@
 #include "Command.h"
 #include "ExpressionNode.h"
 
+#define LET_COMMAND_NAME "LET"
+#define LET_HELP "Instantiate a variable and assign a value; LET C = 3"
+
 class LetCommand :
     public Command
 {
@@ -22,8 +25,6 @@ public:
 
     // Inherited via Command
     CommandStatus invoke() override;
-
-    static const std::string LET_COMMAND_NAME;
 
     std::unique_ptr<ExpressionNode> variable;
     std::unique_ptr<ExpressionNode> expression;

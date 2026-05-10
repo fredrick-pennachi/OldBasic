@@ -7,6 +7,9 @@
 #pragma once
 #include "Command.h"
 
+#define NEXT_COMMAND_NAME "NEXT"
+#define NEXT_HELP "Jumps to the start of FOR loop for next iteration; NEXT I"
+
 class NextCommand : public Command
 {
 public:
@@ -16,8 +19,6 @@ public:
 
 	// Inherited via Command
 	CommandStatus invoke() override;
-
-	static const std::string NEXT_COMMAND_NAME;
 
 	std::string varName;
 };

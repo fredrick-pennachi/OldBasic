@@ -6,8 +6,6 @@
 
 #include <iostream>
 
-const std::string ListCommand::LIST_COMMAND_NAME = "LIST";
-
 ListCommand::ListCommand(const std::vector<Lexeme>& lexemes) : Command(LIST_COMMAND_NAME, lexemes) {
 }
 

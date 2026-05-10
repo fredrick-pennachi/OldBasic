@@ -8,6 +8,9 @@
 
 #include "Command.h"
 
+#define NOOP_COMMAND_NAME "NOOP"
+#define NOOP_HELP "Used as a placeholder internally."
+
 class NoOpCommand : public Command {
 public:
 	NoOpCommand(const std::vector<Lexeme>& lexemes);
@@ -15,5 +18,4 @@ public:
 	// Inherited via Command
 	CommandStatus invoke() override;
 
-	static const std::string NOOP_COMMAND_NAME;
 };

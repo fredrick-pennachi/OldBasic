@@ -7,6 +7,9 @@
 #pragma once
 #include "Command.h"
 
+#define NEW_COMMAND_NAME "NEW"
+#define NEW_HELP "Erases the current program and resets the runtime; NEW"
+
 class NewCommand :
     public Command
 {
@@ -17,6 +20,5 @@ public:
     // Inherited via Command
     CommandStatus invoke() override;
 
-    static const std::string NEW_COMMAND_NAME;
 };
 

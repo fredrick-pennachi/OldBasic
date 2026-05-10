@@ -5,6 +5,7 @@
 #include "CLI11.hpp"
 
 #include "ForCommand.h"
+#include "HelpCommand.h"
 #include "Lexeme.h"
 #include "Parser.h"
 #include "ReadEval.h"
@@ -32,14 +33,17 @@ int main(int argc, char** argv)
 	std::string filename = "";
 	app.add_option("filename", filename, "Filename for a BASIC program");
 
-	bool showCommands = false;
-	app.add_flag("-c, --commands", showCommands, "Prints a command listing");
+	bool printCommands = false;
+	app.add_flag("-c, --commands", printCommands, "Prints a command listing");
 
 	CLI11_PARSE(app, argc, argv);
 
 
-	if (showCommands) {
-		std::cout << "show the commands!\n";
+	if (printCommands) {
+		HelpCommand* help = new HelpCommand({});
+		help->invoke();
+		delete help;
+		return OK;
 	}
 
 	// If a filename is supplied then load the program from it

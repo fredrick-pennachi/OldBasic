@@ -9,6 +9,9 @@
 #include "Command.h"
 #include "ExpressionNode.h"
 
+#define INPUT_COMMAND_NAME "INPUT"
+#define INPUT_HELP "Reads input into a variable; INPUT B"
+
 class InputCommand :
     public Command
 
@@ -19,8 +22,6 @@ public:
 
     // Inherited via Command
     CommandStatus invoke() override;
-
-    static const std::string INPUT_COMMAND_NAME;
 
     std::unique_ptr<ExpressionNode> expression;
 };

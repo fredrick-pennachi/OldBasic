@@ -11,6 +11,9 @@
 
 #include <string>
 
+#define LOAD_COMMAND_NAME "LOAD"
+#define LOAD_HELP "Loads a program from a file; LOAD \"program.bas\""
+
 class LoadCommand : public Command {
 public:
     LoadCommand(const std::vector<Lexeme>& lexemes, std::unique_ptr<ExpressionNode> expression);
@@ -18,9 +21,5 @@ public:
     // Inherited via Command
     CommandStatus invoke() override;
 
-    static const std::string LOAD_COMMAND_NAME;
-
     std::unique_ptr<ExpressionNode> expression;
 };
-
-#pragma once

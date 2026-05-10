@@ -10,6 +10,9 @@
 
 #include <vector>
 
+#define MULTI_COMMAND_NAME "MULTI"
+#define MULTI_HELP "Invokes multiple commands on same line; LET C = C + 1: PRINT C"
+
 class MultiCommand :
     public Command
 {   
@@ -18,8 +21,6 @@ public:
 
     // Inherited via Command
     CommandStatus invoke() override;
-
-    static const std::string MULTI_COMMAND_NAME;
 
     std::vector<std::unique_ptr<Command>> commands;
 };

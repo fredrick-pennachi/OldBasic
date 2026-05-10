@@ -6,8 +6,6 @@
 #include "MultiCommand.h"
 #include "NextCommand.h"
 
-const std::string NextCommand::NEXT_COMMAND_NAME = "NEXT";
-
 NextCommand::NextCommand(const std::vector<Lexeme>& lexemes,
 	const std::string& varName)
 	: Command(NEXT_COMMAND_NAME, lexemes) ,varName(varName)

@@ -7,13 +7,14 @@
 #pragma once
 #include "Command.h"
 
+#define LIST_COMMAND_NAME "LIST"
+#define LIST_HELP "Displays the program line by line."
+
 class ListCommand : public Command {
 public:
 	ListCommand(const std::vector<Lexeme>& lexemes);
 
 	// Inherited via Command
 	CommandStatus invoke() override;
-
-	static const std::string LIST_COMMAND_NAME;
 };
 

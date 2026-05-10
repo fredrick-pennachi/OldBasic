@@ -11,8 +11,6 @@
 
 #include <sstream>
 
-const std::string LetCommand::LET_COMMAND_NAME = "LET";
-
 LetCommand::LetCommand(
 	const std::vector<Lexeme>& lexemes)
 	: Command(LET_COMMAND_NAME, lexemes)

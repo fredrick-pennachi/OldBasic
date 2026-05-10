@@ -9,8 +9,6 @@
 
 #include <string>
 
-const std::string LoadCommand::LOAD_COMMAND_NAME = "LOAD";
-
 LoadCommand::LoadCommand(
 	const std::vector<Lexeme>& lexemes,
 	std::unique_ptr<ExpressionNode> expression)
