@@ -11,14 +11,15 @@
 
 #include <string>
 
+#define PRINT_COMMAND_NAME "PRINT"
+#define PRINT_HELP "Prints variable or value; PRINT A$; PRINT \"Hello!\""
+
 class PrintCommand : public Command {
 public:
     PrintCommand(const std::vector<Lexeme>& lexemes, std::unique_ptr<ExpressionNode> expression);
 
     // Inherited via Command
     CommandStatus invoke() override;
-
-    static const std::string PRINT_COMMAND_NAME;
 
     std::unique_ptr<ExpressionNode> expression;
 };

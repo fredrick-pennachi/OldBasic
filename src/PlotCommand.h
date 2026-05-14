@@ -7,6 +7,9 @@
 #pragma once
 #include "Command.h"
 
+#define PLOT_COMMAND_NAME "PLOT"
+#define PLOT_HELP "Plots a point at (x,y); PLOT X,Y"
+
 class PlotCommand :
     public Command
 
@@ -17,6 +20,4 @@ public:
 
     // Inherited via Command
     CommandStatus invoke() override;
-
-    static const std::string PLOT_COMMAND_NAME;
 };

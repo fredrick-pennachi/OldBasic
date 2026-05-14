@@ -8,6 +8,9 @@
 #include "Command.h"
 #include "ExpressionNode.h"
 
+#define SLEEP_COMMAND_NAME "SLEEP"
+#define SLEEP_HELP "Sleeps for milliseconds; SLEEP 100"
+
 class SleepCommand :
     public Command
 
@@ -19,8 +22,6 @@ public:
 
     // Inherited via Command
     CommandStatus invoke() override;
-
-    static const std::string SLEEP_COMMAND_NAME;
 
     std::unique_ptr<ExpressionNode> expression;
 };

@@ -7,6 +7,9 @@
 #pragma once
 #include "Command.h"
 
+#define STOP_COMMAND_NAME "STOP"
+#define STOP_HELP "Stops the running program."
+
 class StopCommand :
 	public Command
 {
@@ -15,6 +18,4 @@ public:
 
 	// Inherited via Command
 	CommandStatus invoke() override;
-
-	static const std::string STOP_COMMAND_NAME;
 };

@@ -7,6 +7,9 @@
 #pragma once
 #include "Command.h"
 
+#define RUN_COMMAND_NAME "RUN"
+#define RUN_HELP "Runs the program."
+
 class RunCommand :
     public Command
 {
@@ -16,7 +19,5 @@ public:
 
     // Inherited via Command
     CommandStatus invoke() override;
-
-    static const std::string RUN_COMMAND_NAME;
 };
 

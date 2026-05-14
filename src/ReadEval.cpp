@@ -58,7 +58,7 @@ void ReadEval::evalLine(std::string& line)
 		// No line number, invoke immediately.
 		Command* commandPtr = command.get();
 
-		if (commandPtr->name == RunCommand::RUN_COMMAND_NAME)
+		if (commandPtr->name == RUN_COMMAND_NAME)
 		{
 			commandPtr->invoke();
 		}

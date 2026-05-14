@@ -6,8 +6,6 @@
 
 #include <iostream>
 
-const std::string PlotCommand::PLOT_COMMAND_NAME = "PLOT";
-
 PlotCommand::PlotCommand(const std::vector<Lexeme>& lexemes) : Command(PLOT_COMMAND_NAME, lexemes)
 {
 }

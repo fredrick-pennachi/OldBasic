@@ -6,8 +6,6 @@
 
 #include <iostream>
 
-const std::string OnCommand::ON_COMMAND_NAME = "ON";
-
 OnCommand::OnCommand(const std::vector<Lexeme>& lexemes) : Command(ON_COMMAND_NAME, lexemes)
 {
 }

@@ -7,6 +7,9 @@
 #pragma once
 #include "Command.h"
 
+#define RETURN_COMMAND_NAME "RETURN"
+#define RETURN_HELP "Returns to the next line after a GOSUB invocation."
+
 class ReturnCommand :
     public Command
 {
@@ -15,6 +18,4 @@ public:
 
 	// Inherited via Command
 	CommandStatus invoke() override;
-
-    static const std::string RETURN_COMMAND_NAME;
 };

@@ -7,6 +7,9 @@
 #pragma once
 #include "Command.h"
 
+#define READ_COMMAND_NAME "READ"
+#define READ_HELP "Copies next value of DATA into variable; READ A$"
+
 class ReadCommand :
     public Command
 
@@ -17,6 +20,4 @@ public:
 
     // Inherited via Command
     CommandStatus invoke() override;
-
-    static const std::string READ_COMMAND_NAME;
 };

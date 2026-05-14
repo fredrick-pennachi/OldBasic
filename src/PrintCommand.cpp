@@ -8,8 +8,6 @@
 #include <iostream>
 #include <sstream>
 
-const std::string PrintCommand::PRINT_COMMAND_NAME = "PRINT";
-
 PrintCommand::PrintCommand(
 	const std::vector<Lexeme>& lexemes,
 	std::unique_ptr<ExpressionNode> expression)
