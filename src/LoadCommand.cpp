@@ -29,7 +29,9 @@ CommandStatus LoadCommand::invoke()
 
 	// Read the program file.
 	
-	readEval.readFile(filename.strValue);
+	int count = readEval.readFile(filename.strValue);
+
+	std::cout << u8"Successfully loaded " << filename << u8" 🚚 " << count << " lines read." << std::endl;
 
 	return OK;
 }

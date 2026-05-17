@@ -15,11 +15,12 @@
 
 ReadEval readEval;
 
-void ReadEval::readFile(std::string& filename)
+int ReadEval::readFile(std::string& filename)
 {
 	// Read the program file.
 	std::ifstream programFile(filename); 
 	std::string line;
+	int count = 0;
 
 	while (getline(programFile, line)) {
 		// Eval the lines in the file.
@@ -31,10 +32,14 @@ void ReadEval::readFile(std::string& filename)
 			runtime << u8"🐞 ERROR: " << e.what() << std::endl;
 			runtime << u8"🐞 FROM : " << line << std::endl;
 		}
+
+		++count;
 	}
 
 	// Close the file.
 	programFile.close();
+
+	return count;
 }
 
 void ReadEval::evalLine(std::string& line)

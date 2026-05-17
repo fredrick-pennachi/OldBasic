@@ -26,6 +26,7 @@
 #include "ReadCommand.h"
 #include "ReturnCommand.h"
 #include "RunCommand.h"
+#include "SaveCommand.h"
 #include "SleepCommand.h"
 #include "StopCommand.h"
 
@@ -63,10 +64,11 @@ CommandStatus HelpCommand::invoke()
 	HELP(READ_COMMAND_NAME, READ_HELP);
 	HELP(RETURN_COMMAND_NAME, RETURN_HELP);
 	HELP(RUN_COMMAND_NAME, RUN_HELP);
+	HELP(SAVE_COMMAND_NAME, SAVE_HELP);
 	HELP(SLEEP_COMMAND_NAME, SLEEP_HELP);
 	HELP(STOP_COMMAND_NAME, STOP_HELP);
 	
-#undef HELP(cn,ch)
+#undef HELP
 
 	runtime << ss.str();
 

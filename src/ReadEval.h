@@ -12,7 +12,7 @@ class ReadEval
 {
 public:
 	
-	void readFile(std::string& filename);
+	int readFile(std::string& filename);
 	void evalLine(std::string& line);
 
 };

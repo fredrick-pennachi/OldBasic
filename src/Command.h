@@ -18,6 +18,7 @@ class Runtime;
 
 enum CommandStatus {
 	OK,
+	ERROR,
 	CALLER_SHOULD_LOOP,
 	CALLER_SHOULD_BREAK
 };

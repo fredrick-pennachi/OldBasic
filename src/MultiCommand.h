@@ -11,7 +11,7 @@
 #include <vector>
 
 #define MULTI_COMMAND_NAME "MULTI"
-#define MULTI_HELP "Invokes multiple commands on same line; LET C = C + 1: PRINT C"
+#define MULTI_HELP "Colon allows multiple commands on same line; LET C = C + 1 : PRINT C"
 
 class MultiCommand :
     public Command
