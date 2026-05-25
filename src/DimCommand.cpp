@@ -44,8 +44,7 @@ CommandStatus DimCommand::invoke()
 
 	Value arraySize = expression->eval();
 
-	if (arraySize.getType() == INTEGER) {
-
+	if (arraySize.getType() == ValueType::INTEGER) {
 		runtime.setArray(arrayName, arraySize.intValue);
 	}
 	else {

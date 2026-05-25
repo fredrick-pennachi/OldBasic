@@ -57,7 +57,7 @@ void ReadEval::evalLine(std::string& line)
 	// otherwise invoke immediately.
 	if (lexemes[0].tokenName == INTEGER) {
 		int lineNumber = stoi(lexemes[0].value);
-		runtime.program[lineNumber] = move(command);
+		runtime.program[lineNumber] = std::move(command);
 	}
 	else {
 		// No line number, invoke immediately.
@@ -72,7 +72,7 @@ void ReadEval::evalLine(std::string& line)
 			// support single line loops, then remove
 			// it so that it isn't present for future
 			// execution.
-			runtime.program[0] = move(command);
+			runtime.program[0] = std::move(command);
 			commandPtr->invoke();
 			runtime.program.erase(0);
 		}

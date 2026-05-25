@@ -29,7 +29,7 @@ std::ostream& operator<<(std::ostream& os, std::stack<Lexeme> stack);
 
 class ParseException : public std::runtime_error {
 public:
-	ParseException(const std::string what);
+	ParseException(const std::string& what);
 };
 
 extern Parser parser;

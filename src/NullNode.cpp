@@ -4,7 +4,7 @@
 
 #include "NullNode.h"
 
-NullNode::NullNode() : ExpressionNode(lexeme, NULL_NODE)
+NullNode::NullNode() : ExpressionNode(Lexeme(), NULL_NODE)
 {
 }
 

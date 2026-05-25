@@ -7,11 +7,19 @@
 #include "../Runtime.h"
 
 Runtime runtime;
+bool runtimeIsDestroyed = false;
 
 Runtime::Runtime() : currentLineNumber(0), isReturn(false)
 {
 	settings["debug"] = Value(0);
 	settings["run_tests"] = Value(1);
+}
+
+Runtime::~Runtime() {
+	if (!runtimeIsDestroyed && runtime.getSetting("debug").evalBool()) {
+		runtime << u8"Destroying Runtime 👻" << std::endl;
+	}
+	runtimeIsDestroyed = true;
 }
 
 int Runtime::run()
@@ -156,8 +164,3 @@ void Runtime::sleep(int millis)
 
 	// Sleep(millis);
 }
-
-Runtime::~Runtime()
-{
-}
-

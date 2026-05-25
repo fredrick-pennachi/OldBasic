@@ -52,7 +52,7 @@ std::unique_ptr<Command> Parser::parse(const std::vector<Lexeme>& lexemes) {
 		}
 		else {
 			// Skip past the line number.
-			lexStart++;
+			++lexStart;
 		}
 	}
 
@@ -70,7 +70,7 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 {
 	// Check if this is a multi command.
 
-	auto isColon = [](Lexeme l) { return l.value == ":"; };
+	auto isColon = [](const Lexeme& l) { return l.value == ":"; };
 
 	std::vector<Lexeme>::const_iterator colonIter =
 		std::find_if(lexStart, lexemes.cend(), isColon);
@@ -87,7 +87,7 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 
 			std::unique_ptr<Command> delimitedCommand = parse(delimitedLexemes);
 
-			multiCommand->commands.push_back(move(delimitedCommand));
+			multiCommand->commands.push_back(std::move(delimitedCommand));
 
 			if (colonIter != lexemes.end()) {
 				// Skip over the colon to get to the next statement.
@@ -107,7 +107,7 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 
 	const std::string& id = (*lexStart).value;
 
-	lexStart++;
+	++lexStart;
 
 	if (id == "CLS") {
 		return std::make_unique<ClsCommand>(lexemes);
@@ -124,7 +124,7 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 
 		std::string arrayName = (*lexStart).value;
 
-		lexStart++;
+		++lexStart;
 
 		if (lexStart == lexemes.cend()) {
 			throw ParseException("Parenthesis required for DIM array size!");
@@ -138,7 +138,7 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 			throw ParseException("Parenthesis required for DIM array size!");
 		}
 
-		lexStart++;
+		++lexStart;
 
 		std::vector<Lexeme>::const_iterator lexStartCopy = lexStart;
 		std::vector<Lexeme>::const_iterator closeParenIter = lexemes.cend();
@@ -166,7 +166,7 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 
 		std::vector<Lexeme>::const_iterator toIter =
 			std::find_if(lexemes.cbegin(), lexemes.cend(),
-				[](Lexeme l) { return l.value == "TO"; });
+				[](const Lexeme& l) { return l.value == "TO"; });
 
 		if (toIter == lexemes.cend()) {
 			throw ParseException("FOR missing TO!");
@@ -175,7 +175,7 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 		std::unique_ptr<ExpressionNode> initExpr = parseExpression(lexemes.cbegin(), toIter);
 		std::unique_ptr<ExpressionNode> toExpr = parseExpression(toIter + 1, lexemes.cend());
 
-		return std::make_unique<ForCommand>(lexemes, move(initExpr), move(toExpr));
+		return std::make_unique<ForCommand>(lexemes, std::move(initExpr), std::move(toExpr));
 	}
 	else if (id == "GOSUB") {
 		return std::make_unique<GosubCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
@@ -192,7 +192,7 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 
 		std::vector<Lexeme>::const_iterator thenIter =
 			std::find_if(lexemes.cbegin(), lexemes.cend(), 
-				[](Lexeme l) { return l.value == "THEN"; });
+				[](const Lexeme& l) { return l.value == "THEN"; });
 
 		if (thenIter == lexemes.cend()) {
 			throw ParseException("IF without THEN not allowed!");
@@ -201,7 +201,7 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 		std::unique_ptr<ExpressionNode> expr1 = parseExpression(lexemes.cbegin() + 1, thenIter);
 		std::unique_ptr<Command> thenCommand = parseCommand(lexemes, thenIter + 1);
 
-		return std::make_unique<IfCommand>(lexemes, move(expr1), move(thenCommand));
+		return std::make_unique<IfCommand>(lexemes, std::move(expr1), std::move(thenCommand));
 	}
 	else if (id == "INPUT") {
 		return std::make_unique<InputCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
@@ -223,7 +223,7 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 
 		std::vector<Lexeme>::const_iterator assignIter =
 			std::find_if(lexemes.cbegin(), lexemes.cend(),
-				[](Lexeme l) { return l.value == "="; });
+				[](const Lexeme& l) { return l.value == "="; });
 
 		if (assignIter == lexemes.cend()) {
 			throw ParseException("= operator required for LET!");
@@ -255,7 +255,13 @@ std::unique_ptr<Command> Parser::parseCommand(const std::vector<Lexeme>& lexemes
 		return std::make_unique<NextCommand>(lexemes, (*lexStart).value);
 	}
 	else if (id == "PRINT") {
-		return std::make_unique<PrintCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
+		try {
+			return std::make_unique<PrintCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
+		} catch (std::exception& e) {
+			runtime << "Weird " << e.what() << std::endl;
+			return std::make_unique<PrintCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
+		}
+		// return std::make_unique<PrintCommand>(lexemes, parseExpression(lexStart, lexemes.cend()));
 	}
 	else if (id == "REM") {
 		return std::make_unique<NoOpCommand>(lexemes);
@@ -290,7 +296,7 @@ std::unique_ptr<ExpressionNode> Parser::parseExpression(std::vector<Lexeme>::con
 	std::stack<std::unique_ptr<OperatorNode>> operators;
 	std::stack<std::unique_ptr<ExpressionNode>> values;
 
-	for (; lexStart != lexEnd; lexStart++) {
+	for (; lexStart != lexEnd; ++lexStart) {
 		if ((*lexStart).tokenName == INTEGER ||
 			(*lexStart).tokenName == DBL_FLOAT ||
 			(*lexStart).tokenName == STRING) {
@@ -475,6 +481,6 @@ std::ostream& operator<<(std::ostream& os, std::stack<Lexeme> stack)
 	return os; // end of function
 }
 
-ParseException::ParseException(const std::string what) : runtime_error(what)
+ParseException::ParseException(const std::string& what) : runtime_error(what)
 {
 }

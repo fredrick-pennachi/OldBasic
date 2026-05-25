@@ -25,6 +25,7 @@ add_executable(oldbasic
 	src/FunctionNode.cpp
 	src/GosubCommand.cpp
 	src/GotoCommand.cpp
+	src/HelpCommand.cpp
 	src/IfCommand.cpp
 	src/InputCommand.cpp
 	src/LetCommand.cpp
@@ -43,8 +44,10 @@ add_executable(oldbasic
 	src/PlotCommand.cpp
 	src/PrintCommand.cpp
 	src/ReadCommand.cpp
+	src/ReadEval.cpp
 	src/ReturnCommand.cpp
 	src/RunCommand.cpp
+	src/SaveCommand.cpp
 	src/SleepCommand.cpp
 	src/StopCommand.cpp
 	src/Test.cpp

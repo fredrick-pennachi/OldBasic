@@ -13,7 +13,7 @@ LoadCommand::LoadCommand(
 	const std::vector<Lexeme>& lexemes,
 	std::unique_ptr<ExpressionNode> expression)
 	: Command(LOAD_COMMAND_NAME, lexemes),
-	expression(move(expression))
+	expression(std::move(expression))
 {
 }
 
