@@ -51,8 +51,7 @@ CommandStatus ForCommand::invoke()
 	// NEXT should handle the test about whether to loop
 	// or not. reset() will be called by NEXT when the
 	// loop is finished.
-
-	if (varName != "") {
+	if (varName != "" && runtime.hasVariable(varName)) {
 		Variable& controlVar = runtime.getVariable(varName);
 		controlVar.value = controlVar.value + 1;
 	}
