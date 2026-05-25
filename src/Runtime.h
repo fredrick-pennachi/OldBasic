@@ -57,9 +57,9 @@ public:
 
 	void clearProgram();
 
-	void clearScreen();
+	static void clearScreen();
 
-	void sleep(int millis);
+	static void sleep(int millis);
 
 	std::map<int, std::unique_ptr<Command>> program;
 

@@ -6,6 +6,9 @@
 
 #include "../Runtime.h"
 
+#include <unistd.h>
+#include <cstdio>
+
 Runtime runtime;
 bool runtimeIsDestroyed = false;
 
@@ -134,7 +137,6 @@ void Runtime::returnGosub()
 	// stack then pop it off, set the return flag so that gosub
 	// doesn't jump again.
 
-
 	if (!gosubs.empty()) {
 		nextLineIter = program.find(gosubs.top());
 		isReturn = true;
@@ -154,13 +156,16 @@ void Runtime::clearProgram()
 
 void Runtime::clearScreen()
 {
-	// TODO: Find the Linux version of this!
-	
+	// Doesn't work in the CLion console but does work in KDE console.
+
+	// \033[H moves cursor to top-left
+	// \033[2J clears the entire screen
+
+	printf("\033[H\033[2J");
+	fflush(stdout);
 }
 
 void Runtime::sleep(int millis)
 {
-	// TODO: Find the Linux version of this!
-
-	// Sleep(millis);
+	usleep(millis * 1000);
 }
